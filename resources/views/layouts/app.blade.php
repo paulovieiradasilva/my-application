@@ -9,12 +9,8 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -36,11 +32,11 @@
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
-                        </li>  
+                        </li>
                         @can('users.index')
                         <li class="nav-item {{ request()->is('usuarios') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('users.index') }}">Usuários</a>
-                        </li> 
+                        </li>
                         @endcan
 
                         @can('roles.index')
@@ -97,5 +93,9 @@
             @yield('content')
         </main>
     </div>
+
+<!-- Scripts -->
+<script src="{{ asset('js/app.js') }}" defer></script>
+
 </body>
 </html>

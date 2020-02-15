@@ -19,29 +19,35 @@ Auth::routes();
 
 
 Route::middleware(['auth'])->group(function () {
-    
+
     // Dashboard
     Route::get('/dashboard', 'HomeController@index')->name('home');
 
     // Users
     Route::get('usuarios', 'UserController@index')->name('users.index')->middleware('can:users.index');
-    Route::put('usuarios/{user}', 'UserController@update')->name('users.update')->middleware('can:users.edit');
+    Route::get('usuarios/create', 'UserController@create')->name('users.create')->middleware('can:users.create');
+    Route::post('usuarios', 'UserController@store')->name('users.store')->middleware('can:users.create');
     Route::get('usuarios/{user}', 'UserController@show')->name('users.show')->middleware('can:users.show');
-    Route::delete('usuarios/{user}', 'UserController@destroy')->name('users.destroy')->middleware('can:users.destroy');
     Route::get('usuarios/{user}/edit', 'UserController@edit')->name('users.edit')->middleware('can:users.edit');
+    Route::put('usuarios/{user}', 'UserController@update')->name('users.update')->middleware('can:users.edit');
+    Route::delete('usuarios/{user}', 'UserController@destroy')->name('users.destroy')->middleware('can:users.destroy');
 
     // Roles
     Route::get('papeis', 'RoleController@index')->name('roles.index')->middleware('can:roles.index');
-    Route::put('papeis/{role}', 'RoleController@update')->name('roles.update')->middleware('can:roles.edit');
+    Route::get('papeis/create', 'RoleController@create')->name('roles.create')->middleware('can:roles.create');
+    Route::post('papeis', 'RoleController@create')->name('roles.create')->middleware('can:roles.create');
     Route::get('papeis/{role}', 'RoleController@show')->name('roles.show')->middleware('can:roles.show');
-    Route::delete('papeis/{role}', 'RoleController@destroy')->name('roles.destroy')->middleware('can:roles.destroy');
     Route::get('papeis/{role}/edit', 'RoleController@edit')->name('roles.edit')->middleware('can:roles.edit');
+    Route::put('papeis/{role}', 'RoleController@update')->name('roles.update')->middleware('can:roles.edit');
+    Route::delete('papeis/{role}', 'RoleController@destroy')->name('roles.destroy')->middleware('can:roles.destroy');
 
     // Permissions
     Route::get('permissoes', 'PermissionController@index')->name('permissions.index')->middleware('can:permissions.index');
-    Route::put('permissoes/{role}', 'PermissionController@update')->name('permissions.update')->middleware('can:permissions.edit');
+    Route::get('permissoes/create', 'PermissionController@create')->name('permissions.create')->middleware('can:permissions.create');
+    Route::post('permissoes', 'PermissionController@create')->name('permissions.create')->middleware('can:permissions.create');
     Route::get('permissoes/{role}', 'PermissionController@show')->name('permissions.show')->middleware('can:permissions.show');
-    Route::delete('permissoes/{role}', 'PermissionController@destroy')->name('permissions.destroy')->middleware('can:permissions.destroy');
     Route::get('permissoes/{role}/edit', 'PermissionController@edit')->name('permissions.edit')->middleware('can:permissions.edit');
+    Route::put('permissoes/{role}', 'PermissionController@update')->name('permissions.update')->middleware('can:permissions.edit');
+    Route::delete('permissoes/{role}', 'PermissionController@destroy')->name('permissions.destroy')->middleware('can:permissions.destroy');
 
 });
