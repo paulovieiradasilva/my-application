@@ -19,8 +19,8 @@ mix.scripts([
     'resources/js/scripts.js'], 'public/js/app.js');
 
 mix.styles([
+    'resources/css/adminlte.css',
     'resources/css/fontawesome-all.css',
     'resources/css/ionicons.min.css',
     'resources/css/icheck-bootstrap.min.css',
-    'resources/css/adminlte.css',
     'resources/css/styles.css'], 'public/css/app.css');
