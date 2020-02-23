@@ -11,6 +11,8 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.copyDirectory('resources/img', 'public/img');
+
 mix.scripts([
     'node_modules/jquery/dist/jquery.js',
     'resources/js/jquery-ui.min.js',
