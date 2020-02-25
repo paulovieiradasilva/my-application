@@ -9,14 +9,12 @@
 
     <title>{{ config('app.name', 'My Applications') }} - {{ request()->path() }}</title>
 
-    <!-- Ionicons -->
-    {{-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> --}}
-
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css"></link>
 </head>
 <body>
     <div id="app">
@@ -34,7 +32,7 @@
                     @auth
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('home') }}">Dashboard</a>
+                            <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
                         </li>
                         @can('users.index')
                         <li class="nav-item {{ request()->is('usuarios') ? 'active' : '' }}">
@@ -93,6 +91,23 @@
             </div>
         </nav>
 
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container">
+                <div class="row mb-2">
+                <div class="col-sm-6">
+                <h5 class="m-0 text-dark">{{ $page }}</h5>
+                </div><!-- /.col -->
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                    <li class="breadcrumb-item active">{{ ucfirst(request()->path()) }}</li>
+                    </ol>
+                </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container -->
+        </div>
+
         <main class="py-4">
             @yield('content')
         </main>
@@ -100,6 +115,8 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}" defer></script>
+
+@yield('scripts')
 
 </body>
 </html>

@@ -9,7 +9,7 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     return view('welcome');
@@ -17,11 +17,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
 Route::middleware(['auth'])->group(function () {
 
     // Dashboard
-    Route::get('/dashboard', 'HomeController@index')->name('home');
+    Route::get('/dashboard', 'HomeController@index')->name('dashboard');
 
     // Users
     Route::get('usuarios', 'UserController@index')->name('users.index')->middleware('can:users.index');
@@ -31,6 +30,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('usuarios/{user}/edit', 'UserController@edit')->name('users.edit')->middleware('can:users.edit');
     Route::put('usuarios/{user}', 'UserController@update')->name('users.update')->middleware('can:users.edit');
     Route::delete('usuarios/{user}', 'UserController@destroy')->name('users.destroy')->middleware('can:users.destroy');
+
+    /** Datatables */
+    Route::get('users_datatables', 'UserController@list');
 
     // Roles
     Route::get('papeis', 'RoleController@index')->name('roles.index')->middleware('can:roles.index');

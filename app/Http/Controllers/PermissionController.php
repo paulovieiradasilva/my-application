@@ -13,8 +13,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        //
-        return view('permissions');
+        return view('admin.permissions.index')->with('page', 'Permissões');
     }
 
     /**

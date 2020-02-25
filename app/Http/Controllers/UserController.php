@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use Datatables;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -13,8 +15,14 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
-        return view('users');
+        return view('admin.users.index')->with('page', 'Usuários');
+    }
+
+    /** */
+    function list() {
+        return Datatables::of(User::all())
+            ->addColumn('action', 'admin.users._actions')
+            ->make(true);
     }
 
     /**

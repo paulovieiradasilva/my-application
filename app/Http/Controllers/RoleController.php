@@ -13,8 +13,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
-        return view('roles');
+        return view('admin.roles.index')->with('page', 'Papéis');
     }
 
     /**
