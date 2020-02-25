@@ -4,7 +4,7 @@
 @include('layouts.partials._html-head')
 
 <body>
-    <div id="app">
+    <div id="wrapper">
         <nav class="navbar navbar-expand-md navbar-light navbar-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -83,7 +83,7 @@
             <div class="container">
                 <div class="row mb-2">
                 <div class="col-sm-6">
-                <h5 class="m-0 text-dark">{{ $page }}</h5>
+                <h5 class="m-1 text-dark">{{ $page }}</h5>
                 </div><!-- /.col -->
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
