@@ -17,10 +17,10 @@ class CreateDatabaseServerTable extends Migration
             $table->bigIncrements('id');
 
             $table->unsignedBigInteger('server_id');
-            $table->foreign('server_id')->references('id')->on('servers');
+            $table->foreign('server_id')->references('id')->on('servers')->onUpdate('cascade')->onDelete('cascade');
 
             $table->unsignedBigInteger('database_id');
-            $table->foreign('database_id')->references('id')->on('databases');
+            $table->foreign('database_id')->references('id')->on('databases')->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
         });
