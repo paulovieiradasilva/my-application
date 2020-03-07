@@ -1,5 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -51,5 +54,4 @@ Route::middleware(['auth'])->group(function () {
     Route::get('permissoes/{role}/edit', 'PermissionController@edit')->name('permissions.edit')->middleware('can:permissions.edit');
     Route::put('permissoes/{role}', 'PermissionController@update')->name('permissions.update')->middleware('can:permissions.edit');
     Route::delete('permissoes/{role}', 'PermissionController@destroy')->name('permissions.destroy')->middleware('can:permissions.destroy');
-
 });

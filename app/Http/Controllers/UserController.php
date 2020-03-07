@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Datatables;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class UserController extends Controller
 {
@@ -19,8 +19,9 @@ class UserController extends Controller
     }
 
     /** */
-    function list() {
-        return Datatables::of(User::all())
+    function list()
+    {
+        return DataTables::of(User::all())
             ->addColumn('action', 'admin.users._actions')
             ->make(true);
     }

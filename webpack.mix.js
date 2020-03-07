@@ -13,16 +13,19 @@ const mix = require('laravel-mix');
 
 mix.copyDirectory('resources/img', 'public/img');
 
-mix.scripts([
-    'node_modules/jquery/dist/jquery.js',
-    'resources/js/jquery-ui.min.js',
-    'resources/js/bootstrap.js',
-    'resources/js/adminlte.js',
-    'resources/js/scripts.js'], 'public/js/app.js');
-
 mix.styles([
-    'resources/css/adminlte.css',
     'resources/css/fontawesome-all.css',
     'resources/css/ionicons.min.css',
     'resources/css/icheck-bootstrap.min.css',
+    'resources/css/dataTables.bootstrap4.min.css',
+    'resources/css/adminlte.css',
     'resources/css/styles.css'], 'public/css/app.css');
+
+mix.scripts([
+    'resources/js/jquery.min.js',
+    'resources/js/jquery-ui.min.js',
+    'resources/js/jquery.dataTables.js',
+    'resources/js/dataTables.bootstrap4.js',
+    'resources/js/adminlte.js',
+    'resources/js/bootstrap.js',
+    'resources/js/scripts.js'], 'public/js/app.js');
