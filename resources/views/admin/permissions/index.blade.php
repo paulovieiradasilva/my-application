@@ -26,7 +26,7 @@
     </div>
 </section>
 
-@include('admin._modals.permissions')
+@include('admin._modals.permissions.create')
 
 @endsection
 

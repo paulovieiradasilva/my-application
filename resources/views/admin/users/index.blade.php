@@ -25,7 +25,7 @@
     </div>
 </section>
 
-@include('admin._modals.users')
+@include('admin._modals.users.create')
 
 @endsection
 

@@ -17,6 +17,8 @@ mix.styles([
     'resources/css/fontawesome-all.css',
     'resources/css/ionicons.min.css',
     'resources/css/icheck-bootstrap.min.css',
+    'resources/css/select2.css',
+    'resources/css/select2-bootstrap4.css',
     'resources/css/dataTables.bootstrap4.min.css',
     'resources/css/adminlte.css',
     'resources/css/styles.css'], 'public/css/app.css');
@@ -24,6 +26,7 @@ mix.styles([
 mix.scripts([
     'resources/js/jquery.min.js',
     'resources/js/jquery-ui.min.js',
+    'resources/js/select2.full.js',
     'resources/js/jquery.dataTables.js',
     'resources/js/dataTables.bootstrap4.js',
     'resources/js/dataTables.buttons.min.js',
