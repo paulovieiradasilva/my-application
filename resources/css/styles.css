@@ -1,6 +1,7 @@
 html, body {
     background-color: #F4F6F9;
     margin: 0;
+    font-size: 13px;
 }
 
 .full-height {
@@ -43,4 +44,30 @@ html, body {
 
 .m-b-md {
     margin-bottom: 30px;
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    color: #ada5a5;
+    text-decoration: none;
+    background-color: #f4f6f9;
+}
+
+.dropdown-item.active, .dropdown-item:hover {
+    color: #292828;
+    text-decoration: none;
+    background-color: #f4f6f9;
+}
+
+.dropdown-item {
+    display: block;
+    width: 96%;
+    padding: 0.25rem 1rem;
+    clear: both;
+    font-weight: 400;
+    color: #949596;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+    margin-left: 2px;
 }

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Caffeinated\Shinobi\Models\Permission;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class PermissionController extends Controller
 {
@@ -14,6 +16,14 @@ class PermissionController extends Controller
     public function index()
     {
         return view('admin.permissions.index')->with('page', 'Permissões');
+    }
+
+    /** */
+    function list()
+    {
+        return DataTables::of(Permission::all())
+            ->addColumn('action', 'admin.permissions._actions')
+            ->make(true);
     }
 
     /**

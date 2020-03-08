@@ -46,12 +46,18 @@ Route::middleware(['auth'])->group(function () {
     Route::put('papeis/{role}', 'RoleController@update')->name('roles.update')->middleware('can:roles.edit');
     Route::delete('papeis/{role}', 'RoleController@destroy')->name('roles.destroy')->middleware('can:roles.destroy');
 
+    /** Datatables */
+    Route::get('roles_datatables', 'RoleController@list');
+
     // Permissions
     Route::get('permissoes', 'PermissionController@index')->name('permissions.index')->middleware('can:permissions.index');
     Route::get('permissoes/create', 'PermissionController@create')->name('permissions.create')->middleware('can:permissions.create');
     Route::post('permissoes', 'PermissionController@create')->name('permissions.create')->middleware('can:permissions.create');
-    Route::get('permissoes/{role}', 'PermissionController@show')->name('permissions.show')->middleware('can:permissions.show');
-    Route::get('permissoes/{role}/edit', 'PermissionController@edit')->name('permissions.edit')->middleware('can:permissions.edit');
-    Route::put('permissoes/{role}', 'PermissionController@update')->name('permissions.update')->middleware('can:permissions.edit');
-    Route::delete('permissoes/{role}', 'PermissionController@destroy')->name('permissions.destroy')->middleware('can:permissions.destroy');
+    Route::get('permissoes/{permission}', 'PermissionController@show')->name('permissions.show')->middleware('can:permissions.show');
+    Route::get('permissoes/{permission}/edit', 'PermissionController@edit')->name('permissions.edit')->middleware('can:permissions.edit');
+    Route::put('permissoes/{permission}', 'PermissionController@update')->name('permissions.update')->middleware('can:permissions.edit');
+    Route::delete('permissoes/{permission}', 'PermissionController@destroy')->name('permissions.destroy')->middleware('can:permissions.destroy');
+
+    /** Datatables */
+    Route::get('permissions_datatables', 'PermissionController@list');
 });

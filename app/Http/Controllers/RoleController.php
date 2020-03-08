@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Caffeinated\Shinobi\Models\Role;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class RoleController extends Controller
 {
@@ -14,6 +16,14 @@ class RoleController extends Controller
     public function index()
     {
         return view('admin.roles.index')->with('page', 'Papéis');
+    }
+
+    /** */
+    function list()
+    {
+        return DataTables::of(Role::all())
+            ->addColumn('action', 'admin.roles._actions')
+            ->make(true);
     }
 
     /**

@@ -10,7 +10,9 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'My Applications') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -21,23 +23,29 @@
                         <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
                         </li>
-                        @can('users.index')
-                        <li class="nav-item {{ request()->is('usuarios') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('users.index') }}">Usuários</a>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+
+                        @can('access.control')
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle {{ request()->is(['usuarios','papeis', 'permissoes']) ? 'active' : '' }}"
+                                href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+                                aria-expanded="false">
+                                Controle de Acesso
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item {{ request()->is('usuarios') ? 'active' : '' }}"
+                                    href="{{ route('users.index') }}">Usuários</a>
+                                <a class="dropdown-item {{ request()->is('papeis') ? 'active' : '' }}"
+                                    href="{{ route('roles.index') }}">Papéis</a>
+                                <a class="dropdown-item {{ request()->is('permissoes') ? 'active' : '' }}"
+                                    href="{{ route('permissions.index') }}">Permissões</a>
+                            </div>
                         </li>
                         @endcan
 
-                        @can('roles.index')
-                        <li class="nav-item {{ request()->is('papeis') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('roles.index') }}">Papéis</a>
-                        </li>
-                        @endcan
-
-                        @can('permissions.index')
-                        <li class="nav-item {{ request()->is('permissoes') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('permissions.index') }}">Permissões</a>
-                        </li>
-                        @endcan
                     </ul>
                     @endauth
 
@@ -55,8 +63,10 @@
                         @endif
                         @else
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <img src="img/default-150x150.png" width="25px" class="rounded-circle" data-holder-rendered="true" alt="User Image">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <!-- <img src="img/default-150x150.png" width="25px" class="rounded-circle"
+                                    data-holder-rendered="true" alt="User Image"> -->
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 
@@ -66,7 +76,8 @@
                                     {{ __('Logout') }}
                                 </a>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                    style="display: none;">
                                     @csrf
                                 </form>
                             </div>
