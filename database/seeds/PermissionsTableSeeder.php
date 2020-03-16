@@ -53,26 +53,21 @@ class PermissionsTableSeeder extends Seeder
         Permission::create([
             'name' => 'Visualizar detalhes de papéis',
             'slug' => 'roles.show',
-            'description' => 'Listar todos os papéis'
+            'description' => 'Ver detalhe dos papéis'
         ]);
 
         Permission::create([
             'name' => 'Atualizar papéis',
             'slug' => 'roles.edit',
-            'description' => 'Listar todos os papéis'
+            'description' => 'Editar os papéis'
         ]);
 
         Permission::create([
             'name' => 'Eliminar papéis',
             'slug' => 'roles.destroy',
-            'description' => 'Listar todos os papéis'
+            'description' => 'Deletar os papéis'
         ]);
 
-        Permission::create([
-            'name' => 'Dashboard',
-            'slug' => 'users.dashboard',
-            'description' => 'Exibir o dashboard padrão para os usuáris não administradores'
-        ]);
 
         /** Permissions */
         Permission::create([
@@ -103,6 +98,18 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'Eliminar papéis',
             'slug' => 'permissions.destroy',
             'description' => 'Apagar permissões do sistema'
+        ]);
+
+        Permission::create([
+            'name' => 'Controle de Acesso',
+            'slug' => 'access.control',
+            'description' => 'Acesso aos módulos de usuários, papeis e permissões.'
+        ]);
+
+        Permission::create([
+            'name' => 'Dashboard',
+            'slug' => 'users.dashboard',
+            'description' => 'Exibir o dashboard padrão para os usuários'
         ]);
     }
 }

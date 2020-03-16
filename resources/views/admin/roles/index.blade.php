@@ -26,7 +26,7 @@
     </div>
 </section>
 
-@include('admin._modals.roles.create')
+@include('admin.roles.create')
 
 @endsection
 
@@ -67,13 +67,5 @@
             },
         });
     });
-
-    /** SAVE ROLE */
-    $(function () {
-        $('#save-role').click(function () {
-            alert('Salvando ...');
-        });
-    });
-
 </script>
 @stop

@@ -28,7 +28,7 @@ Route::middleware(['auth'])->group(function () {
     // Users
     Route::get('usuarios', 'UserController@index')->name('users.index')->middleware('can:users.index');
     Route::get('usuarios/create', 'UserController@create')->name('users.create')->middleware('can:users.create');
-    Route::post('usuarios', 'UserController@store')->name('users.store')->middleware('can:users.create');
+    Route::post('usuarios', 'UserController@store')->name('users.store');
     Route::get('usuarios/{user}', 'UserController@show')->name('users.show')->middleware('can:users.show');
     Route::get('usuarios/{user}/edit', 'UserController@edit')->name('users.edit')->middleware('can:users.edit');
     Route::put('usuarios/{user}', 'UserController@update')->name('users.update')->middleware('can:users.edit');
@@ -52,7 +52,7 @@ Route::middleware(['auth'])->group(function () {
     // Permissions
     Route::get('permissoes', 'PermissionController@index')->name('permissions.index')->middleware('can:permissions.index');
     Route::get('permissoes/create', 'PermissionController@create')->name('permissions.create')->middleware('can:permissions.create');
-    Route::post('permissoes', 'PermissionController@create')->name('permissions.create')->middleware('can:permissions.create');
+    Route::post('permissoes', 'PermissionController@store')->name('permissions.store');
     Route::get('permissoes/{permission}', 'PermissionController@show')->name('permissions.show')->middleware('can:permissions.show');
     Route::get('permissoes/{permission}/edit', 'PermissionController@edit')->name('permissions.edit')->middleware('can:permissions.edit');
     Route::put('permissoes/{permission}', 'PermissionController@update')->name('permissions.update')->middleware('can:permissions.edit');

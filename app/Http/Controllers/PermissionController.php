@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Caffeinated\Shinobi\Models\Permission;
 use Illuminate\Http\Request;
+use App\Http\Requests\PermissionCreateRequest;
+use App\Http\Requests\PermissionUpdateRequest;
 use Yajra\DataTables\DataTables;
+use Caffeinated\Shinobi\Models\Permission;
 
 class PermissionController extends Controller
 {
@@ -42,9 +44,10 @@ class PermissionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PermissionCreateRequest $request)
     {
-        //
+        Permission::create($request->all());
+        return response()->json(['success' => 'Permissão cadastrada com sucesso!']);
     }
 
     /**
@@ -66,7 +69,7 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        //
+        return $permission = Permission::find($id);
     }
 
     /**
@@ -76,9 +79,12 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PermissionUpdateRequest $request, $id)
     {
-        //
+        $permission = Permission::find($id);
+        $permission->update($request->all());
+
+        return response()->json(['success' => 'Permissão atualizada com sucesso!']);
     }
 
     /**
@@ -89,6 +95,9 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $permission = Permission::find($id);
+        $permission->delete();
+
+        return response()->json([]);
     }
 }

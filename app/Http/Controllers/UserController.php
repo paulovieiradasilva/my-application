@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use App\Http\Requests\UserCreateRequest;
 
 class UserController extends Controller
 {
@@ -42,9 +43,11 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserCreateRequest $request)
     {
-        //
+        User::create($request->all());
+
+        return response()->json(['success' => 'Usuário cadastrado com sucesso!']);
     }
 
     /**
@@ -66,7 +69,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        return $user = User::find($id);
     }
 
     /**
@@ -78,7 +81,11 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+
+        $user->update($request->all());
+
+        return response()->json(['success' => 'Usuário atualizado com sucesso!']);
     }
 
     /**
@@ -89,6 +96,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+
+        return response()->json([]);
     }
 }

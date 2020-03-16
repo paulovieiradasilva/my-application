@@ -16,7 +16,7 @@
             </div>
             <div class="modal-body">
                 <form>
-                    @include('admin._modals.roles._fields')
+                    @include('admin.roles._fields')
             </div>
             <div class="modal-footer">
                 <button type="button" id="save-role" class="btn btn-primary">Save changes</button>
