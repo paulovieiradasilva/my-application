@@ -100,6 +100,9 @@
                     $('#modalFormCreate').modal('hide');
                     $('#users_table').DataTable().ajax.reload();
                 },
+                complete: function (data) {
+                    toastr.success(data.responseJSON.msg);
+                },
                 error: function (data) {
                     /** Criar as validações dos inputs para erros */
                     $('#name').addClass('is-invalid');
@@ -116,6 +119,7 @@
             event.preventDefault();
 
             let id = $(this).data('id');
+            console.log('Incicial:' + id);
 
             $('#send').removeClass('save');
             $('#send').addClass('edit');
@@ -134,7 +138,7 @@
                 event.preventDefault();
 
                 $.ajax({
-                    url: "usuarios/" + id,
+                    url: "{{ route('users.index') }}" + '/' + id,
                     type: 'PUT',
                     dataType: 'json',
                     data: $('#formUser').serialize(),
@@ -143,7 +147,10 @@
                         $('#modalFormCreate').modal('hide');
                         $('#users_table').DataTable().ajax.reload();
                     },
-                    error: function (data) {
+                    complete: function (data) {
+                        toastr.success(data.responseJSON.msg);
+                    },
+                    error: function (data) {                        
                         /** Criar as validações dos inputs para erros */
                         if ($('#name').val() == "") {
                             $('#name').addClass('is-invalid');
@@ -153,9 +160,10 @@
                             $('#email').addClass('is-invalid');
                             $('#email-feedback').html(data.responseJSON.errors.email);
                         }
-
                     }
                 });
+
+                console.log('Final: ' + id);
 
             });
         });
@@ -193,6 +201,9 @@
                     success: function (data) {
                         $('#users_table').DataTable().ajax.reload();
                         $('#deleteModalCenter').modal('hide');
+                    },
+                    complete: function (data) {
+                        toastr.success(data.responseJSON.msg);
                     },
                     error: function (data) {
                         /** Criar as validações dos inputs para erros */

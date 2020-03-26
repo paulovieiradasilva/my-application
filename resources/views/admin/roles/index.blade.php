@@ -117,6 +117,9 @@
                 $('#modalFormCreate').modal('hide');
                 $('#roles_table').DataTable().ajax.reload();
             },
+            complete: function (data) {
+                toastr.success(data.responseJSON.msg);
+            },
             error: function (data) {
                 /** Criar as validações dos inputs para erros */
                 $('#name').addClass('is-invalid');
@@ -169,6 +172,9 @@
                     $('#modalFormCreate').modal('hide');
                     $('#roles_table').DataTable().ajax.reload();
                 },
+                complete: function (data) {
+                    toastr.success(data.responseJSON.msg);
+                },
                 error: function (data) {
                     /** Criar as validações dos inputs para erros */
                     if ($('#name').val() == "") {
@@ -218,6 +224,9 @@
                 success: function (data) {
                     $('#roles_table').DataTable().ajax.reload();
                     $('#deleteModalCenter').modal('hide');
+                },
+                complete: function (data) {
+                    toastr.success(data.responseJSON.msg);
                 },
                 error: function (data) {
                     /** Criar as validações dos inputs para erros */

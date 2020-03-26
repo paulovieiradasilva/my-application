@@ -53,7 +53,7 @@ class PermissionController extends Controller
     public function store(PermissionCreateRequest $request)
     {
         Permission::create($request->all());
-        return response()->json(['success' => 'Permissão cadastrada com sucesso!']);
+        return response()->json(['msg' => 'Permissão cadastrada com sucesso!']);
     }
 
     /**
@@ -90,7 +90,7 @@ class PermissionController extends Controller
         $permission = Permission::find($id);
         $permission->update($request->all());
 
-        return response()->json(['success' => 'Permissão atualizada com sucesso!']);
+        return response()->json(['msg' => 'Permissão atualizada com sucesso!']);
     }
 
     /**
@@ -104,6 +104,6 @@ class PermissionController extends Controller
         $permission = Permission::find($id);
         $permission->delete();
 
-        return response()->json([]);
+        return response()->json(['msg' => 'Permissão deletada com sucesso!']);
     }
 }

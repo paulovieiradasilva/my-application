@@ -97,10 +97,13 @@
                 type: 'POST',
                 dataType: 'json',
                 data: $('#formPermission').serialize(),
-                success: function (data) {
+                success: function (data) {                    
                     $('#formPermission').trigger('reset');
                     $('#modalFormCreate').modal('hide');
                     $('#permissions_table').DataTable().ajax.reload();
+                },
+                complete: function (data) {
+                    toastr.success(data.responseJSON.msg);
                 },
                 error: function (data) {
                     /** Criar as validações dos inputs para erros */
@@ -146,6 +149,9 @@
                         $('#formPermission').trigger('reset');
                         $('#modalFormCreate').modal('hide');
                         $('#permissions_table').DataTable().ajax.reload();
+                    },
+                    complete: function (data) {
+                        toastr.success(data.responseJSON.msg);
                     },
                     error: function (data) {
                         /** Criar as validações dos inputs para erros */
@@ -196,6 +202,9 @@
                     success: function (data) {
                         $('#permissions_table').DataTable().ajax.reload();
                         $('#deleteModalCenter').modal('hide');
+                    },
+                    complete: function (data) {
+                        toastr.success(data.responseJSON.msg);
                     },
                     error: function (data) {
                         /** Criar as validações dos inputs para erros */
