@@ -61,7 +61,6 @@
                 action: function () {
                     $('#modalTitle').html('Nova permissão');
                     $('#send').html('Cadastrar');
-                    $('#id').val('');
                     $('#send').removeClass('edit');
                     $('#send').addClass('save');
                     $('#formPermission').trigger('reset');

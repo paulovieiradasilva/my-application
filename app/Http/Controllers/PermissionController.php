@@ -21,11 +21,17 @@ class PermissionController extends Controller
     }
 
     /** */
-    function list()
+    public function list()
     {
         return DataTables::of(Permission::all())
             ->addColumn('action', 'admin.permissions._actions')
             ->make(true);
+    }
+
+    /** */
+    public function get()
+    {
+        return $permissions = Permission::all();
     }
 
     /**

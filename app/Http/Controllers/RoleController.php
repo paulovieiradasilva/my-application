@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Caffeinated\Shinobi\Models\Role;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Caffeinated\Shinobi\Models\Role;
+use App\Http\Requests\RoleCreateRequest;
+use App\Http\Requests\RoleUpdateRequest;
 
 class RoleController extends Controller
 {
@@ -19,7 +21,7 @@ class RoleController extends Controller
     }
 
     /** */
-    function list()
+    public function list()
     {
         return DataTables::of(Role::all())
             ->addColumn('action', 'admin.roles._actions')
@@ -42,9 +44,12 @@ class RoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoleCreateRequest $request)
     {
-        //
+        $role = Role::create($request->all());
+        $role->permissions()->sync($request->get('permissions'));
+
+        return response()->json(['success' => 'Papél cadastrado com sucesso!']);
     }
 
     /**
@@ -66,7 +71,10 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $roles = Role::find($id);
+        $roles->permissions;
+
+        return $roles;
     }
 
     /**
@@ -76,9 +84,14 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RoleUpdateRequest $request, $id)
     {
-        //
+        $role = Role::find($id);
+        $role->update($request->all());
+
+        $role->permissions()->sync($request->get('permissions'));
+
+        return response()->json(['success' => 'Papél atualizado com sucesso!']);
     }
 
     /**
@@ -89,6 +102,9 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $role = Role::find($id);
+        $role->delete();
+
+        return response()->json([]);
     }
 }

@@ -40,10 +40,10 @@ Route::middleware(['auth'])->group(function () {
     // Roles
     Route::get('papeis', 'RoleController@index')->name('roles.index')->middleware('can:roles.index');
     Route::get('papeis/create', 'RoleController@create')->name('roles.create')->middleware('can:roles.create');
-    Route::post('papeis', 'RoleController@create')->name('roles.create')->middleware('can:roles.create');
+    Route::post('papeis', 'RoleController@store')->name('roles.store');
     Route::get('papeis/{role}', 'RoleController@show')->name('roles.show')->middleware('can:roles.show');
     Route::get('papeis/{role}/edit', 'RoleController@edit')->name('roles.edit')->middleware('can:roles.edit');
-    Route::put('papeis/{role}', 'RoleController@update')->name('roles.update')->middleware('can:roles.edit');
+    Route::put('papeis/{role}', 'RoleController@update')->name('roles.update');
     Route::delete('papeis/{role}', 'RoleController@destroy')->name('roles.destroy')->middleware('can:roles.destroy');
 
     /** Datatables */
@@ -60,4 +60,5 @@ Route::middleware(['auth'])->group(function () {
 
     /** Datatables */
     Route::get('permissions_datatables', 'PermissionController@list');
+    Route::get('permissions', 'PermissionController@get');
 });

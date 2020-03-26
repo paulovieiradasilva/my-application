@@ -20,7 +20,7 @@ class UserController extends Controller
     }
 
     /** */
-    function list()
+    public function list()
     {
         return DataTables::of(User::all())
             ->addColumn('action', 'admin.users._actions')

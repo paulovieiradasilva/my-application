@@ -7,7 +7,7 @@
                 <!-- <div class="card-header"></div> -->
                 <div id="buttons"></div>
                 <div class="card-body">
-                    <table id="roles" class="table table-hover table-sm">
+                    <table id="roles_table" class="table table-hover table-sm">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -26,14 +26,14 @@
     </div>
 </section>
 
-@include('admin.roles.create')
+@include('admin.roles.form')
 
 @endsection
 
 @section('scripts')
 <script>
     $(document).ready(function () {
-        $('#roles').DataTable({
+        $('#roles_table').DataTable({
             processing: true,
             serverSide: true,
             ajax: "{{ url('roles_datatables') }}",
@@ -58,13 +58,171 @@
             {
                 text: 'Novo',
                 action: function (e, dt, node, config) {
-                    $('#my-modal-show').click();
+                    $('#modalTitle').html('Novo papél');
+                    $('#send').html('Cadastrar');
+                    $('#send').removeClass('edit');
+                    $('#send').addClass('save');
+                    $('#formRole').trigger('reset');
+                    $('#modalFormCreate').modal('show');
                 }
             }
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Portuguese-Brasil.json"
             },
+        });
+    });
+
+    /** RESET MODAL VALIDATIONS */
+    $("#modalFormCreate").on("hide.bs.modal", function () {
+        $('#name').removeClass('is-invalid');
+        $('#slug').removeClass('is-invalid');
+        $('#send').removeClass('save');
+        $('#send').removeClass('edit');
+        $('#formRole').trigger('reset');
+        $('#select-permission').val(null).trigger('change');
+    });
+
+    /** SUBMIT FORM */
+    $('#formRole').on('submit', function (event) {
+        event.preventDefault();
+    });
+
+    /** LIST PERMISSIONS */
+    $(document).ready(function () {
+        $.ajax({
+            url: "{{ url('permissions') }}",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                $.each(data, function (i, d) {
+                    $('#select-permission').append('<option value="' + d.id + '">' + d.name + '</option>');
+                });
+            }
+        })
+    });
+
+    /** CREATE  */
+    $(document).on('click', '.save', function (event) {
+
+        event.preventDefault();
+
+        $.ajax({
+            url: "{{ route('roles.store') }}",
+            type: 'POST',
+            dataType: 'json',
+            data: $('#formRole').serialize(),
+            success: function (data) {
+                $('#formRole').trigger('reset');
+                $('#modalFormCreate').modal('hide');
+                $('#roles_table').DataTable().ajax.reload();
+            },
+            error: function (data) {
+                /** Criar as validações dos inputs para erros */
+                $('#name').addClass('is-invalid');
+                $('#name-feedback').html(data.responseJSON.errors.name);
+                $('#slug').addClass('is-invalid');
+                $('#slug-feedback').html(data.responseJSON.errors.slug);
+            }
+        });
+    });
+
+    /** EDIT  */
+    $(document).on('click', '#edit-item', function (event) {
+
+        event.preventDefault();
+
+        let id = $(this).data('id');
+
+        $('#send').removeClass('save');
+        $('#send').addClass('edit');
+
+        $.get("{{ route('roles.index') }}" + '/' + id + '/edit', function (data) {
+
+            let itens = [];
+            data.permissions.forEach(element => {
+                itens.push(element.id);
+            });
+
+            $('#modalTitle').html('Editar papél');
+            $('#send').html('Atualizar');
+            $('#modalFormCreate').modal('show');
+            $('#id').val(data.id);
+            $('#name').val(data.name);
+            $('#slug').val(data.slug);
+            $('#description').val(data.description);
+            $('#select-permission').val(itens).trigger('change');
+        });
+
+        /** SEND FORM UPDATE */
+        $('.edit').click(function (event) {
+
+            event.preventDefault();
+
+            $.ajax({
+                url: "papeis/" + id,
+                type: 'PUT',
+                dataType: 'json',
+                data: $('#formRole').serialize(),
+                success: function (data) {
+                    $('#formRole').trigger('reset');
+                    $('#modalFormCreate').modal('hide');
+                    $('#roles_table').DataTable().ajax.reload();
+                },
+                error: function (data) {
+                    /** Criar as validações dos inputs para erros */
+                    if ($('#name').val() == "") {
+                        $('#name').addClass('is-invalid');
+                        $('#name-feedback').html(data.responseJSON.errors.name);
+                    }
+                    if ($('#slug').val() == "") {
+                        $('#slug').addClass('is-invalid');
+                        $('#slug-feedback').html(data.responseJSON.errors.slug);
+                    }
+                }
+            });
+
+        });
+    });
+
+    /** DELETE  */
+    $(document).on('click', '#delete-item', function (event) {
+
+        event.preventDefault();
+
+        let id = $(this).data('id');
+
+        $('#deleteModalCenter').modal('show');
+        $('#deleteModalLongTitle').html('Confirmar exclusão');
+        $('#id-item').html(id);
+
+        /** SEND FORM DELETE */
+        $('#send-delete').click(function (event) {
+
+            event.preventDefault();
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": id
+                },
+                url: "papeis/" + id,
+                type: 'DELETE',
+                dataType: 'json',
+                success: function (data) {
+                    $('#roles_table').DataTable().ajax.reload();
+                    $('#deleteModalCenter').modal('hide');
+                },
+                error: function (data) {
+                    /** Criar as validações dos inputs para erros */
+                }
+            });
         });
     });
 </script>
