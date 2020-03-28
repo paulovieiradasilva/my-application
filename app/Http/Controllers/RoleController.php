@@ -28,6 +28,12 @@ class RoleController extends Controller
             ->make(true);
     }
 
+    /** */
+    public function get()
+    {
+        return $roles = Role::all();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -47,6 +53,7 @@ class RoleController extends Controller
     public function store(RoleCreateRequest $request)
     {
         $role = Role::create($request->all());
+
         $role->permissions()->sync($request->get('permissions'));
 
         return response()->json(['msg' => 'Papél cadastrado com sucesso!']);

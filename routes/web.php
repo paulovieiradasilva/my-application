@@ -31,7 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('usuarios', 'UserController@store')->name('users.store');
     Route::get('usuarios/{user}', 'UserController@show')->name('users.show')->middleware('can:users.show');
     Route::get('usuarios/{user}/edit', 'UserController@edit')->name('users.edit')->middleware('can:users.edit');
-    Route::put('usuarios/{user}', 'UserController@update')->name('users.update')->middleware('can:users.edit');
+    Route::patch('usuarios/{user}', 'UserController@update')->name('users.update')->middleware('can:users.edit');
     Route::delete('usuarios/{user}', 'UserController@destroy')->name('users.destroy')->middleware('can:users.destroy');
 
     /** Datatables */
@@ -48,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
 
     /** Datatables */
     Route::get('roles_datatables', 'RoleController@list');
+    Route::get('roles', 'RoleController@get');
 
     // Permissions
     Route::get('permissoes', 'PermissionController@index')->name('permissions.index')->middleware('can:permissions.index');

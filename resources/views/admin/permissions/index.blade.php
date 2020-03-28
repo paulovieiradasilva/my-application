@@ -59,6 +59,7 @@
             {
                 text: 'Novo',
                 action: function () {
+                    $('#id').val('');
                     $('#modalTitle').html('Nova permissão');
                     $('#send').html('Cadastrar');
                     $('#send').removeClass('edit');
@@ -75,6 +76,7 @@
 
         /** RESET MODAL VALIDATIONS */
         $("#modalFormCreate").on("hide.bs.modal", function () {
+            $('#id').val('');
             $('#formPermission').trigger('reset');
             $('#name').removeClass('is-invalid');
             $('#slug').removeClass('is-invalid');
@@ -93,6 +95,7 @@
                 dataType: 'json',
                 data: $('#formPermission').serialize(),
                 success: function (data) {
+                    $('#id').val('');
                     $('#formPermission').trigger('reset');
                     $('#modalFormCreate').modal('hide');
                     $('#permissions_table').DataTable().ajax.reload(null, false);
@@ -200,6 +203,7 @@
                     type: 'DELETE',
                     dataType: 'json',
                     success: function (data) {
+                        $('#id').val('');
                         $('#permissions_table').DataTable().ajax.reload(null, false);
                         $('#deleteModalCenter').modal('hide');
                         toastr.success(data.msg);

@@ -58,6 +58,7 @@
             {
                 text: 'Novo',
                 action: function () {
+                    $('#id').val('');
                     $('#modalTitle').html('Novo usuário');
                     $('#send').html('Cadastrar');
                     $('#send').removeClass('edit');
@@ -74,6 +75,7 @@
 
         /** RESET MODAL VALIDATIONS */
         $("#modalFormCreate").on("hide.bs.modal", function () {
+            $('#id').val('');
             $('#formUser').trigger('reset');
             $('#name').removeClass('is-invalid');
             $('#email').removeClass('is-invalid');
@@ -81,6 +83,21 @@
             $('#password-confirm').removeClass('is-invalid');
             $('#send').removeClass('save');
             $('#send').removeClass('edit');
+            $('#select-role').val(null).trigger('change');
+        });
+
+        /** LIST ROLES */
+        $(document).ready(function () {
+            $.ajax({
+                url: "{{ url('roles') }}",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    $.each(data, function (i, d) {
+                        $('#select-role').append('<option value="' + d.id + '">' + d.name + '</option>');
+                    });
+                }
+            })
         });
 
         /** CREATE  */
@@ -94,6 +111,7 @@
                 dataType: 'json',
                 data: $('#formUser').serialize(),
                 success: function (data) {
+                    $('#id').val('');
                     $('#formUser').trigger('reset');
                     $('#modalFormCreate').modal('hide');
                     $('#users_table').DataTable().ajax.reload(null, false);
@@ -135,12 +153,19 @@
             let id = $(this).data('id');
 
             $.get("{{ route('users.index') }}" + '/' + id + '/edit', function (data) {
+
+                let itens = [];
+                data.roles.forEach(element => {
+                    itens.push(element.id);
+                });
+
                 $('#modalTitle').html('Editar usuário');
                 $('#send').html('Atualizar');
                 $('#modalFormCreate').modal('show');
                 $('#id').val(data.id);
                 $('#name').val(data.name);
                 $('#email').val(data.email);
+                $('#select-role').val(itens).trigger('change');
             });
 
             /** SEND FORM UPDATE */
@@ -150,7 +175,7 @@
 
                 $.ajax({
                     url: "{{ route('users.index') }}" + '/' + id,
-                    type: 'PUT',
+                    type: 'PATCH',
                     dataType: 'json',
                     data: $('#formUser').serialize(),
                     success: function (data) {
@@ -171,6 +196,14 @@
                         if (data.responseJSON.errors.email) {
                             $('#email').addClass('is-invalid');
                             $('#email-feedback').html(data.responseJSON.errors.email);
+                        }
+                        if (data.responseJSON.errors.password) {
+                            $('#password').addClass('is-invalid');
+                            $('#password-feedback').html(data.responseJSON.errors.password);
+                        }
+                        if (data.responseJSON.errors.password) {
+                            $('#password-confirm').addClass('is-invalid');
+                            $('#password-confirm-feedback').html(data.responseJSON.errors.password);
                         }
                     }
                 });
@@ -204,10 +237,11 @@
                         "_token": "{{ csrf_token() }}",
                         "id": id
                     },
-                    url: "usuarios/" + id,
+                    url: "{{ route('users.index') }}" + '/' +  id,
                     type: 'DELETE',
                     dataType: 'json',
                     success: function (data) {
+                        $('#id').val('');
                         $('#users_table').DataTable().ajax.reload(null, false);
                         $('#deleteModalCenter').modal('hide');
                         toastr.success(data.msg);

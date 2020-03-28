@@ -46,7 +46,9 @@ class UserController extends Controller
      */
     public function store(UserCreateRequest $request)
     {
-        User::create($request->all());
+        $user = User::create($request->all());
+
+        $user->roles()->sync($request->get('roles'));
 
         return response()->json(['msg' => 'Usuário cadastrado com sucesso!']);
     }
@@ -70,7 +72,10 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        return $user = User::find($id);
+        $user = User::find($id);
+        $user->roles;
+
+        return $user;
     }
 
     /**
@@ -84,7 +89,9 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        $user->update($request->all());
+        $user->update($request->validated());
+
+        $user->roles()->sync($request->get('roles'));
 
         return response()->json(['msg' => 'Usuário atualizado com sucesso!']);
     }

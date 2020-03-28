@@ -58,6 +58,7 @@
             {
                 text: 'Novo',
                 action: function (e, dt, node, config) {
+                    $('#id').val('');
                     $('#modalTitle').html('Novo papél');
                     $('#send').html('Cadastrar');
                     $('#send').removeClass('edit');
@@ -75,11 +76,12 @@
 
     /** RESET MODAL VALIDATIONS */
     $("#modalFormCreate").on("hide.bs.modal", function () {
+        $('#id').val('');
+        $('#formRole').trigger('reset');
         $('#name').removeClass('is-invalid');
         $('#slug').removeClass('is-invalid');
         $('#send').removeClass('save');
         $('#send').removeClass('edit');
-        $('#formRole').trigger('reset');
         $('#select-permission').val(null).trigger('change');
     });
 
@@ -108,6 +110,7 @@
             dataType: 'json',
             data: $('#formRole').serialize(),
             success: function (data) {
+                $('#id').val('');
                 $('#formRole').trigger('reset');
                 $('#modalFormCreate').modal('hide');
                 $('#roles_table').DataTable().ajax.reload(null, false);
@@ -222,6 +225,7 @@
                 type: 'DELETE',
                 dataType: 'json',
                 success: function (data) {
+                    $('#id').val('');
                     $('#roles_table').DataTable().ajax.reload(null, false);
                     $('#deleteModalCenter').modal('hide');
                     toastr.success(data.msg);
