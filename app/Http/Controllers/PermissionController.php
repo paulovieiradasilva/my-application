@@ -23,7 +23,7 @@ class PermissionController extends Controller
     /** */
     public function list()
     {
-        return DataTables::of(Permission::all())
+        return DataTables::of(Permission::select(['id', 'name', 'slug', 'description', 'created_at', 'updated_at']))
             ->addColumn('action', 'admin.permissions._actions')
             ->make(true);
     }

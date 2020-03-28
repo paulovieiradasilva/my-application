@@ -75,11 +75,11 @@
 
         /** RESET MODAL VALIDATIONS */
         $("#modalFormCreate").on("hide.bs.modal", function () {
+            $('#formPermission').trigger('reset');
             $('#name').removeClass('is-invalid');
             $('#slug').removeClass('is-invalid');
             $('#send').removeClass('save');
             $('#send').removeClass('edit');
-            $('#formPermission').trigger('reset');
         });
 
         /** CREATE  */
@@ -96,16 +96,20 @@
                     $('#formPermission').trigger('reset');
                     $('#modalFormCreate').modal('hide');
                     $('#permissions_table').DataTable().ajax.reload(null, false);
+                    toastr.success(data.msg);
                 },
                 complete: function (data) {
-                    toastr.success(data.responseJSON.msg);
                 },
                 error: function (data) {
                     /** Criar as validações dos inputs para erros */
-                    $('#name').addClass('is-invalid');
-                    $('#name-feedback').html(data.responseJSON.errors.name);
-                    $('#slug').addClass('is-invalid');
-                    $('#slug-feedback').html(data.responseJSON.errors.slug);
+                    if (data.responseJSON.errors.name) {
+                        $('#name').addClass('is-invalid');
+                        $('#name-feedback').html(data.responseJSON.errors.name);
+                    }
+                    if (data.responseJSON.errors.slug) {
+                        $('#slug').addClass('is-invalid');
+                        $('#slug-feedback').html(data.responseJSON.errors.slug);
+                    }
                 }
             });
         });

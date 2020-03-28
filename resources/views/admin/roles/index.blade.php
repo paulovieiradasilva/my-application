@@ -117,10 +117,14 @@
             },
             error: function (data) {
                 /** Criar as validações dos inputs para erros */
-                $('#name').addClass('is-invalid');
-                $('#name-feedback').html(data.responseJSON.errors.name);
-                $('#slug').addClass('is-invalid');
-                $('#slug-feedback').html(data.responseJSON.errors.slug);
+                if (data.responseJSON.errors.name) {
+                    $('#name').addClass('is-invalid');
+                    $('#name-feedback').html(data.responseJSON.errors.name);
+                }
+                if (data.responseJSON.errors.slug) {
+                    $('#slug').addClass('is-invalid');
+                    $('#slug-feedback').html(data.responseJSON.errors.slug);
+                }
             }
         });
     });
@@ -173,11 +177,11 @@
                 },
                 error: function (data) {
                     /** Criar as validações dos inputs para erros */
-                    if ($('#name').val() == "") {
+                    if (data.responseJSON.errors.name) {
                         $('#name').addClass('is-invalid');
                         $('#name-feedback').html(data.responseJSON.errors.name);
                     }
-                    if ($('#slug').val() == "") {
+                    if (data.responseJSON.errors.slug) {
                         $('#slug').addClass('is-invalid');
                         $('#slug-feedback').html(data.responseJSON.errors.slug);
                     }
