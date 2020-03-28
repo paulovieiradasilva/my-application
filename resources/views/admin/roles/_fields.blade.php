@@ -1,3 +1,5 @@
+<input type="hidden" name="id" id="id">
+
 <div class="form-group row">
     <label for="name" class="col-sm-2 col-form-label">Nome</label>
     <div class="col-sm-10">
@@ -5,6 +7,7 @@
         <div id="name-feedback" class="invalid-feedback"></div>
     </div>
 </div>
+
 <div class="form-group row">
     <label for="slug" class="col-sm-2 col-form-label">Slug</label>
     <div class="col-sm-10">
@@ -12,12 +15,14 @@
         <div id="slug-feedback" class="invalid-feedback"></div>
     </div>
 </div>
+
 <div class="form-group row">
     <label for="description" class="col-sm-2 col-form-label">Descrição</label>
     <div class="col-sm-10">
         <textarea class="form-control" name="description" id="description" rows="3" placeholder="Descrição"></textarea>
     </div>
 </div>
+
 <div class="form-group row">
     <label for="description" class="col-sm-2 col-form-label">Permissões</label>
     <div class="col-sm-10">

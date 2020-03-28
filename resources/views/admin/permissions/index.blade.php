@@ -82,11 +82,6 @@
             $('#formPermission').trigger('reset');
         });
 
-        /** SUBMIT FORM */
-        $('#formPermission').on('submit', function (event) {
-            event.preventDefault();
-        });
-
         /** CREATE  */
         $(document).on('click', '.save', function (event) {
 
@@ -97,10 +92,10 @@
                 type: 'POST',
                 dataType: 'json',
                 data: $('#formPermission').serialize(),
-                success: function (data) {                    
+                success: function (data) {
                     $('#formPermission').trigger('reset');
                     $('#modalFormCreate').modal('hide');
-                    $('#permissions_table').DataTable().ajax.reload();
+                    $('#permissions_table').DataTable().ajax.reload(null, false);
                 },
                 complete: function (data) {
                     toastr.success(data.responseJSON.msg);
@@ -136,22 +131,23 @@
             });
 
             /** SEND FORM UPDATE */
-            $('.edit').click(function (event) {
+            $('.edit').unbind().bind('click', function (event) {
 
                 event.preventDefault();
 
                 $.ajax({
-                    url: "permissoes/" + id,
+                    url: "{{ route('permissions.index') }}" + '/' + id,
                     type: 'PUT',
                     dataType: 'json',
                     data: $('#formPermission').serialize(),
                     success: function (data) {
+                        $('#id').val('');
                         $('#formPermission').trigger('reset');
                         $('#modalFormCreate').modal('hide');
-                        $('#permissions_table').DataTable().ajax.reload();
+                        $('#permissions_table').DataTable().ajax.reload(null, false);
+                        toastr.success(data.msg);
                     },
                     complete: function (data) {
-                        toastr.success(data.responseJSON.msg);
                     },
                     error: function (data) {
                         /** Criar as validações dos inputs para erros */
@@ -181,7 +177,7 @@
             $('#id-item').html(id);
 
             /** SEND FORM DELETE */
-            $('#send-delete').click(function (event) {
+            $('#send-delete').unbind().bind('click', function (event) {
 
                 event.preventDefault();
 
@@ -196,15 +192,15 @@
                         "_token": "{{ csrf_token() }}",
                         "id": id
                     },
-                    url: "permissoes/" + id,
+                    url: "{{ route('permissions.index') }}" + '/' + id,
                     type: 'DELETE',
                     dataType: 'json',
                     success: function (data) {
-                        $('#permissions_table').DataTable().ajax.reload();
+                        $('#permissions_table').DataTable().ajax.reload(null, false);
                         $('#deleteModalCenter').modal('hide');
+                        toastr.success(data.msg);
                     },
                     complete: function (data) {
-                        toastr.success(data.responseJSON.msg);
                     },
                     error: function (data) {
                         /** Criar as validações dos inputs para erros */

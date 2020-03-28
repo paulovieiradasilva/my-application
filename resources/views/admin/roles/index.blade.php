@@ -83,11 +83,6 @@
         $('#select-permission').val(null).trigger('change');
     });
 
-    /** SUBMIT FORM */
-    $('#formRole').on('submit', function (event) {
-        event.preventDefault();
-    });
-
     /** LIST PERMISSIONS */
     $(document).ready(function () {
         $.ajax({
@@ -115,10 +110,10 @@
             success: function (data) {
                 $('#formRole').trigger('reset');
                 $('#modalFormCreate').modal('hide');
-                $('#roles_table').DataTable().ajax.reload();
+                $('#roles_table').DataTable().ajax.reload(null, false);
+                toastr.success(data.msg);
             },
             complete: function (data) {
-                toastr.success(data.responseJSON.msg);
             },
             error: function (data) {
                 /** Criar as validações dos inputs para erros */
@@ -158,22 +153,23 @@
         });
 
         /** SEND FORM UPDATE */
-        $('.edit').click(function (event) {
+        $('.edit').unbind().bind('click', function (event) {
 
             event.preventDefault();
 
             $.ajax({
-                url: "papeis/" + id,
+                url: "{{ route('roles.index') }}" + '/' + id,
                 type: 'PUT',
                 dataType: 'json',
                 data: $('#formRole').serialize(),
                 success: function (data) {
+                    $('#id').val('');
                     $('#formRole').trigger('reset');
                     $('#modalFormCreate').modal('hide');
-                    $('#roles_table').DataTable().ajax.reload();
+                    $('#roles_table').DataTable().ajax.reload(null, false);
+                    toastr.success(data.msg);
                 },
                 complete: function (data) {
-                    toastr.success(data.responseJSON.msg);
                 },
                 error: function (data) {
                     /** Criar as validações dos inputs para erros */
@@ -203,7 +199,7 @@
         $('#id-item').html(id);
 
         /** SEND FORM DELETE */
-        $('#send-delete').click(function (event) {
+        $('#send-delete').unbind().bind('click', function (event) {
 
             event.preventDefault();
 
@@ -218,15 +214,15 @@
                     "_token": "{{ csrf_token() }}",
                     "id": id
                 },
-                url: "papeis/" + id,
+                url: "{{ route('roles.index') }}" + '/' + id,
                 type: 'DELETE',
                 dataType: 'json',
                 success: function (data) {
-                    $('#roles_table').DataTable().ajax.reload();
+                    $('#roles_table').DataTable().ajax.reload(null, false);
                     $('#deleteModalCenter').modal('hide');
+                    toastr.success(data.msg);
                 },
                 complete: function (data) {
-                    toastr.success(data.responseJSON.msg);
                 },
                 error: function (data) {
                     /** Criar as validações dos inputs para erros */

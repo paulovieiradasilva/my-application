@@ -36,6 +36,7 @@
             processing: true,
             serverSide: true,
             ajax: "{{ url('users_datatables') }}",
+            pagingType: "simple_numbers",
             columns: [
                 { data: 'id' },
                 { data: 'name' },
@@ -73,16 +74,13 @@
 
         /** RESET MODAL VALIDATIONS */
         $("#modalFormCreate").on("hide.bs.modal", function () {
+            $('#formUser').trigger('reset');
             $('#name').removeClass('is-invalid');
             $('#email').removeClass('is-invalid');
+            $('#password').removeClass('is-invalid');
+            $('#password-confirm').removeClass('is-invalid');
             $('#send').removeClass('save');
             $('#send').removeClass('edit');
-            $('#formUser').trigger('reset');
-        });
-
-        /** SUBMIT FORM */
-        $('#formUser').on('submit', function (event) {
-            event.preventDefault();
         });
 
         /** CREATE  */
@@ -98,17 +96,30 @@
                 success: function (data) {
                     $('#formUser').trigger('reset');
                     $('#modalFormCreate').modal('hide');
-                    $('#users_table').DataTable().ajax.reload();
+                    $('#users_table').DataTable().ajax.reload(null, false);
+                    toastr.success(data.msg);
                 },
                 complete: function (data) {
-                    toastr.success(data.responseJSON.msg);
                 },
                 error: function (data) {
+
                     /** Criar as validações dos inputs para erros */
-                    $('#name').addClass('is-invalid');
-                    $('#name-feedback').html(data.responseJSON.errors.name);
-                    $('#email').addClass('is-invalid');
-                    $('#email-feedback').html(data.responseJSON.errors.email);
+                    if (data.responseJSON.errors.name) {
+                        $('#name').addClass('is-invalid');
+                        $('#name-feedback').html(data.responseJSON.errors.name);
+                    }
+                    if (data.responseJSON.errors.email) {
+                        $('#email').addClass('is-invalid');
+                        $('#email-feedback').html(data.responseJSON.errors.email);
+                    }
+                    if (data.responseJSON.errors.password) {
+                        $('#password').addClass('is-invalid');
+                        $('#password-feedback').html(data.responseJSON.errors.password);
+                    }
+                    if (data.responseJSON.errors.password) {
+                        $('#password-confirm').addClass('is-invalid');
+                        $('#password-confirm-feedback').html(data.responseJSON.errors.password);
+                    }
                 }
             });
         });
@@ -118,22 +129,22 @@
 
             event.preventDefault();
 
-            let id = $(this).data('id');
-            console.log('Incicial:' + id);
-
             $('#send').removeClass('save');
             $('#send').addClass('edit');
+
+            let id = $(this).data('id');
 
             $.get("{{ route('users.index') }}" + '/' + id + '/edit', function (data) {
                 $('#modalTitle').html('Editar usuário');
                 $('#send').html('Atualizar');
                 $('#modalFormCreate').modal('show');
+                $('#id').val(data.id);
                 $('#name').val(data.name);
                 $('#email').val(data.email);
             });
 
             /** SEND FORM UPDATE */
-            $('.edit').click(function (event) {
+            $('.edit').unbind().bind('click', function (event) {
 
                 event.preventDefault();
 
@@ -143,28 +154,26 @@
                     dataType: 'json',
                     data: $('#formUser').serialize(),
                     success: function (data) {
+                        $('#id').val('');
                         $('#formUser').trigger('reset');
                         $('#modalFormCreate').modal('hide');
-                        $('#users_table').DataTable().ajax.reload();
+                        $('#users_table').DataTable().ajax.reload(null, false);
+                        toastr.success(data.msg);
                     },
                     complete: function (data) {
-                        toastr.success(data.responseJSON.msg);
                     },
-                    error: function (data) {                        
+                    error: function (data) {
                         /** Criar as validações dos inputs para erros */
-                        if ($('#name').val() == "") {
+                        if (data.responseJSON.errors.name) {
                             $('#name').addClass('is-invalid');
                             $('#name-feedback').html(data.responseJSON.errors.name);
                         }
-                        if ($('#email').val() == "") {
+                        if (data.responseJSON.errors.email) {
                             $('#email').addClass('is-invalid');
                             $('#email-feedback').html(data.responseJSON.errors.email);
                         }
                     }
                 });
-
-                console.log('Final: ' + id);
-
             });
         });
 
@@ -180,7 +189,7 @@
             $('#id-item').html(id);
 
             /** SEND FORM DELETE */
-            $('#send-delete').click(function (event) {
+            $('#send-delete').unbind().bind('click',function (event) {
 
                 event.preventDefault();
 
@@ -199,11 +208,11 @@
                     type: 'DELETE',
                     dataType: 'json',
                     success: function (data) {
-                        $('#users_table').DataTable().ajax.reload();
+                        $('#users_table').DataTable().ajax.reload(null, false);
                         $('#deleteModalCenter').modal('hide');
+                        toastr.success(data.msg);
                     },
                     complete: function (data) {
-                        toastr.success(data.responseJSON.msg);
                     },
                     error: function (data) {
                         /** Criar as validações dos inputs para erros */

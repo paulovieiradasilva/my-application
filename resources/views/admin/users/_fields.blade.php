@@ -1,3 +1,5 @@
+<input type="hidden" name="id" id="id">
+
 <div class="form-group row">
     <label for="name" class="col-sm-2 col-form-label">Nome</label>
     <div class="col-sm-10">
@@ -5,6 +7,7 @@
         <div id="name-feedback" class="invalid-feedback"></div>
     </div>
 </div>
+
 <div class="form-group row">
     <label for="slug" class="col-sm-2 col-form-label">E-mail</label>
     <div class="col-sm-10">
@@ -12,6 +15,7 @@
         <div id="email-feedback" class="invalid-feedback"></div>
     </div>
 </div>
+
 <div class="form-group row">
     <label for="slug" class="col-sm-2 col-form-label">Password</label>
     <div class="col-sm-10">
@@ -19,10 +23,11 @@
         <div id="password-feedback" class="invalid-feedback"></div>
     </div>
 </div>
+
 <div class="form-group row">
     <label for="slug" class="col-sm-2 col-form-label">Confirmar</label>
     <div class="col-sm-10">
-        <input type="password" name="password-confirm" id="password-confirm" class="form-control" placeholder="Confirmar">
+        <input type="password" name="password_confirmation" id="password-confirm" class="form-control" placeholder="Confirmar">
         <div id="password-confirm-feedback" class="invalid-feedback"></div>
     </div>
 </div>
