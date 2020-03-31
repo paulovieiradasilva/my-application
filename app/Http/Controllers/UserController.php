@@ -23,7 +23,7 @@ class UserController extends Controller
     /** */
     public function list()
     {
-        return DataTables::of(User::select(['id', 'name', 'email', 'created_at', 'updated_at']))
+        return DataTables::of(User::with(['roles'])->select(['id', 'name', 'email', 'created_at', 'updated_at']))
             ->addColumn('action', 'admin.users._actions')
             ->make(true);
     }
@@ -89,7 +89,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        $user->update($request->validated());
+        $user->update($request->all());
 
         $user->roles()->sync($request->get('roles'));
 

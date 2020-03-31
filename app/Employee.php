@@ -11,7 +11,15 @@ class Employee extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'type', 'tower_id'];
+
+    /**
+     * Get the tower of the employee.
+     */
+    public function tower()
+    {
+        return $this->belongsTo(Tower::class);
+    }
 
     /**
      * Get all of the contacts for the employee.

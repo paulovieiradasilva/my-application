@@ -11,7 +11,7 @@ class Provider extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'opening_hours', 'on_duty'];
 
     /**
      * Get all of the contacts for the employee.

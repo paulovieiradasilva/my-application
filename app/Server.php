@@ -11,7 +11,7 @@ class Server extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'ip', 'os', 'version_os', 'type', 'environment_id'];
 
     /**
      * Get the environment of the server.

@@ -11,6 +11,6 @@ class Environment extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
-    
+    protected $fillable = ['name', 'description'];
+
 }

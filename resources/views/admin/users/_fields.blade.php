@@ -25,7 +25,7 @@
     </div>
 </div>
 
-<div class="form-group row">
+<div class="form-group row password">
     <label for="slug" class="col-sm-2 col-form-label">Password</label>
     <div class="col-sm-10">
         <input type="password" name="password" id="password" class="form-control" placeholder="Password">
@@ -33,10 +33,10 @@
     </div>
 </div>
 
-<div class="form-group row">
+<div class="form-group row password-confirm">
     <label for="slug" class="col-sm-2 col-form-label">Confirmar</label>
     <div class="col-sm-10">
-        <input type="password" name="password_confirmation" id="password-confirm" class="form-control" placeholder="Confirmar">
+        <input type="password" name="password_confirmation" id="password-confirm" class="form-control" placeholder="Confirmar Password">
         <div id="password-confirm-feedback" class="invalid-feedback"></div>
     </div>
 </div>

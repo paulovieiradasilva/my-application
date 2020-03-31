@@ -46,6 +46,7 @@
                 { data: 'updated_at' },
                 { data: 'action' }
             ],
+            order: [[0, 'desc']],
             dom: "<'row'<'col-md-4'B><'col-md-5'l><'col-md-3'f>><'row'<'col-md-12'tr>><'row'<'col-md-3'i><'col-md-3'><'col-md-6'p>>",
             buttons: [{
                 extend: 'pdf',

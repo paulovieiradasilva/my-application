@@ -12,11 +12,11 @@ class User extends Authenticatable
     use Notifiable, HasRolesAndPermissions;
 
     /**
-     * The attributes that aren't mass assignable.
+     * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $guarded = [];
+    protected $fillable = ['name', 'email', 'password'];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -53,4 +53,26 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($password);
     }
+
+    /**
+     * Get the created at.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    /* public function getCreatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('d/m/Y H:i:s');
+    } */
+
+    /**
+     * Get the updated at.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    /* public function getUpdatedAtAttribute($value)
+    {
+        return Carbon::parse($value)->format('d/m/Y H:i:s');
+    } */
 }

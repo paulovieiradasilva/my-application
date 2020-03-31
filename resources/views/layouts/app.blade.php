@@ -20,13 +20,41 @@
                     <!-- Left Side Of Navbar -->
                     @auth
                     <ul class="navbar-nav mr-auto">
+                        @can('users.dashboard')
                         <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
                         </li>
+                        @endcan
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
+                        @can('providers.index')
+                        <li class="nav-item {{ request()->is('fornecedores') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('providers.index') }}">Fornecedores</a>
                         </li>
+                        @endcan
+
+                        @can('environments.index')
+                        <li class="nav-item {{ request()->is('ambientes') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('environments.index') }}">Ambientes</a>
+                        </li>
+                        @endcan
+
+                        @can('employees.index')
+                        <li class="nav-item {{ request()->is('funcionarios') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('employees.index') }}">Funcionarios</a>
+                        </li>
+                        @endcan
+
+                        @can('towers.index')
+                        <li class="nav-item {{ request()->is('torres') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('towers.index') }}">Torres</a>
+                        </li>
+                        @endcan
+
+                        @can('servers.index')
+                        <li class="nav-item {{ request()->is('servidores') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('servers.index') }}">Servidores</a>
+                        </li>
+                        @endcan
 
                         @can('access.control')
                         <li class="nav-item dropdown">

@@ -59,6 +59,8 @@
                 text: 'Novo',
                 action: function () {
                     $('#id').val('');
+                    $('.password').show(); // Mostrando o input PASSWORD
+                    $('.password-confirm').show(); // Mostrando o input PASSWORD CONFIRM
                     $('#modalTitle').html('Novo usuário');
                     $('#send').html('Cadastrar');
                     $('#send').removeClass('edit');
@@ -161,6 +163,8 @@
 
                 $('#modalTitle').html('Editar usuário');
                 $('#send').html('Atualizar');
+                $('.password').hide(); // Ocultando o input PASSWORD
+                $('.password-confirm').hide(); // Ocultando o input PASSWORD
                 $('#modalFormCreate').modal('show');
                 $('#id').val(data.id);
                 $('#name').val(data.name);
@@ -222,7 +226,7 @@
             $('#id-item').html(id);
 
             /** SEND FORM DELETE */
-            $('#send-delete').unbind().bind('click',function (event) {
+            $('#send-delete').unbind().bind('click', function (event) {
 
                 event.preventDefault();
 
@@ -237,7 +241,7 @@
                         "_token": "{{ csrf_token() }}",
                         "id": id
                     },
-                    url: "{{ route('users.index') }}" + '/' +  id,
+                    url: "{{ route('users.index') }}" + '/' + id,
                     type: 'DELETE',
                     dataType: 'json',
                     success: function (data) {
