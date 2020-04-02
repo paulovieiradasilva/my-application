@@ -11,8 +11,8 @@ class Contact extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
-    
+    protected $fillable = ['email', 'phone', 'cellphone', 'site'];
+
     /**
      * Get the parent of the contact record.
      */

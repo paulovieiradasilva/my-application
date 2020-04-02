@@ -94,8 +94,6 @@
             type: "GET",
             dataType: "json",
             success: function (data) {
-                console.log(data);
-
                 $.each(data, function (i, d) {
                     $('#select-tower').append('<option value="' + d.id + '">' + d.name + '</option>');
                 });
@@ -109,7 +107,7 @@
         event.preventDefault();
 
         $.ajax({
-            url: "{{ route('towers.store') }}",
+            url: "{{ route('employees.store') }}",
             type: 'POST',
             dataType: 'json',
             data: $('#formEmployee').serialize(),
@@ -118,7 +116,12 @@
                 $('#formEmployee').trigger('reset');
                 $('#modalFormCreate').modal('hide');
                 $('#employees_table').DataTable().ajax.reload(null, false);
-                toastr.success(data.msg);
+                if (data.success) {
+                    toastr.success(data.success);
+                }
+                if (data.error) {
+                    toastr.error(data.error);
+                }
             },
             complete: function (data) {
             },
@@ -144,12 +147,13 @@
 
         $.get("{{ route('employees.index') }}" + '/' + id + '/edit', function (data) {
 
-            console.log(data);
-
             $('#modalTitle').html('Editar funcionario');
             $('#send').html('Atualizar');
             $('#modalFormCreate').modal('show');
             $('#id').val(data.id);
+            $('#email').val(data.contacts[0].email);
+            $('#phone').val(data.contacts[0].phone);
+            $('#cellphone').val(data.contacts[0].cellphone);
             $('#name').val(data.name);
             $('#type').val(data.type);
             $('#select-tower').val(data.tower_id).trigger('change');
@@ -170,7 +174,12 @@
                     $('#formEmployee').trigger('reset');
                     $('#modalFormCreate').modal('hide');
                     $('#employees_table').DataTable().ajax.reload(null, false);
-                    toastr.success(data.msg);
+                    if (data.success) {
+                        toastr.success(data.success);
+                    }
+                    if (data.error) {
+                        toastr.error(data.error);
+                    }
                 },
                 complete: function (data) {
                 },
@@ -220,7 +229,12 @@
                     $('#id').val('');
                     $('#employees_table').DataTable().ajax.reload(null, false);
                     $('#deleteModalCenter').modal('hide');
-                    toastr.success(data.msg);
+                    if (data.success) {
+                        toastr.success(data.success);
+                    }
+                    if (data.error) {
+                        toastr.error(data.error);
+                    }
                 },
                 complete: function (data) {
                 },

@@ -102,7 +102,12 @@
                     $('#formProvider').trigger('reset');
                     $('#modalFormCreate').modal('hide');
                     $('#providers_table').DataTable().ajax.reload(null, false);
-                    toastr.success(data.msg);
+                    if (data.success) {
+                        toastr.success(data.success);
+                    }
+                    if (data.error) {
+                        toastr.error(data.error);
+                    }
                 },
                 complete: function (data) {
                 },
@@ -127,13 +132,16 @@
             $('#send').addClass('edit');
 
             $.get("{{ route('providers.index') }}" + '/' + id + '/edit', function (data) {
-                console.log(data);
 
                 $('#modalTitle').html('Editar permissão');
                 $('#send').html('Atualizar');
                 $('#modalFormCreate').modal('show');
                 $('#id').val(data.id);
                 $('#name').val(data.name);
+                $('#email').val(data.contacts[0].email);
+                $('#site').val(data.contacts[0].site);
+                $('#phone').val(data.contacts[0].phone);
+                $('#cellphone').val(data.contacts[0].cellphone);
                 $('#opening_hours').val(data.opening_hours);
                 $('#on_duty').val(data.on_duty);
                 $('#description').val(data.description);
@@ -154,7 +162,12 @@
                         $('#formProvider').trigger('reset');
                         $('#modalFormCreate').modal('hide');
                         $('#providers_table').DataTable().ajax.reload(null, false);
-                        toastr.success(data.msg);
+                        if (data.success) {
+                            toastr.success(data.success);
+                        }
+                        if (data.error) {
+                            toastr.error(data.error);
+                        }
                     },
                     complete: function (data) {
                     },
@@ -204,7 +217,12 @@
                         $('#id').val('');
                         $('#providers_table').DataTable().ajax.reload(null, false);
                         $('#deleteModalCenter').modal('hide');
-                        toastr.success(data.msg);
+                        if (data.success) {
+                            toastr.success(data.success);
+                        }
+                        if (data.error) {
+                            toastr.error(data.error);
+                        }
                     },
                     complete: function (data) {
                     },

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Provider;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ProviderCreateRequest;
 use App\Http\Requests\ProviderUpdateRequest;
 
@@ -23,7 +24,7 @@ class ProviderController extends Controller
     /** */
     public function list()
     {
-        return DataTables::of(Provider::select(['id', 'name', 'opening_hours', 'on_duty', 'description', 'created_at', 'updated_at']))
+        return DataTables::of(Provider::with(['contacts'])->select(['id', 'name', 'opening_hours', 'on_duty', 'description', 'created_at', 'updated_at']))
             ->addColumn('action', 'admin.providers._actions')
             ->make(true);
     }
@@ -46,9 +47,22 @@ class ProviderController extends Controller
      */
     public function store(ProviderCreateRequest $request)
     {
-        $provider = Provider::create($request->all());
+        try {
+            DB::beginTransaction();
 
-        return response()->json(['msg' => 'Fornecedor cadastrado com sucesso!']);
+            $provider = Provider::create($request->all());
+            $provider->contacts()->create($request->all());
+
+            DB::commit();
+
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json(['error' => 'Erro ao cadastrar fornecedor']);
+        }
+
+        return response()->json(['success' => 'Fornecedor cadastrado com sucesso!']);
+
     }
 
     /**
@@ -71,6 +85,7 @@ class ProviderController extends Controller
     public function edit($id)
     {
         $provider = Provider::find($id);
+        $provider->contacts;
 
         return $provider;
     }
@@ -84,11 +99,32 @@ class ProviderController extends Controller
      */
     public function update(ProviderUpdateRequest $request, $id)
     {
-        $provider = Provider::find($id);
+        try {
+            DB::beginTransaction();
 
-        $provider->update($request->all());
+            $provider = Provider::find($id);
+            $provider->update([
+                'name' => $request->name,
+                'opening_hours' => $request->opening_hours,
+                'on_duty' => $request->on_duty,
+                'description' => $request->description
+            ]);
+            $provider->contacts()->update([
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'cellphone' => $request->cellphone,
+                'site' => $request->site
+            ]);
 
-        return response()->json(['msg' => 'Fornecedor atualizado com sucesso!']);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json(['error' => 'Erro ao atualizar fornecedor']);
+        }
+
+        return response()->json(['success' => 'Fornecedor atualizado com sucesso!']);
+
     }
 
     /**
@@ -99,9 +135,21 @@ class ProviderController extends Controller
      */
     public function destroy($id)
     {
-        $provider = Provider::find($id);
-        $provider->delete();
+        try {
+            DB::beginTransaction();
 
-        return response()->json(['msg' => 'Fornecedor deletado com sucesso!']);
+            $provider = Provider::find($id);
+            $provider->delete();
+            $provider->contacts()->delete();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json(['error' => 'Erro ao deletar fornecedor']);
+        }
+
+        return response()->json(['success' => 'Fornecedor deletado com sucesso!']);
+
     }
 }

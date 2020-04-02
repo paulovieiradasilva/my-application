@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Employee;
 use App\Tower;
+use App\Employee;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\EmployeeCreateRequest;
 use App\Http\Requests\EmployeeUpdateRequest;
 
@@ -24,7 +25,7 @@ class EmployeeController extends Controller
     /** */
     public function list()
     {
-        return DataTables::of(Employee::with(['tower'])->select(['id', 'name', 'type', 'tower_id', 'created_at', 'updated_at']))
+        return DataTables::of(Employee::with(['tower', 'contacts'])->select(['id', 'name', 'type', 'tower_id', 'created_at', 'updated_at']))
             ->addColumn('action', 'admin.employees._actions')
             ->make(true);
     }
@@ -53,9 +54,21 @@ class EmployeeController extends Controller
      */
     public function store(EmployeeCreateRequest $request)
     {
-        $employee = Employee::create($request->all());
+        try {
+            DB::beginTransaction();
 
-        return response()->json(['msg' => 'Funcionario cadastrado com sucesso!']);
+            $employee = Employee::create($request->all());
+            $employee->contacts()->create($request->all());
+
+            DB::commit();
+
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json(['error' => 'Erro ao cadastrar funcionario']);
+        }
+
+        return response()->json(['success' => 'Funcionario cadastrado com sucesso!']);
     }
 
     /**
@@ -78,6 +91,7 @@ class EmployeeController extends Controller
     public function edit($id)
     {
         $employee = Employee::find($id);
+        $employee->contacts;
 
         return $employee;
     }
@@ -91,11 +105,29 @@ class EmployeeController extends Controller
      */
     public function update(EmployeeUpdateRequest $request, $id)
     {
-        $employee = Employee::find($id);
+        try {
+            DB::beginTransaction();
 
-        $employee->update($request->all());
+            $employee = Employee::find($id);
+            $employee->update([
+                'name' => $request->name,
+                'type' => $request->type,
+                'tower_id' => $request->tower_id
+            ]);
+            $employee->contacts()->update([
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'cellphone' => $request->cellphone
+            ]);
 
-        return response()->json(['msg' => 'Funcionario atualizado com sucesso!']);
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json(['error' => 'Erro ao atualizar funcionario']);
+        }
+
+        return response()->json(['success' => 'Funcionario atualizado com sucesso!']);
     }
 
     /**
@@ -106,9 +138,20 @@ class EmployeeController extends Controller
      */
     public function destroy($id)
     {
-        $employee = Employee::find($id);
-        $employee->delete();
+        try {
+            DB::beginTransaction();
 
-        return response()->json(['msg' => 'Funcionario deletado com sucesso!']);
+            $employee = Employee::find($id);
+            $employee->delete();
+            $employee->contacts()->delete();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json(['error' => 'Erro ao deletar funcionario']);
+        }
+
+        return response()->json(['success' => 'Funcionario deletado com sucesso!']);
     }
 }

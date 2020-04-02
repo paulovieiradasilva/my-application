@@ -11,13 +11,13 @@ class Provider extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'opening_hours', 'on_duty'];
+    protected $fillable = ['name', 'opening_hours', 'on_duty', 'description'];
 
     /**
      * Get all of the contacts for the employee.
      */
     public function contacts()
     {
-        return $this->morphToMany(Contact::class, 'contactable');
+        return $this->morphMany(Contact::class, 'contactable');
     }
 }
