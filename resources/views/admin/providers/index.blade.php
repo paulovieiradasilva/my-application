@@ -133,18 +133,20 @@
 
             $.get("{{ route('providers.index') }}" + '/' + id + '/edit', function (data) {
 
-                $('#modalTitle').html('Editar permissão');
+                $('#modalTitle').html('Editar forncedor');
                 $('#send').html('Atualizar');
                 $('#modalFormCreate').modal('show');
                 $('#id').val(data.id);
                 $('#name').val(data.name);
-                $('#email').val(data.contacts[0].email);
-                $('#site').val(data.contacts[0].site);
-                $('#phone').val(data.contacts[0].phone);
-                $('#cellphone').val(data.contacts[0].cellphone);
                 $('#opening_hours').val(data.opening_hours);
                 $('#on_duty').val(data.on_duty);
                 $('#description').val(data.description);
+                if (data.contacts != "") {
+                    $('#email').val(data.contacts[0].email);
+                    $('#site').val(data.contacts[0].site);
+                    $('#phone').val(data.contacts[0].phone);
+                    $('#cellphone').val(data.contacts[0].cellphone);
+                }
             });
 
             /** SEND FORM UPDATE */

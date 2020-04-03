@@ -109,12 +109,8 @@ class ProviderController extends Controller
                 'on_duty' => $request->on_duty,
                 'description' => $request->description
             ]);
-            $provider->contacts()->update([
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'cellphone' => $request->cellphone,
-                'site' => $request->site
-            ]);
+            $provider->contacts()->delete();
+            $provider->contacts()->create($request->all());
 
             DB::commit();
         } catch (\Exception $e) {

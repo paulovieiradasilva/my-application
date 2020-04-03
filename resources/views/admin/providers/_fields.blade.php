@@ -12,7 +12,7 @@
     <label for="opening_hours" class="col-sm-2 col-form-label">Atendimento</label>
     <div class="col-sm-10">
         <input type="text" name="opening_hours" id="opening_hours" class="form-control" placeholder="Horario de Atendimento">
-        <div id="sopening_hourslug-feedback" class="invalid-feedback"></div>
+        <div id="opening_hours-feedback" class="invalid-feedback"></div>
     </div>
 </div>
 

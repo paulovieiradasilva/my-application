@@ -114,11 +114,8 @@ class EmployeeController extends Controller
                 'type' => $request->type,
                 'tower_id' => $request->tower_id
             ]);
-            $employee->contacts()->update([
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'cellphone' => $request->cellphone
-            ]);
+            $employee->contacts()->delete();
+            $employee->contacts()->create($request->all());
 
             DB::commit();
         } catch (\Exception $e) {

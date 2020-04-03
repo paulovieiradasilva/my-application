@@ -151,12 +151,14 @@
             $('#send').html('Atualizar');
             $('#modalFormCreate').modal('show');
             $('#id').val(data.id);
-            $('#email').val(data.contacts[0].email);
-            $('#phone').val(data.contacts[0].phone);
-            $('#cellphone').val(data.contacts[0].cellphone);
             $('#name').val(data.name);
             $('#type').val(data.type);
             $('#select-tower').val(data.tower_id).trigger('change');
+            if (data.contacts != "") {
+                $('#email').val(data.contacts[0].email);
+                $('#phone').val(data.contacts[0].phone);
+                $('#cellphone').val(data.contacts[0].cellphone);
+            }
         });
 
         /** SEND FORM UPDATE */
