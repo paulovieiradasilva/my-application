@@ -146,6 +146,7 @@
         $('#send').addClass('edit');
 
         $.get("{{ route('employees.index') }}" + '/' + id + '/edit', function (data) {
+            console.log(data);
 
             $('#modalTitle').html('Editar funcionario');
             $('#send').html('Atualizar');

@@ -109,13 +109,8 @@ class EmployeeController extends Controller
             DB::beginTransaction();
 
             $employee = Employee::find($id);
-            $employee->update([
-                'name' => $request->name,
-                'type' => $request->type,
-                'tower_id' => $request->tower_id
-            ]);
-            $employee->contacts()->delete();
-            $employee->contacts()->create($request->all());
+            $employee->update($request->all());
+            $employee->contacts()->updateOrCreate([], $request->all());
 
             DB::commit();
         } catch (\Exception $e) {

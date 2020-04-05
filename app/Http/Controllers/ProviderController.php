@@ -103,14 +103,8 @@ class ProviderController extends Controller
             DB::beginTransaction();
 
             $provider = Provider::find($id);
-            $provider->update([
-                'name' => $request->name,
-                'opening_hours' => $request->opening_hours,
-                'on_duty' => $request->on_duty,
-                'description' => $request->description
-            ]);
-            $provider->contacts()->delete();
-            $provider->contacts()->create($request->all());
+            $provider->update($request->all());
+            $provider->contacts()->updateOrCreate([], $request->all());
 
             DB::commit();
         } catch (\Exception $e) {

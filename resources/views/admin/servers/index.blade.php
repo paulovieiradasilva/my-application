@@ -127,13 +127,16 @@
                 $('#formServer').trigger('reset');
                 $('#modalFormCreate').modal('hide');
                 $('#servers_table').DataTable().ajax.reload(null, false);
-                toastr.success(data.msg);
+                if (data.success) {
+                    toastr.success(data.success);
+                }
+                if (data.error) {
+                    toastr.error(data.error);
+                }
             },
             complete: function (data) {
             },
             error: function (data) {
-                console.log(data.responseJSON.errors);
-
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
                     $('#name').addClass('is-invalid');
@@ -186,7 +189,12 @@
                     $('#formServer').trigger('reset');
                     $('#modalFormCreate').modal('hide');
                     $('#servers_table').DataTable().ajax.reload(null, false);
-                    toastr.success(data.msg);
+                    if (data.success) {
+                        toastr.success(data.success);
+                    }
+                    if (data.error) {
+                        toastr.error(data.error);
+                    }
                 },
                 complete: function (data) {
                 },
@@ -240,7 +248,12 @@
                     $('#id').val('');
                     $('#servers_table').DataTable().ajax.reload(null, false);
                     $('#deleteModalCenter').modal('hide');
-                    toastr.success(data.msg);
+                    if (data.success) {
+                        toastr.success(data.success);
+                    }
+                    if (data.error) {
+                        toastr.error(data.error);
+                    }
                 },
                 complete: function (data) {
                 },
