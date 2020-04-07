@@ -7,6 +7,7 @@
                 <!-- <div class="card-header"></div> -->
                 <div id="buttons"></div>
                 <div class="card-body">
+                    <div id="loader">Carregando... <img src="{{ asset('img/loaders/103.gif')}}"></div>
                     <table id="providers_table" class="table table-hover table-sm">
                         <thead>
                             <tr>
@@ -14,7 +15,6 @@
                                 <th>Nome</th>
                                 <th>Atendimento</th>
                                 <th>Plantão</th>
-                                <th>Descrição</th>
                                 <th>Criado</th>
                                 <th>Atualizado</th>
                                 <th></th>
@@ -35,6 +35,9 @@
 <script>
     $(document).ready(function () {
         $('#providers_table').DataTable({
+            initComplete: function () {
+                $('#loader').hide();
+            },
             processing: true,
             serverSide: true,
             ajax: "{{ url('providers_datatables') }}",
@@ -43,7 +46,6 @@
                 { data: 'name' },
                 { data: 'opening_hours' },
                 { data: 'on_duty' },
-                { data: 'description' },
                 { data: 'created_at' },
                 { data: 'updated_at' },
                 { data: 'action' }

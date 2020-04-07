@@ -7,6 +7,7 @@
                 <!-- <div class="card-header"></div> -->
                 <div id="buttons"></div>
                 <div class="card-body">
+                <div id="loader">Carregando... <img src="{{ asset('img/loaders/103.gif')}}"></div>
                     <table id="permissions_table" class="table table-hover table-sm">
                         <thead>
                             <tr>
@@ -34,6 +35,9 @@
 <script>
     $(document).ready(function () {
         $('#permissions_table').DataTable({
+            initComplete: function () {
+                $('#loader').hide();
+            },
             processing: true,
             serverSide: true,
             ajax: "{{ url('permissions_datatables') }}",

@@ -6,6 +6,7 @@ use App\Tower;
 use App\Employee;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use App\Events\ClearNullContacts;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\EmployeeCreateRequest;
 use App\Http\Requests\EmployeeUpdateRequest;
@@ -111,6 +112,7 @@ class EmployeeController extends Controller
             $employee = Employee::find($id);
             $employee->update($request->all());
             $employee->contacts()->updateOrCreate([], $request->all());
+            event(new ClearNullContacts($employee->id));
 
             DB::commit();
         } catch (\Exception $e) {
