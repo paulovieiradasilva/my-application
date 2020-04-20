@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Provider;
+use App\Models\Provider;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
-use App\Events\ClearNullContacts;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ProviderCreateRequest;
 use App\Http\Requests\ProviderUpdateRequest;
@@ -106,7 +105,7 @@ class ProviderController extends Controller
             $provider = Provider::find($id);
             $provider->update($request->all());
             $provider->contacts()->updateOrCreate([], $request->all());
-            event(new ClearNullContacts($provider->id));
+            // event();
 
             DB::commit();
         } catch (\Exception $e) {

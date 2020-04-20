@@ -1,23 +1,24 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Credential extends Model
+class Contact extends Model
 {
 	/**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name'];
-    
+    protected $fillable = ['email', 'phone', 'cellphone', 'site'];
+
     /**
-     * Get the parent of the credential record.
+     * Get the parent of the contact record.
      */
-    public function credentailable()
+    public function contactable()
     {
         return $this->morphTo();
     }
+
 }

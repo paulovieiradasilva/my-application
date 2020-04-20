@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Database extends Model
+class Service extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -14,15 +14,15 @@ class Database extends Model
     protected $fillable = ['name'];
 
     /**
-     * The servers that belong to the database.
+     * Get the application of the service.
      */
-    public function servers()
+    public function application()
     {
-        return $this->belongsToMany(Server::class)->withTimestamps();
+        return $this->belongsTo(Application::class);
     }
 
     /**
-     * Get the database's credential.
+     * Get the server's credential.
      */
     public function credential()
     {

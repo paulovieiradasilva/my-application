@@ -1,16 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Integration extends Model
+class Tower extends Model
 {
 	/**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name'];
-    
+    protected $fillable = ['name', 'description'];
+
 }

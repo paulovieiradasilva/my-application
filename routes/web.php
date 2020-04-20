@@ -18,6 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Route::resource('databases', 'DatabaseController');
+
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
@@ -74,7 +76,6 @@ Route::middleware(['auth'])->group(function () {
 
     /** Datatables */
     Route::get('employees_datatables', 'EmployeeController@list');
-    Route::get('towers', 'EmployeeController@get');
 
     // Providers
     Route::get('fornecedores', 'ProviderController@index')->name('providers.index')->middleware('can:providers.index');
@@ -97,6 +98,9 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('torres/{tower}', 'TowerController@update')->name('towers.update')->middleware('can:towers.edit');
     Route::delete('torres/{tower}', 'TowerController@destroy')->name('towers.destroy')->middleware('can:towers.destroy');
 
+    /** All towers */
+    Route::get('towers', 'TowerController@get');
+
     /** Datatables */
     Route::get('towers_datatables', 'TowerController@list');
 
@@ -108,6 +112,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('ambientes/{environment}/edit', 'EnvironmentController@edit')->name('environments.edit')->middleware('can:environments.edit');
     Route::patch('ambientes/{environment}', 'EnvironmentController@update')->name('environments.update')->middleware('can:environments.edit');
     Route::delete('ambientes/{environment}', 'EnvironmentController@destroy')->name('environments.destroy')->middleware('can:environments.destroy');
+
+    /** All environments */
+    Route::get('environments', 'EnvironmentController@get');
 
     /** Datatables */
     Route::get('environments_datatables', 'EnvironmentController@list');
@@ -123,5 +130,9 @@ Route::middleware(['auth'])->group(function () {
 
     /** Datatables */
     Route::get('servers_datatables', 'ServerController@list');
-    Route::get('environments', 'ServerController@get');
+
+    // Database
+    Route::post('database', 'DatabaseController@store')->name('database.store');
+    Route::delete('database/{id}', 'DatabaseController@destroy')->name('database.destroy');
+    Route::patch('database/{id}', 'DatabaseController@update')->name('database.update');
 });

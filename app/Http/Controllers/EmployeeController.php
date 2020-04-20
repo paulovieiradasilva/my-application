@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Tower;
-use App\Employee;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
-use App\Events\ClearNullContacts;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\EmployeeCreateRequest;
 use App\Http\Requests\EmployeeUpdateRequest;
@@ -29,12 +27,6 @@ class EmployeeController extends Controller
         return DataTables::of(Employee::with(['tower', 'contacts'])->select(['id', 'name', 'type', 'tower_id', 'created_at', 'updated_at']))
             ->addColumn('action', 'admin.employees._actions')
             ->make(true);
-    }
-
-    /** */
-    public function get()
-    {
-        return $towers = Tower::all();
     }
 
     /**
@@ -112,7 +104,7 @@ class EmployeeController extends Controller
             $employee = Employee::find($id);
             $employee->update($request->all());
             $employee->contacts()->updateOrCreate([], $request->all());
-            event(new ClearNullContacts($employee->id));
+            // event();
 
             DB::commit();
         } catch (\Exception $e) {

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Server;
-use App\Environment;
+use App\Models\Server;
+use App\Models\Database;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ServerCreateRequest;
 use App\Http\Requests\ServerUpdateRequest;
 
@@ -24,15 +25,10 @@ class ServerController extends Controller
     /** */
     public function list()
     {
-        return DataTables::of(Server::with(['environment'])->select(['id', 'name', 'ip', 'os', 'type', 'environment_id', 'description', 'created_at', 'updated_at']))
+        return DataTables::of(Server::with(['environment'])
+            ->select(['id', 'name', 'ip', 'os', 'type', 'environment_id', 'description', 'created_at', 'updated_at']))
             ->addColumn('action', 'admin.servers._actions')
             ->make(true);
-    }
-
-    /** */
-    public function get()
-    {
-        return $environments = Environment::all();
     }
 
     /**
@@ -51,11 +47,51 @@ class ServerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ServerCreateRequest $request)
+    public function store(Request $request)
     {
-        $server = Server::create($request->all());
+        try {
+            DB::beginTransaction();
 
-        return response()->json(['msg' => 'Servidor cadastrado com sucesso!']);
+            $server = Server::create($request->all());
+            $server->credential()->create($request->all());
+
+            /** Databases */
+            $name = $request->get('db');
+            $sgdb = $request->get('sgdb');
+            $port = $request->get('port');
+
+            /** Crendentials */
+            $user = $request->get('usr');
+            $pass = $request->get('pwd');
+
+            /** */
+            $i = 0;
+
+            while ($i < count($name)) {
+
+                $database = new Database;
+                $database->name = $name[$i];
+                $database->sgdb = $sgdb[$i];
+                $database->port = $port[$i];
+                $database->server_id = $server->id;
+                $database->save();
+
+                $database->credential()->create([
+                    'username' => $user[$i],
+                    'password' => $pass[$i]
+                ]);
+
+                $i++;
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json(['error' => 'Erro ao cadastrar servidor']);
+        }
+
+        return response()->json(['success' => 'Servidor cadastrado com sucesso!']);
     }
 
     /**
@@ -77,9 +113,10 @@ class ServerController extends Controller
      */
     public function edit($id)
     {
-        $server = Server::find($id);
+        $server = Server::with(['credential'])->where('id', $id)->first();
+        $databases = Database::with(['credential'])->where('server_id', $server->id)->get();
 
-        return $server;
+        return ['data' => ['server' => $server, 'databases' => $databases]];
     }
 
     /**
@@ -91,11 +128,24 @@ class ServerController extends Controller
      */
     public function update(ServerUpdateRequest $request, $id)
     {
-        $server = Server::find($id);
+        try {
+            DB::beginTransaction();
 
-        $server->update($request->all());
+            //dd($request->all());
 
-        return response()->json(['msg' => 'Servidor atualizado com sucesso!']);
+            $server = Server::find($id);
+            $server->update($request->all());
+            $server->credential()->updateOrCreate([], $request->all());
+            // event();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json(['error' => 'Erro ao atualizar servidor']);
+        }
+
+        return response()->json(['success' => 'Servidor atualizado com sucesso!']);
     }
 
     /**
@@ -106,9 +156,20 @@ class ServerController extends Controller
      */
     public function destroy($id)
     {
-        $server = Server::find($id);
-        $server->delete();
+        try {
+            DB::beginTransaction();
 
-        return response()->json(['msg' => 'Servidor deletado com sucesso!']);
+            $server = Server::find($id);
+            $server->delete();
+            $server->credential()->delete();
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json(['error' => 'Não foi possivel deletar este servidor, pois existe banco de dados cadastrado']);
+        }
+
+        return response()->json(['success' => 'Servidor deletado com sucesso!']);
     }
 }

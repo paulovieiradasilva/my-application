@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Tower;
+use App\Models\Tower;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Http\Requests\TowerCreateRequest;
@@ -26,6 +26,12 @@ class TowerController extends Controller
         return DataTables::of(Tower::select(['id', 'name', 'description', 'created_at', 'updated_at']))
             ->addColumn('action', 'admin.towers._actions')
             ->make(true);
+    }
+
+    /** */
+    public function get()
+    {
+        return $towers = Tower::all();
     }
 
     /**

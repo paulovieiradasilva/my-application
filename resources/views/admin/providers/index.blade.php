@@ -33,53 +33,68 @@
 
 @section('scripts')
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#providers_table').DataTable({
-            initComplete: function () {
+            initComplete: function() {
                 $('#loader').hide();
-            },
-            processing: true,
-            serverSide: true,
-            ajax: "{{ url('providers_datatables') }}",
-            columns: [
-                { data: 'id' },
-                { data: 'name' },
-                { data: 'opening_hours' },
-                { data: 'on_duty' },
-                { data: 'created_at' },
-                { data: 'updated_at' },
-                { data: 'action' }
-            ],
-            order: [[0, 'desc']],
-            dom: "<'row'<'col-md-4'B><'col-md-5'l><'col-md-3'f>><'row'<'col-md-12'tr>><'row'<'col-md-3'i><'col-md-3'><'col-md-6'p>>",
-            buttons: [{
-                extend: 'pdf',
-                className: 'btn btn-default'
-            },
-            {
-                extend: 'excel',
-                className: 'btn btn-default'
-            },
-            {
-                text: 'Novo',
-                action: function () {
-                    $('#id').val('');
-                    $('#modalTitle').html('Novo fornecedor');
-                    $('#send').html('Cadastrar');
-                    $('#send').removeClass('edit');
-                    $('#send').addClass('save');
-                    $('#formProvider').trigger('reset');
-                    $('#modalFormCreate').modal('show');
-                }
             }
-            ],
-            language: {
+            , processing: true
+            , serverSide: true
+            , ajax: "{{ url('providers_datatables') }}"
+            , columns: [{
+                    data: 'id'
+                }
+                , {
+                    data: 'name'
+                }
+                , {
+                    data: 'opening_hours'
+                }
+                , {
+                    data: 'on_duty'
+                }
+                , {
+                    data: 'created_at'
+                }
+                , {
+                    data: 'updated_at'
+                }
+                , {
+                    data: 'action'
+                }
+            ]
+            , order: [
+                [0, 'desc']
+            ]
+            , dom: "<'row'<'col-md-4'B><'col-md-5'l><'col-md-3'f>><'row'<'col-md-12'tr>><'row'<'col-md-3'i><'col-md-3'><'col-md-6'p>>"
+            , buttons: [{
+                    extend: 'pdf'
+                    , className: 'btn btn-default'
+                }
+                , {
+                    extend: 'excel'
+                    , className: 'btn btn-default'
+                }
+                , {
+                    text: 'Novo'
+                    , action: function() {
+                        $('#id').val('');
+                        $('#modalTitle').html('Novo fornecedor');
+                        $('#send').html('Cadastrar');
+                        $('#send').removeClass('edit');
+                        $('#send').addClass('save');
+                        $('#formProvider').trigger('reset');
+                        $('#modalFormCreate').modal('show');
+                    }
+                }
+            ]
+            , language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Portuguese-Brasil.json"
-            },
-        });
+            }
+        , });
 
         /** RESET MODAL VALIDATIONS */
-        $("#modalFormCreate").on("hide.bs.modal", function () {
+        $("#modalFormCreate").on("hide.bs.modal", function() {
             $('#id').val('');
             $('#formProvider').trigger('reset');
             $('#name').removeClass('is-invalid');
@@ -90,16 +105,16 @@
         });
 
         /** CREATE  */
-        $(document).on('click', '.save', function (event) {
+        $(document).on('click', '.save', function(event) {
 
             event.preventDefault();
 
             $.ajax({
-                url: "{{ route('providers.store') }}",
-                type: 'POST',
-                dataType: 'json',
-                data: $('#formProvider').serialize(),
-                success: function (data) {
+                url: "{{ route('providers.store') }}"
+                , type: 'POST'
+                , dataType: 'json'
+                , data: $('#formProvider').serialize()
+                , success: function(data) {
                     $('#id').val('');
                     $('#formProvider').trigger('reset');
                     $('#modalFormCreate').modal('hide');
@@ -110,10 +125,9 @@
                     if (data.error) {
                         toastr.error(data.error);
                     }
-                },
-                complete: function (data) {
-                },
-                error: function (data) {
+                }
+                , complete: function(data) {}
+                , error: function(data) {
                     /** Criar as validações dos inputs para erros */
                     if (data.responseJSON.errors.name) {
                         $('#name').addClass('is-invalid');
@@ -124,7 +138,7 @@
         });
 
         /** EDIT  */
-        $(document).on('click', '#edit-item', function (event) {
+        $(document).on('click', '#edit-item', function(event) {
 
             event.preventDefault();
 
@@ -133,7 +147,7 @@
             $('#send').removeClass('save');
             $('#send').addClass('edit');
 
-            $.get("{{ route('providers.index') }}" + '/' + id + '/edit', function (data) {
+            $.get("{{ route('providers.index') }}" + '/' + id + '/edit', function(data) {
 
                 $('#modalTitle').html('Editar forncedor');
                 $('#send').html('Atualizar');
@@ -143,25 +157,25 @@
                 $('#opening_hours').val(data.opening_hours);
                 $('#on_duty').val(data.on_duty);
                 $('#description').val(data.description);
-                if (data.contacts != "") {
-                    $('#email').val(data.contacts[0].email);
-                    $('#site').val(data.contacts[0].site);
-                    $('#phone').val(data.contacts[0].phone);
-                    $('#cellphone').val(data.contacts[0].cellphone);
+                if (data.contacts != null) {
+                    $('#email').val(data.contacts.email);
+                    $('#site').val(data.contacts.site);
+                    $('#phone').val(data.contacts.phone);
+                    $('#cellphone').val(data.contacts.cellphone);
                 }
             });
 
             /** SEND FORM UPDATE */
-            $('.edit').unbind().bind('click', function (event) {
+            $('.edit').unbind().bind('click', function(event) {
 
                 event.preventDefault();
 
                 $.ajax({
-                    url: "{{ route('providers.index') }}" + '/' + id,
-                    type: 'PATCH',
-                    dataType: 'json',
-                    data: $('#formProvider').serialize(),
-                    success: function (data) {
+                    url: "{{ route('providers.index') }}" + '/' + id
+                    , type: 'PATCH'
+                    , dataType: 'json'
+                    , data: $('#formProvider').serialize()
+                    , success: function(data) {
                         $('#id').val('');
                         $('#formProvider').trigger('reset');
                         $('#modalFormCreate').modal('hide');
@@ -172,10 +186,9 @@
                         if (data.error) {
                             toastr.error(data.error);
                         }
-                    },
-                    complete: function (data) {
-                    },
-                    error: function (data) {
+                    }
+                    , complete: function(data) {}
+                    , error: function(data) {
                         /** Criar as validações dos inputs para erros */
                         if ($('#name').val() == "") {
                             $('#name').addClass('is-invalid');
@@ -188,7 +201,7 @@
         });
 
         /** DELETE  */
-        $(document).on('click', '#delete-item', function (event) {
+        $(document).on('click', '#delete-item', function(event) {
 
             event.preventDefault();
 
@@ -199,7 +212,7 @@
             $('#id-item').html(id);
 
             /** SEND FORM DELETE */
-            $('#send-delete').unbind().bind('click', function (event) {
+            $('#send-delete').unbind().bind('click', function(event) {
 
                 event.preventDefault();
 
@@ -211,13 +224,13 @@
 
                 $.ajax({
                     data: {
-                        "_token": "{{ csrf_token() }}",
-                        "id": id
-                    },
-                    url: "{{ route('providers.index') }}" + '/' + id,
-                    type: 'DELETE',
-                    dataType: 'json',
-                    success: function (data) {
+                        "_token": "{{ csrf_token() }}"
+                        , "id": id
+                    }
+                    , url: "{{ route('providers.index') }}" + '/' + id
+                    , type: 'DELETE'
+                    , dataType: 'json'
+                    , success: function(data) {
                         $('#id').val('');
                         $('#providers_table').DataTable().ajax.reload(null, false);
                         $('#deleteModalCenter').modal('hide');
@@ -227,10 +240,9 @@
                         if (data.error) {
                             toastr.error(data.error);
                         }
-                    },
-                    complete: function (data) {
-                    },
-                    error: function (data) {
+                    }
+                    , complete: function(data) {}
+                    , error: function(data) {
                         /** Criar as validações dos inputs para erros */
                     }
                 });
@@ -238,5 +250,6 @@
 
         });
     });
+
 </script>
 @stop

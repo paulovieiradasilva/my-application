@@ -17,9 +17,12 @@ class CreateDatabasesTable extends Migration
             $table->bigIncrements('id');
 
             $table->string('name');
-            $table->string('sgbd')->nullable();
+            $table->string('sgdb')->nullable();
             $table->string('version_sgbd')->nullable();
             $table->string('port')->nullable();
+
+            $table->unsignedBigInteger('server_id');
+            $table->foreign('server_id')->references('id')->on('servers');
 
             $table->timestamps();
         });

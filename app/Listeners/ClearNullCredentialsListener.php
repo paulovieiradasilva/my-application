@@ -2,12 +2,12 @@
 
 namespace App\Listeners;
 
-use App\Events\ClearNullContacts;
 use Illuminate\Support\Facades\DB;
+use App\Events\ClearNullCredentials;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ClearNullContactsListener
+class ClearNullCredentialsListener
 {
     /**
      * Create the event listener.
@@ -25,16 +25,18 @@ class ClearNullContactsListener
      * @param  object  $event
      * @return void
      */
-    public function handle(ClearNullContacts $event)
+    public function handle(ClearNullCredentials $event)
     {
-        $id = $event->getContacts();
-        $query = DB::table('contacts')
-            ->select('id', 'email', 'phone', 'cellphone', 'site')
-            ->where('contactable_id', $id)
+        $id = $event->getCredential();
+        $query = DB::table('credentials')
+            ->select('username', 'password')
+            ->where('credentialable_id', $id)
             ->first();
 
-        if ($query->email == null && $query->phone == null && $query->cellphone == null && $query->site == null) {
-            DB::table('contacts')
+        dd($query);
+
+        if ($query->username == null && $query->password == null) {
+            DB::table('credentials')
                 ->where('id', $query->id)
                 ->delete();
         }

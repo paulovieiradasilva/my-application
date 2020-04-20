@@ -20,9 +20,12 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        ClearNullContacts::class => [
+        /* ClearNullContacts::class => [
             ClearNullContactsListener::class,
-        ]
+        ],
+        ClearNullCredentials::class => [
+            ClearNullCredentialsListener::class,
+        ] */
     ];
 
     /**

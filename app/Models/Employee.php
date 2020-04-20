@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,6 +26,6 @@ class Employee extends Model
      */
     public function contacts()
     {
-        return $this->morphMany(Contact::class, 'contactable');
+        return $this->morphOne(Contact::class, 'contactable');
     }
 }

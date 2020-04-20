@@ -68,9 +68,8 @@ class PermissionsTableSeeder extends Seeder
             'description' => 'Deletar os papéis'
         ]);
 
-
-        /** Permissions */
-        Permission::create([
+         /** Permissions */
+         Permission::create([
             'name' => 'Criar novas permissões',
             'slug' => 'permissions.create',
             'description' => 'Cadastrar novos permissões'
@@ -110,6 +109,161 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'Dashboard',
             'slug' => 'users.dashboard',
             'description' => 'Exibir o dashboard padrão para os usuários'
+        ]);
+
+        /** Servers */
+        Permission::create([
+            'name' => 'Criar novos servidores',
+            'slug' => 'servers.create',
+            'description' => 'Cadastrar novos servidores'
+        ]);
+
+        Permission::create([
+            'name' => 'Listar servidores',
+            'slug' => 'servers.index',
+            'description' => 'Listar todos os servidores'
+        ]);
+
+        Permission::create([
+            'name' => 'Visualizar detalhes de servidores',
+            'slug' => 'servers.show',
+            'description' => 'Ver detalhe dos servidores'
+        ]);
+
+        Permission::create([
+            'name' => 'Atualizar servidores',
+            'slug' => 'servers.edit',
+            'description' => 'Editar os servidores'
+        ]);
+
+        Permission::create([
+            'name' => 'Eliminar servidores',
+            'slug' => 'servers.destroy',
+            'description' => 'Deletar os servidores'
+        ]);
+
+        /** Employee */
+        Permission::create([
+            'name' => 'Criar novos funcionários',
+            'slug' => 'employees.create',
+            'description' => 'Cadastrar novos funcionários'
+        ]);
+
+        Permission::create([
+            'name' => 'Listar funcionários',
+            'slug' => 'employees.index',
+            'description' => 'Listar todos os funcionários'
+        ]);
+
+        Permission::create([
+            'name' => 'Visualizar detalhes de funcionários',
+            'slug' => 'employees.show',
+            'description' => 'Ver detalhe dos funcionários'
+        ]);
+
+        Permission::create([
+            'name' => 'Atualizar funcionários',
+            'slug' => 'employees.edit',
+            'description' => 'Editar os funcionários'
+        ]);
+
+        Permission::create([
+            'name' => 'Eliminar funcionários',
+            'slug' => 'employees.destroy',
+            'description' => 'Deletar os funcionários'
+        ]);
+
+        /** Providers */
+        Permission::create([
+            'name' => 'Criar novos fornecedores',
+            'slug' => 'providers.create',
+            'description' => 'Cadastrar novos fornecedores'
+        ]);
+
+        Permission::create([
+            'name' => 'Listar fornecedores',
+            'slug' => 'providers.index',
+            'description' => 'Listar todos os fornecedores'
+        ]);
+
+        Permission::create([
+            'name' => 'Visualizar detalhes de fornecedores',
+            'slug' => 'providers.show',
+            'description' => 'Ver detalhe dos fornecedores'
+        ]);
+
+        Permission::create([
+            'name' => 'Atualizar fornecedores',
+            'slug' => 'providers.edit',
+            'description' => 'Editar os fornecedores'
+        ]);
+
+        Permission::create([
+            'name' => 'Eliminar fornecedores',
+            'slug' => 'providers.destroy',
+            'description' => 'Deletar os fornecedores'
+        ]);
+
+        /** Towers */
+        Permission::create([
+            'name' => 'Criar novos torres',
+            'slug' => 'towers.create',
+            'description' => 'Cadastrar novas torres'
+        ]);
+
+        Permission::create([
+            'name' => 'Listar torres',
+            'slug' => 'towers.index',
+            'description' => 'Listar todas as torres'
+        ]);
+
+        Permission::create([
+            'name' => 'Visualizar detalhes de torres',
+            'slug' => 'towers.show',
+            'description' => 'Ver detalhe das torres'
+        ]);
+
+        Permission::create([
+            'name' => 'Atualizar torres',
+            'slug' => 'towers.edit',
+            'description' => 'Editar torres'
+        ]);
+
+        Permission::create([
+            'name' => 'Eliminar torres',
+            'slug' => 'towers.destroy',
+            'description' => 'Deletar torres'
+        ]);
+
+        /** Environments */
+        Permission::create([
+            'name' => 'Criar novos ambientes',
+            'slug' => 'environments.create',
+            'description' => 'Cadastrar novas ambientes'
+        ]);
+
+        Permission::create([
+            'name' => 'Listar ambientes',
+            'slug' => 'environments.index',
+            'description' => 'Listar todos os ambientes'
+        ]);
+
+        Permission::create([
+            'name' => 'Visualizar detalhes de ambientes',
+            'slug' => 'environments.show',
+            'description' => 'Ver detalhe dos ambientes'
+        ]);
+
+        Permission::create([
+            'name' => 'Atualizar ambientes',
+            'slug' => 'environments.edit',
+            'description' => 'Editar ambientes'
+        ]);
+
+        Permission::create([
+            'name' => 'Eliminar ambientes',
+            'slug' => 'environments.destroy',
+            'description' => 'Deletar ambientes'
         ]);
     }
 }

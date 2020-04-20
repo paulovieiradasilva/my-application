@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Contact;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -11,11 +10,11 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ClearNullContacts
+class ClearNullCredentials
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    private $contact;
+    private $credential;
 
     /**
      * Create a new event instance.
@@ -24,11 +23,11 @@ class ClearNullContacts
      */
     public function __construct($data)
     {
-        $this->contact = $data;
+        $this->credential = $data;
     }
 
-    public function getContacts()
+    public function getCredential()
     {
-        return $this->contact;
+        return $this->credential;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Environment;
+use App\Models\Environment;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Http\Requests\EnvironmentCreateRequest;
@@ -26,6 +26,12 @@ class EnvironmentController extends Controller
         return DataTables::of(Environment::select(['id', 'name', 'description', 'created_at', 'updated_at']))
             ->addColumn('action', 'admin.environments._actions')
             ->make(true);
+    }
+
+    /** */
+    public function get()
+    {
+        return $environments = Environment::all();
     }
 
     /**

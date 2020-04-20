@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +11,7 @@ class Server extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'ip', 'os', 'version_os', 'type', 'environment_id'];
+    protected $fillable = ['name', 'ip', 'os', 'type', 'environment_id', 'description'];
 
     /**
      * Get the environment of the server.
@@ -26,7 +26,7 @@ class Server extends Model
      */
     public function databases()
     {
-        return $this->belongsToMany(Database::class)->withTimestamps();
+        return $this->hasMany(Database::class);
     }
 
     /**
@@ -34,6 +34,6 @@ class Server extends Model
      */
     public function credential()
     {
-        return $this->morphOne(Credential::class, 'credentailable');
+        return $this->morphOne(Credential::class, 'credentialable');
     }
 }
