@@ -56,7 +56,7 @@ class RoleController extends Controller
 
         $role->permissions()->sync($request->get('permissions'));
 
-        return response()->json(['msg' => 'Papél cadastrado com sucesso!']);
+        return response()->json(['success' => 'Papél cadastrado com sucesso!']);
     }
 
     /**
@@ -98,7 +98,7 @@ class RoleController extends Controller
 
         $role->permissions()->sync($request->get('permissions'));
 
-        return response()->json(['msg' => 'Papél atualizado com sucesso!']);
+        return response()->json(['success' => 'Papél atualizado com sucesso!']);
     }
 
     /**
@@ -112,6 +112,6 @@ class RoleController extends Controller
         $role = Role::find($id);
         $role->delete();
 
-        return response()->json(['msg' => 'Papél deletado com sucesso!']);
+        return response()->json(['success' => 'Papél deletado com sucesso!']);
     }
 }

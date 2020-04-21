@@ -54,7 +54,7 @@ class TowerController extends Controller
     {
         $tower = Tower::create($request->all());
 
-        return response()->json(['msg' => 'Torre cadastrada com sucesso!']);
+        return response()->json(['success' => 'Torre cadastrada com sucesso!']);
     }
 
     /**
@@ -94,7 +94,7 @@ class TowerController extends Controller
 
         $tower->update($request->all());
 
-        return response()->json(['msg' => 'Torre atualizada com sucesso!']);
+        return response()->json(['success' => 'Torre atualizada com sucesso!']);
     }
 
     /**
@@ -108,6 +108,6 @@ class TowerController extends Controller
         $tower = Tower::find($id);
         $tower->delete();
 
-        return response()->json(['msg' => 'Torre deletada com sucesso!']);
+        return response()->json(['success' => 'Torre deletada com sucesso!']);
     }
 }

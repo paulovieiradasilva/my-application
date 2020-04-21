@@ -50,7 +50,7 @@ class UserController extends Controller
 
         $user->roles()->sync($request->get('roles'));
 
-        return response()->json(['msg' => 'Usuário cadastrado com sucesso!']);
+        return response()->json(['success' => 'Usuário cadastrado com sucesso!']);
     }
 
     /**
@@ -93,7 +93,7 @@ class UserController extends Controller
 
         $user->roles()->sync($request->get('roles'));
 
-        return response()->json(['msg' => 'Usuário atualizado com sucesso!']);
+        return response()->json(['success' => 'Usuário atualizado com sucesso!']);
     }
 
     /**
@@ -107,6 +107,6 @@ class UserController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        return response()->json(['msg' => 'Usuário deletado com sucesso!']);
+        return response()->json(['success' => 'Usuário deletado com sucesso!']);
     }
 }

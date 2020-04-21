@@ -47,8 +47,9 @@ class ServerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ServerCreateRequest $request)
     {
+        //dd($request->all());
         try {
             DB::beginTransaction();
 
@@ -64,10 +65,13 @@ class ServerController extends Controller
             $user = $request->get('usr');
             $pass = $request->get('pwd');
 
+            // Depois do PHP 7.2.X
+            $pkCount = (is_array($name) ? count($name) : 0);
+
             /** */
             $i = 0;
 
-            while ($i < count($name)) {
+            while ($i < $pkCount) {
 
                 $database = new Database;
                 $database->name = $name[$i];
@@ -88,7 +92,7 @@ class ServerController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
 
-            return response()->json(['error' => 'Erro ao cadastrar servidor']);
+            return response()->json(['error' => 'Erro ao cadastrar servidor'.$e]);
         }
 
         return response()->json(['success' => 'Servidor cadastrado com sucesso!']);
@@ -130,8 +134,6 @@ class ServerController extends Controller
     {
         try {
             DB::beginTransaction();
-
-            //dd($request->all());
 
             $server = Server::find($id);
             $server->update($request->all());

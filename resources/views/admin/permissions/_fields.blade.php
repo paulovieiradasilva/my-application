@@ -1,5 +1,3 @@
-<input type="hidden" name="id" id="id">
-
 <div class="form-group row">
     <label for="name" class="col-sm-2 col-form-label">Nome</label>
     <div class="col-sm-10">

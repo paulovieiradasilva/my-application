@@ -54,7 +54,7 @@ class EnvironmentController extends Controller
     {
         $environment = Environment::create($request->all());
 
-        return response()->json(['msg' => 'Ambiente cadastrado com sucesso!']);
+        return response()->json(['success' => 'Ambiente cadastrado com sucesso!']);
     }
 
     /**
@@ -94,7 +94,7 @@ class EnvironmentController extends Controller
 
         $environment->update($request->all());
 
-        return response()->json(['msg' => 'Ambiente atualizado com sucesso!']);
+        return response()->json(['success' => 'Fornecedor atualizado com sucesso!']);
     }
 
     /**
@@ -108,6 +108,6 @@ class EnvironmentController extends Controller
         $environment = Environment::find($id);
         $environment->delete();
 
-        return response()->json(['msg' => 'Ambiente deletado com sucesso!']);
+        return response()->json(['success' => 'Ambiente deletado com sucesso!']);
     }
 }

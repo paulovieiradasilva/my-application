@@ -5,10 +5,10 @@
         <div class="col-md-12">
             <div class="card">
                 <!-- <div class="card-header"></div> -->
-                <div id="buttons"></div>
+                <div style="display: none;" id="buttons"></div>
                 <div class="card-body">
-                    <div id="loader">Carregando... <img src="{{ asset('img/loaders/103.gif')}}"></div>
-                    <table id="employees_table" class="table table-hover table-sm">
+                    <div id="loader">Carregando... <img src="{{ asset('img/loaders/loader-grey.gif') }}"></div>
+                    <table id="employees_table" class="table table-hover table-sm" style="display: none;">
                         <thead>
                             <tr>
                                 <th>#</th>
@@ -33,69 +33,55 @@
 
 @section('scripts')
 <script>
-    $(document).ready(function() {
+    /** LIST EMPLOYEES */
+    $(document).ready(function () {
         $('#employees_table').DataTable({
-            initComplete: function() {
+            initComplete: function () {
                 $('#loader').hide();
-            }
-            , processing: true
-            , serverSide: true
-            , ajax: "{{ url('employees_datatables') }}"
-            , columns: [{
-                    data: 'id'
-                }
-                , {
-                    data: 'name'
-                }
-                , {
-                    data: 'type'
-                }
-                , {
-                    data: 'tower.name'
-                }
-                , {
-                    data: 'created_at'
-                }
-                , {
-                    data: 'updated_at'
-                }
-                , {
-                    data: 'action'
-                }
-            ]
-            , order: [
+                $('#employees_table').css('display', 'inline-table').css('width', 'inherit');
+            },
+            processing: true,
+            serverSide: true,
+            ajax: "{{ url('employees_datatables') }}",
+            columns: [
+                { data: 'id' },
+                { data: 'name' },
+                { data: 'type' },
+                { data: 'tower.name' },
+                { data: 'created_at' },
+                { data: 'updated_at' },
+                { data: 'action' }
+            ],
+            order: [
                 [0, 'desc']
-            ]
-            , dom: "<'row'<'col-md-4'B><'col-md-5'l><'col-md-3'f>><'row'<'col-md-12'tr>><'row'<'col-md-3'i><'col-md-3'><'col-md-6'p>>"
-            , buttons: [{
-                    extend: 'pdf'
-                    , className: 'btn btn-default'
+            ],
+            dom: "<'row'<'col-md-4'B><'col-md-5'l><'col-md-3'f>><'row'<'col-md-12'tr>><'row'<'col-md-3'i><'col-md-3'><'col-md-6'p>>",
+            buttons: [{
+                extend: 'pdf',
+                className: 'btn btn-default'
+            }, {
+                extend: 'excel',
+                className: 'btn btn-default'
+            }, {
+                text: 'Novo',
+                action: function (e, dt, node, config) {
+                    $('#id').val('');
+                    $('#modalTitle').html('Novo funcionario');
+                    $("#created").html("Cadastrar");
+                    $("#updated").hide();
+                    $("#created").show();
+                    $('#formEmployee').trigger('reset');
+                    $('#modalFormCreate').modal('show');
                 }
-                , {
-                    extend: 'excel'
-                    , className: 'btn btn-default'
-                }
-                , {
-                    text: 'Novo'
-                    , action: function(e, dt, node, config) {
-                        $('#id').val('');
-                        $('#modalTitle').html('Novo funcionario');
-                        $('#send').html('Cadastrar');
-                        $('#send').removeClass('edit');
-                        $('#send').addClass('save');
-                        $('#formEmployee').trigger('reset');
-                        $('#modalFormCreate').modal('show');
-                    }
-                }
-            ]
-            , language: {
+            }],
+            language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Portuguese-Brasil.json"
-            }
-        , });
+            },
+        });
     });
 
     /** RESET MODAL VALIDATIONS */
-    $("#modalFormCreate").on("hide.bs.modal", function() {
+    $("#modalFormCreate").on("hide.bs.modal", function () {
         $('#id').val('');
         $('#formEmployee').trigger('reset');
         $('#name').removeClass('is-invalid');
@@ -107,31 +93,30 @@
     });
 
     /** LIST PERMISSIONS */
-    $(document).ready(function() {
+    $(document).ready(function () {
         $.ajax({
-            url: "{{ url('towers') }}"
-            , type: "GET"
-            , dataType: "json"
-            , success: function(data) {
-                $.each(data, function(i, d) {
+            url: "{{ url('towers') }}",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                $.each(data, function (i, d) {
                     $('#select-tower').append('<option value="' + d.id + '">' + d.name + '</option>');
                 });
             }
         })
     });
 
-    /** CREATE  */
-    $(document).on('click', '.save', function(event) {
+    /** ::::::::::::::::::::::::: FUNCTIONS ::::::::::::::::::::::::: */
 
-        event.preventDefault();
+    /** CREATE  */
+    function store() {
 
         $.ajax({
-            url: "{{ route('employees.store') }}"
-            , type: 'POST'
-            , dataType: 'json'
-            , data: $('#formEmployee').serialize()
-            , success: function(data) {
-                $('#id').val('');
+            url: "{{ route('employees.store') }}",
+            type: 'POST',
+            dataType: 'json',
+            data: $('#formEmployee').serialize(),
+            success: function (data) {
                 $('#formEmployee').trigger('reset');
                 $('#modalFormCreate').modal('hide');
                 $('#employees_table').DataTable().ajax.reload(null, false);
@@ -141,9 +126,9 @@
                 if (data.error) {
                     toastr.error(data.error);
                 }
-            }
-            , complete: function(data) {}
-            , error: function(data) {
+            },
+            complete: function (data) {},
+            error: function (data) {
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
                     $('#name').addClass('is-invalid');
@@ -151,117 +136,108 @@
                 }
             }
         });
-    });
+    }
 
     /** EDIT  */
-    $(document).on('click', '#edit-item', function(event) {
+    function edit(id) {
 
-        event.preventDefault();
+        $("#updated").show();
+        $("#created").hide();
 
-        let id = $(this).data('id');
-
-        $('#send').removeClass('save');
-        $('#send').addClass('edit');
-
-        $.get("{{ route('employees.index') }}" + '/' + id + '/edit', function(data) {
-
-            $('#modalTitle').html('Editar funcionario');
-            $('#send').html('Atualizar');
-            $('#modalFormCreate').modal('show');
-            $('#id').val(data.id);
-            $('#name').val(data.name);
-            if (data.contacts != null) {
-                $('#email').val(data.contacts.email);
-                $('#phone').val(data.contacts.phone);
-                $('#cellphone').val(data.contacts.cellphone);
+        $.get(
+            "{{ route('employees.index') }}" + '/' + id + '/edit',
+            function (data) {
+                $('#modalTitle').html('Editar funcionario');
+                $('#updated').html('Atualizar');
+                $('#modalFormCreate').modal('show');
+                $('#name').val(data.name);
+                if (data.contacts != null) {
+                    $('#email').val(data.contacts.email);
+                    $('#phone').val(data.contacts.phone);
+                    $('#cellphone').val(data.contacts.cellphone);
+                }
+                $('#type').val(data.type);
+                $('#select-tower').val(data.tower_id).trigger('change');
+                $('#id').val(data.id);
             }
-            $('#type').val(data.type);
-            $('#select-tower').val(data.tower_id).trigger('change');
+        );
+    }
+
+    /** UPDATE */
+    function update() {
+
+        var id = $('#id').val();
+
+        $.ajax({
+            url: "{{ route('employees.index') }}" + '/' + id,
+            type: 'PATCH',
+            dataType: 'json',
+            data: $('#formEmployee').serialize(),
+            success: function (data) {
+                $('#formEmployee').trigger('reset');
+                $('#modalFormCreate').modal('hide');
+                $('#employees_table').DataTable().ajax.reload(null, false);
+                if (data.success) {
+                    toastr.success(data.success);
+                }
+                if (data.error) {
+                    toastr.error(data.error);
+                }
+            },
+            complete: function (data) {},
+            error: function (data) {
+                /** Criar as validações dos inputs para erros */
+                if (data.responseJSON.errors.name) {
+                    $('#name').addClass('is-invalid');
+                    $('#name-feedback').html(data.responseJSON.errors.name);
+                }
+            }
         });
 
-        /** SEND FORM UPDATE */
-        $('.edit').unbind().bind('click', function(event) {
-
-            event.preventDefault();
-
-            $.ajax({
-                url: "{{ route('employees.index') }}" + '/' + id
-                , type: 'PATCH'
-                , dataType: 'json'
-                , data: $('#formEmployee').serialize()
-                , success: function(data) {
-                    $('#id').val('');
-                    $('#formEmployee').trigger('reset');
-                    $('#modalFormCreate').modal('hide');
-                    $('#employees_table').DataTable().ajax.reload(null, false);
-                    if (data.success) {
-                        toastr.success(data.success);
-                    }
-                    if (data.error) {
-                        toastr.error(data.error);
-                    }
-                }
-                , complete: function(data) {}
-                , error: function(data) {
-                    /** Criar as validações dos inputs para erros */
-                    if (data.responseJSON.errors.name) {
-                        $('#name').addClass('is-invalid');
-                        $('#name-feedback').html(data.responseJSON.errors.name);
-                    }
-                }
-            });
-
-        });
-    });
+        $('#id').val('');
+    }
 
     /** DELETE  */
-    $(document).on('click', '#delete-item', function(event) {
+    function destroy() {
 
-        event.preventDefault();
+        var id = $('#id').val();
 
-        let id = $(this).data('id');
-
-        $('#deleteModalCenter').modal('show');
-        $('#deleteModalLongTitle').html('Confirmar exclusão');
-        $('#id-item').html(id);
-
-        /** SEND FORM DELETE */
-        $('#send-delete').unbind().bind('click', function(event) {
-
-            event.preventDefault();
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+        $.ajax({
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "id": id
+            },
+            url: "{{ route('employees.index') }}" + '/' + id,
+            type: 'DELETE',
+            dataType: 'json',
+            success: function (data) {
+                $('#id').val('');
+                $('#employees_table').DataTable().ajax.reload(null, false);
+                $('#deleteModalCenter').modal('hide');
+                if (data.success) {
+                    toastr.success(data.success);
                 }
-            });
-
-            $.ajax({
-                data: {
-                    "_token": "{{ csrf_token() }}"
-                    , "id": id
+                if (data.error) {
+                    toastr.error(data.error);
                 }
-                , url: "{{ route('employees.index') }}" + '/' + id
-                , type: 'DELETE'
-                , dataType: 'json'
-                , success: function(data) {
-                    $('#id').val('');
-                    $('#employees_table').DataTable().ajax.reload(null, false);
-                    $('#deleteModalCenter').modal('hide');
-                    if (data.success) {
-                        toastr.success(data.success);
-                    }
-                    if (data.error) {
-                        toastr.error(data.error);
-                    }
-                }
-                , complete: function(data) {}
-                , error: function(data) {
-                    /** Criar as validações dos inputs para erros */
-                }
-            });
+            },
+            complete: function (data) {},
+            error: function (data) {
+                /** Criar as validações dos inputs para erros */
+            }
         });
-    });
+
+        $('#id').val('');
+    }
+
+    /** DELETE CONFIRMATION */
+    function confirmation(item) {
+        $("#deleteModalCenter").modal("show");
+        $("#deleteModalLongTitle").html("Confirmar exclusão");
+        $("#id-item").html(item);
+
+        $('#id').val(item);
+    }
 
 </script>
 @stop
