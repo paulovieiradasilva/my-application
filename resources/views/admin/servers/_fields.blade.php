@@ -64,7 +64,7 @@
                     <th><input class="form-control form-control-sm" type="text" id="usr" placeholder="Usuário"></th>
                     <th><input class="form-control form-control-sm" type="text" id="pwd" placeholder="Senha"></th>
                     <th>
-                        <a href="#" style="display: none;" id="add-item-table" class="btn btn-xs btn-primary my-1 p-1"> Adicionar</a>
+                        <a href="#" style="display: none;" onclick="addItemToTable()" id="add-item-table" class="btn btn-xs btn-primary my-1 p-1"> Adicionar</a>
                         <a href="#" style="display: none;" onclick="addItem()" id="edit-item-table" class="btn btn-xs btn-success my-1 p-1"> Adicionar</a>
                     </th>
                 </thead>

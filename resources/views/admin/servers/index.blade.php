@@ -1,11 +1,10 @@
-@extends('layouts.app')
-@section('content')
+@extends('layouts.app') @section('content')
 <section>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <!-- <div class="card-header"></div> -->
-                <div style="display: none;" id="buttons"></div>
+                <div id="buttons"></div>
                 <div class="card-body">
                     <div id="loader">Carregando...<img src="{{ asset('img/loaders/loader-grey.gif') }}"></div>
                     <table id="servers_table" class="table table-hover table-sm" style="display: none;">
@@ -29,15 +28,12 @@
     </div>
 </section>
 
-@include('admin.servers.form')
-
-@endsection
-
-@section('scripts')
+@include('admin.servers.form') @endsection @section('scripts')
 <script>
-    $(document).ready(function () {
+    /** LIST SERVERS */
+    $(document).ready(function() {
         $('#servers_table').DataTable({
-            initComplete: function () {
+            initComplete: function() {
                 $('#loader').hide();
                 $('#servers_table').css('display', 'inline-table').css('width', 'inherit');
             },
@@ -67,7 +63,7 @@
                 className: 'btn btn-default'
             }, {
                 text: 'Novo',
-                action: function (e, dt, node, config) {
+                action: function(e, dt, node, config) {
                     $('#id').val(''); // verificar a possiblidade de remoção
                     $('#edit-item-table').hide();
                     $('#add-item-table').show();
@@ -87,7 +83,7 @@
     });
 
     /** RESET MODAL VALIDATIONS */
-    $("#modalFormCreate").on("hide.bs.modal", function () {
+    $("#modalFormCreate").on("hide.bs.modal", function() {
         cleanFormDB();
         $("#server-table").find("tr:not(:first)").remove();
         $('#formServer').trigger('reset');
@@ -102,14 +98,14 @@
         $('#select-environment').val(null).trigger('change');
     });
 
-     /** LIST PERMISSIONS */
-     $(document).ready(function () {
+    /** LIST PERMISSIONS */
+    $(document).ready(function() {
         $.ajax({
             url: "{{ url('environments') }}",
             type: "GET",
             dataType: "json",
-            success: function (data) {
-                $.each(data, function (i, d) {
+            success: function(data) {
+                $.each(data, function(i, d) {
                     $('#select-environment').append('<option value="' + d.id + '">' + d.name + '</option>');
                 });
             }
@@ -117,42 +113,9 @@
     });
 
     /** CHANGE TYPE SERVER */
-    $(document).on('change', '#type', function () {
+    $(document).on('change', '#type', function() {
         var item = $('#type').val();
         (item == 'database') ? $('#table').show(): $('#table').hide();
-    });
-
-    /** VALIDATION AND ADD NEW INF DATABASE TO TABLE*/
-    $(document).on('click', '#add-item-table', function (event) {
-
-        event.preventDefault();
-
-        if ($('#dbn').val() == '' || $('#sgdb').val() == '' || $('#port').val() == '' || $('#usr').val() == '' || $('#pwd').val() == '') {
-
-            $('#error-msg').show();
-
-            ($('#dbn').val() == '') ? $('#dbn').addClass('is-invalid'): $('#dbn').removeClass('is-invalid');
-            ($('#sgdb').val() == '') ? $('#sgdb').addClass('is-invalid'): $('#sgdb').removeClass('is-invalid');
-            ($('#port').val() == '') ? $('#port').addClass('is-invalid'): $('#port').removeClass('is-invalid');
-            ($('#usr').val() == '') ? $('#usr').addClass('is-invalid'): $('#usr').removeClass('is-invalid');
-            ($('#pwd').val() == '') ? $('#pwd').addClass('is-invalid'): $('#pwd').removeClass('is-invalid');
-
-        } else {
-
-            var id;
-            var name = $('#dbn').val();
-            var sgdb = $('#sgdb').val();
-            var port = $('#port').val();
-            var username = $('#usr').val();
-            var password = $('#pwd').val();
-
-            var data = { data: { id, name, sgdb, port, credential: { username, password } } };
-
-            /** */
-            addRowTable('#server-table', data.data, null);
-
-            cleanFormDB();
-        }
     });
 
     /** ::::::::::::::::::::::::: FUNCTIONS ::::::::::::::::::::::::: */
@@ -165,7 +128,7 @@
             type: 'POST',
             dataType: 'json',
             data: $('#formServer').serialize(),
-            success: function (data) {
+            success: function(data) {
                 cleanFormDB();
                 $('#formServer').trigger('reset');
                 $('#modalFormCreate').modal('hide');
@@ -177,8 +140,8 @@
                     toastr.error(data.error);
                 }
             },
-            complete: function (data) {},
-            error: function (data) {
+            complete: function(data) {},
+            error: function(data) {
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
                     $('#name').addClass('is-invalid');
@@ -213,29 +176,29 @@
 
         $.get(
             "{{ route('servers.index') }}" + '/' + id + '/edit',
-            function (data) {
+            function(data) {
 
-            /** */
-            data.data.databases.forEach(function (item) {
-                addRowTable('#server-table', item);
-            })
+                /** */
+                data.data.databases.forEach(function(item) {
+                    addRowTable('#server-table', item);
+                })
 
-            $('#modalTitle').html('Editar servidor');
-            $('#updated').html('Atualizar');
-            $('#modalFormCreate').modal('show');
-            $('#name').val(data.data.server.name);
-            $('#ip').val(data.data.server.ip);
-            $('#os').val(data.data.server.os);
-            if (data.data.server.credential != null) {
-                $('#username').val(data.data.server.credential.username);
-                $('#password').val(data.data.server.credential.password);
-            }
-            $('#type').val(data.data.server.type);
-            (data.data.server.type == 'database') ? $('#table').show(): $('#table').hide();
-            $('#select-environment').val(data.data.server.environment_id).trigger('change');
-            $('#description').val(data.data.server.description);
-            $('#id').val(data.data.server.id);
-        });
+                $('#modalTitle').html('Editar servidor');
+                $('#updated').html('Atualizar');
+                $('#modalFormCreate').modal('show');
+                $('#name').val(data.data.server.name);
+                $('#ip').val(data.data.server.ip);
+                $('#os').val(data.data.server.os);
+                if (data.data.server.credential != null) {
+                    $('#username').val(data.data.server.credential.username);
+                    $('#password').val(data.data.server.credential.password);
+                }
+                $('#type').val(data.data.server.type);
+                (data.data.server.type == 'database') ? $('#table').show(): $('#table').hide();
+                $('#select-environment').val(data.data.server.environment_id).trigger('change');
+                $('#description').val(data.data.server.description);
+                $('#id').val(data.data.server.id);
+            });
     }
 
     /** UPDATE */
@@ -248,7 +211,7 @@
             type: 'PATCH',
             dataType: 'json',
             data: $('#formServer').serialize(),
-            success: function (data) {
+            success: function(data) {
                 $('#formServer').trigger('reset');
                 $('#modalFormCreate').modal('hide');
                 $('#servers_table').DataTable().ajax.reload(null, false);
@@ -259,8 +222,8 @@
                     toastr.error(data.error);
                 }
             },
-            complete: function (data) {},
-            error: function (data) {
+            complete: function(data) {},
+            error: function(data) {
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
                     $('#name').addClass('is-invalid');
@@ -289,7 +252,7 @@
             url: "{{ route('servers.index') }}" + '/' + id,
             type: 'DELETE',
             dataType: 'json',
-            success: function (data) {
+            success: function(data) {
                 $('#servers_table').DataTable().ajax.reload(null, false);
                 $('#deleteModalCenter').modal('hide');
                 if (data.success) {
@@ -299,8 +262,8 @@
                     toastr.error(data.error);
                 }
             },
-            complete: function (data) {},
-            error: function (data) {
+            complete: function(data) {},
+            error: function(data) {
                 /** Criar as validações dos inputs para erros */
             }
         });
@@ -315,6 +278,25 @@
         $("#id-item").html(item);
 
         $('#id').val(item);
+    }
+
+    /** ADD ITEM TO TABLE */
+    function addItemToTable() {
+
+        var $i = Math.floor((Math.random() * 100) + 1);
+        var id;
+        var name = $('#dbn').val();
+        var sgdb = $('#sgdb').val();
+        var port = $('#port').val();
+        var username = $('#usr').val();
+        var password = $('#pwd').val();
+
+        var data = { data: { id, name, sgdb, port, credential: { username, password }}};
+
+        /** */
+        addRowTable('#server-table', data.data, $i);
+
+        cleanFormDB();
     }
 
     /** ADD ITEM DATABASE AND TABLE*/
@@ -340,7 +322,7 @@
             url: "{{ route('database.store') }}",
             type: 'POST',
             dataType: 'json',
-            success: function (data) {
+            success: function(data) {
                 cleanFormDB();
 
                 /** */
@@ -353,8 +335,8 @@
                     toastr.error(data.error);
                 }
             },
-            complete: function (data) {},
-            error: function (data) {
+            complete: function(data) {},
+            error: function(data) {
                 /** Criar as validações dos inputs para erros */
             }
         });
@@ -382,7 +364,7 @@
             url: "{{ url('database') }}" + '/' + id,
             type: 'PATCH',
             dataType: 'json',
-            success: function (data) {
+            success: function(data) {
 
                 if (data.success) {
                     toastr.success(data.success);
@@ -391,38 +373,42 @@
                     toastr.error(data.error);
                 }
             },
-            complete: function (data) {},
-            error: function (data) {
+            complete: function(data) {},
+            error: function(data) {
                 /** Criar as validações dos inputs para erros */
             }
         });
     }
 
     /** REMOVE ITEM TABLE AND DATABASE */
-    function removeItem(id) {
+    function removeItem(id, index) {
 
-        $.ajax({
-            data: {
-                "_token": "{{ csrf_token() }}",
-                "id": id
-            },
-            url: "{{ url('database') }}" + '/' + id,
-            type: 'DELETE',
-            dataType: 'json',
-            success: function (data) {
-                $("#row-" + id).remove();
-                if (data.success) {
-                    toastr.success(data.success);
+        if (id != undefined) {
+            $.ajax({
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: id
+                },
+                url: "{{ url('database') }}" + '/' + id,
+                type: 'DELETE',
+                dataType: 'json',
+                success: function(data) {
+                    $("#row-" + id).remove();
+                    if (data.success) {
+                        toastr.success(data.success);
+                    }
+                    if (data.error) {
+                        toastr.error(data.error);
+                    }
+                },
+                complete: function(data) {},
+                error: function(data) {
+                    /** Criar as validações dos inputs para erros */
                 }
-                if (data.error) {
-                    toastr.error(data.error);
-                }
-            },
-            complete: function (data) {},
-            error: function (data) {
-                /** Criar as validações dos inputs para erros */
-            }
-        });
+            });
+        } else {
+            $("#row-" + index).remove();
+        }
 
     }
 
@@ -440,28 +426,28 @@
     function addRowTable(selector, data, index = null) {
 
         newRow = $(selector).find('tbody').append(`
-            <tr id="row-${data.id}">
+            <tr id="row-${index}">
                 <td><input class="form-control form-control-sm" id="name_${data.id}" type="text" name="db[]" value="${data.name}"></td>
                 <td><input class="form-control form-control-sm" id="sgdb_${data.id}" type="text" name="sgdb[]" value="${data.sgdb}"></td>
                 <td><input class="form-control form-control-sm" id="port_${data.id}" type="text" name="port[]" value="${data.port}"></td>
                 <td><input class="form-control form-control-sm" id="username_${data.id}" type="text" name="usr[]" value="${data.credential.username}"></td>
                 <td><input class="form-control form-control-sm" id="password_${data.id}" type="text" name="pwd[]" value="${data.credential.password}"></td>
                 <td>
-                    <a href="#" title="Update" id="update-item-databases" onclick="updateItem(${data.id})" class="btn btn-primary btn-xs">
+                    <a href="#" title="Update" onclick="updateItem(${data.id})" class="btn btn-primary btn-xs update-item-databases">
                         <i class="fas fa-sync-alt"></i>
                     </a>
-                    <a href="#" title="Delete" id="delete-item-databases" onclick="removeItem(${data.id})" class="btn btn-danger btn-xs">
+                    <a href="#" title="Delete" onclick="removeItem(${data.id},${index})" class="btn btn-danger btn-xs">
                         <i class="fas fa-trash-alt"></i>
                     </a>
                 </td>
             </tr>
-        `);
+        `
+        );
 
         /** */
-        (data.id === undefined) ? $('#update-item-databases').addClass('disabled'): '';
+        (data.id === undefined) ? $('.update-item-databases').addClass('disabled'): '';
 
         return newRow;
     }
-
 </script>
 @stop
