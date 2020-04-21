@@ -1,4 +1,5 @@
-@extends('layouts.app') @section('content')
+@extends('layouts.app')
+@section('content')
 <section>
     <div class="row">
         <div class="col-md-12">
@@ -28,7 +29,11 @@
     </div>
 </section>
 
-@include('admin.servers.form') @endsection @section('scripts')
+@include('admin.servers.form')
+
+@endsection
+
+@section('scripts')
 <script>
     /** LIST SERVERS */
     $(document).ready(function() {
@@ -64,7 +69,6 @@
             }, {
                 text: 'Novo',
                 action: function(e, dt, node, config) {
-                    $('#id').val(''); // verificar a possiblidade de remoção
                     $('#edit-item-table').hide();
                     $('#add-item-table').show();
                     $('#table').hide();
@@ -183,6 +187,8 @@
                     addRowTable('#server-table', item);
                 })
 
+                $('#edit-item-table').show();
+                $('#add-item-table').hide();
                 $('#modalTitle').html('Editar servidor');
                 $('#updated').html('Atualizar');
                 $('#modalFormCreate').modal('show');
@@ -280,66 +286,104 @@
         $('#id').val(item);
     }
 
+    /** VALIDATE */
+    function validate(selector) {
+
+        var inputs = new Array();
+        var count = 0;
+
+        $('input[name='+selector+']').each(function(){
+
+            var value = $(this).val();
+            if (value) {
+                inputs.push(value);
+            }
+            count++;
+            
+        });
+
+        return (inputs.length == count) ? true : false;
+
+    }
+
     /** ADD ITEM TO TABLE */
     function addItemToTable() {
 
-        var $i = Math.floor((Math.random() * 100) + 1);
-        var id;
-        var name = $('#dbn').val();
-        var sgdb = $('#sgdb').val();
-        var port = $('#port').val();
-        var username = $('#usr').val();
-        var password = $('#pwd').val();
+        var result = validate('is-empty');
 
-        var data = { data: { id, name, sgdb, port, credential: { username, password }}};
+        if (result) {
 
-        /** */
-        addRowTable('#server-table', data.data, $i);
+            var $i = Math.floor((Math.random() * 100) + 1);
+            var id;
+            var name = $('#dbn').val();
+            var sgdb = $('#sgdb').val();
+            var port = $('#port').val();
+            var username = $('#usr').val();
+            var password = $('#pwd').val();
 
-        cleanFormDB();
+            var data = { data: { id, name, sgdb, port, credential: { username, password }}};
+
+            /** */
+            addRowTable('#server-table', data.data, $i);
+
+            cleanFormDB('is-empty','is-invalid');
+
+        } else {
+            $('#error-msg').show();
+        }
+
     }
 
     /** ADD ITEM DATABASE AND TABLE*/
     function addItem() {
 
-        var name = $('#dbn').val();
-        var sgdb = $('#sgdb').val();
-        var port = $('#port').val();
-        var username = $('#usr').val();
-        var password = $('#pwd').val();
-        let server_id = $('#id').val();
+        var result = validate('is-empty');
 
-        $.ajax({
-            data: {
-                "_token": "{{ csrf_token() }}",
-                "name": name,
-                "sgdb": sgdb,
-                "port": port,
-                "username": username,
-                "password": password,
-                "server_id": server_id
-            },
-            url: "{{ route('database.store') }}",
-            type: 'POST',
-            dataType: 'json',
-            success: function(data) {
-                cleanFormDB();
+        if (result) {
 
-                /** */
-                addRowTable('#server-table', data.data);
+            var name = $('#dbn').val();
+            var sgdb = $('#sgdb').val();
+            var port = $('#port').val();
+            var username = $('#usr').val();
+            var password = $('#pwd').val();
+            let server_id = $('#id').val();
 
-                if (data.success) {
-                    toastr.success(data.success);
+            $.ajax({
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "name": name,
+                    "sgdb": sgdb,
+                    "port": port,
+                    "username": username,
+                    "password": password,
+                    "server_id": server_id
+                },
+                url: "{{ route('database.store') }}",
+                type: 'POST',
+                dataType: 'json',
+                success: function(data) {
+                    cleanFormDB();
+
+                    /** */
+                    addRowTable('#server-table', data.data);
+
+                    if (data.success) {
+                        toastr.success(data.success);
+                    }
+                    if (data.error) {
+                        toastr.error(data.error);
+                    }
+                },
+                complete: function(data) {},
+                error: function(data) {
+                    /** Criar as validações dos inputs para erros */
                 }
-                if (data.error) {
-                    toastr.error(data.error);
-                }
-            },
-            complete: function(data) {},
-            error: function(data) {
-                /** Criar as validações dos inputs para erros */
-            }
-        });
+            });
+
+        } else {
+            $('#error-msg').show();
+        }
+
     }
 
     /** UPDATE ITEM DATABASE AND TABLE*/
@@ -393,7 +437,7 @@
                 type: 'DELETE',
                 dataType: 'json',
                 success: function(data) {
-                    $("#row-" + id).remove();
+                    $("#row-" + index).remove();
                     if (data.success) {
                         toastr.success(data.success);
                     }
@@ -413,13 +457,20 @@
     }
 
     /** CLEAN FORM DB */
-    function cleanFormDB() {
+    function cleanFormDB(selector, cls) {
+
         $('#error-msg').hide();
-        $('#dbn').removeClass('is-invalid').val('');
-        $('#sgdb').removeClass('is-invalid').val('');
-        $('#port').removeClass('is-invalid').val('');
-        $('#usr').removeClass('is-invalid').val('');
-        $('#pwd').removeClass('is-invalid').val('');
+
+        $('#dbn').val('');
+        $('#sgdb').val('');
+        $('#port').val('');
+        $('#usr').val('');
+        $('#pwd').val('');
+
+        $('input[name='+selector+']').each(function(){
+            $('input[name='+selector+']').removeClass(cls);
+        });
+
     }
 
     /** RETURN NEW TR TO TABLE */
@@ -449,5 +500,6 @@
 
         return newRow;
     }
+
 </script>
 @stop
