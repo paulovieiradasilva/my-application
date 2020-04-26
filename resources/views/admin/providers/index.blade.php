@@ -1,4 +1,5 @@
-@extends('layouts.app') @section('content')
+@extends('layouts.app')
+@section('content')
 <section>
     <div class="row">
         <div class="col-md-12">
@@ -16,7 +17,7 @@
                                 <th>Plantão</th>
                                 <th>Criado</th>
                                 <th>Atualizado</th>
-                                <th></th>
+                                <th style="width: 35px;"></th>
                             </tr>
                         </thead>
                     </table>
@@ -26,7 +27,11 @@
     </div>
 </section>
 
-@include('admin.providers.form') @endsection @section('scripts')
+@include('admin.providers.form')
+
+@endsection
+
+@section('scripts')
 <script>
     /** LIST PROVIDERS */
     $(document).ready(function () {
@@ -37,6 +42,7 @@
             },
             processing: true,
             serverSide: true,
+            autoWidth: false,
             ajax: "{{ url('providers_datatables') }}",
             columns: [
                 {data: "id"},
@@ -79,11 +85,9 @@
 
     /** RESET MODAL VALIDATIONS */
     $("#modalFormCreate").on("hide.bs.modal", function () {
-        $('#id').val('');
+        cleanFormValidation();
         $("#formProvider").trigger("reset");
-        $("#name").removeClass("is-invalid");
-        $("#opening_hours").removeClass("is-invalid");
-        $("#on_duty").removeClass("is-invalid");
+        $('#on_duty').val(null).trigger('change');
     });
 
     /** ::::::::::::::::::::::::: FUNCTIONS ::::::::::::::::::::::::: */
@@ -218,6 +222,15 @@
         $("#id-item").html(item);
 
         $('#id').val(item);
+    }
+
+    /** CLEAN FORM VALIDATION */
+    function cleanFormValidation(selector, cls) {
+
+        $('input[name='+selector+']').each(function(){
+            $('input[name='+selector+']').removeClass(cls);
+        });
+
     }
 
 </script>

@@ -18,7 +18,7 @@ class ProviderController extends Controller
      */
     public function index()
     {
-        return view('admin.providers.index')->with('page', 'Fornecedors');
+        return view('admin.providers.index')->with('page', 'Fornecedores');
     }
 
     /** */
@@ -27,6 +27,12 @@ class ProviderController extends Controller
         return DataTables::of(Provider::with(['contacts'])->select(['id', 'name', 'opening_hours', 'on_duty', 'description', 'created_at', 'updated_at']))
             ->addColumn('action', 'admin.providers._actions')
             ->make(true);
+    }
+
+    /** */
+    public function get()
+    {
+        return $providers = Provider::all();
     }
 
     /**

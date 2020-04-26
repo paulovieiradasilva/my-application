@@ -16,7 +16,7 @@
                                 <th>Descição</th>
                                 <th>Criado</th>
                                 <th>Atualizado</th>
-                                <th></th>
+                                <th style="width: 35px;"></th>
                             </tr>
                         </thead>
                     </table>
@@ -40,25 +40,15 @@
             },
             processing: true,
             serverSide: true,
+            autoWidth: false,
             ajax: "{{ url('environments_datatables') }}",
-            columns: [{
-                    data: 'id'
-                },
-                {
-                    data: 'name'
-                },
-                {
-                    data: 'description'
-                },
-                {
-                    data: 'created_at'
-                },
-                {
-                    data: 'updated_at'
-                },
-                {
-                    data: 'action'
-                }
+            columns: [
+                { data: 'id' },
+                { data: 'name' },
+                { data: 'description' },
+                { data: 'created_at' },
+                { data: 'updated_at' },
+                { data: 'action' }
             ],
             order: [
                 [0, 'desc']
@@ -92,17 +82,9 @@
 
         /** RESET MODAL VALIDATIONS */
         $("#modalFormCreate").on("hide.bs.modal", function () {
-            $('#id').val('');
+            cleanFormValidation();
             $('#formEnvironment').trigger('reset');
-            $('#name').removeClass('is-invalid');
-            $('#description').removeClass('is-invalid');
-            $('#send').removeClass('save');
-            $('#send').removeClass('edit');
         });
-
-        /** CREATE  */
-        /** EDIT  */
-        /** DELETE  */
 
     });
 
@@ -247,6 +229,15 @@
         $("#id-item").html(item);
 
         $('#id').val(item);
+    }
+
+    /** CLEAN FORM VALIDATION */
+    function cleanFormValidation(selector, cls) {
+
+        $('input[name='+selector+']').each(function(){
+            $('input[name='+selector+']').removeClass(cls);
+        });
+
     }
 
 </script>

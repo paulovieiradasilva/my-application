@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Employee;
 use Illuminate\Database\Seeder;
 
 class EmployeesTableSeeder extends Seeder
@@ -11,6 +12,6 @@ class EmployeesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Employee::class, 50)->create();
+        factory(Employee::class, 50)->create();
     }
 }

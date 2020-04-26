@@ -11,6 +11,14 @@ class Integration extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'description', 'type', 'application_id'];
+
+    /**
+     * Get the application of the service.
+     */
+    public function application()
+    {
+        return $this->belongsTo(Application::class);
+    }
 
 }

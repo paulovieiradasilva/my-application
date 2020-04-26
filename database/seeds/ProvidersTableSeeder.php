@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Provider;
 use Illuminate\Database\Seeder;
 
 class ProvidersTableSeeder extends Seeder
@@ -11,6 +12,6 @@ class ProvidersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Provider::class, 20)->create();
+        factory(Provider::class, 20)->create();
     }
 }

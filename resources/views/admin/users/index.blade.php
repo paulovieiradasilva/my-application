@@ -16,7 +16,7 @@
                                 <th>E-mail</th>
                                 <th>Criado</th>
                                 <th>Atualizado</th>
-                                <th></th>
+                                <th style="width: 35px;"></th>
                             </tr>
                         </thead>
                     </table>
@@ -41,26 +41,16 @@
             },
             processing: true,
             serverSide: true,
+            autoWidth: false,
             ajax: "{{ url('users_datatables') }}",
             pagingType: "simple_numbers",
-            columns: [{
-                    data: 'id'
-                },
-                {
-                    data: 'name'
-                },
-                {
-                    data: 'email'
-                },
-                {
-                    data: 'created_at'
-                },
-                {
-                    data: 'updated_at'
-                },
-                {
-                    data: 'action'
-                }
+            columns: [
+                { data: 'id' },
+                { data: 'name' },
+                { data: 'email' },
+                { data: 'created_at' },
+                { data: 'updated_at' },
+                { data: 'action' }
             ],
             order: [
                 [0, 'desc']
@@ -96,29 +86,13 @@
 
     /** RESET MODAL VALIDATIONS */
     $("#modalFormCreate").on("hide.bs.modal", function () {
-        $('#id').val('');
-        $('#formUser').trigger('reset');
-        $('#name').removeClass('is-invalid');
-        $('#email').removeClass('is-invalid');
-        $('#password').removeClass('is-invalid');
-        $('#password-confirm').removeClass('is-invalid');
-        $('#send').removeClass('save');
-        $('#send').removeClass('edit');
-        $('#select-role').val(null).trigger('change');
+        cleanFormValidation();
+        $('#select-roleS').val(null).trigger('change');
     });
 
-    /** LIST ROLES */
+    /** LIST ALL */
     $(document).ready(function () {
-        $.ajax({
-            url: "{{ url('roles') }}",
-            type: "GET",
-            dataType: "json",
-            success: function (data) {
-                $.each(data, function (i, d) {
-                    $('#select-role').append('<option value="' + d.id + '">' + d.name + '</option>');
-                });
-            }
-        })
+        getSelectOptions("{{ url('roles') }}", "GET", "json", "#select-roles")
     });
 
     /** ::::::::::::::::::::::::: FUNCTIONS ::::::::::::::::::::::::: */
@@ -188,7 +162,7 @@
                 $('#modalFormCreate').modal('show');
                 $('#name').val(data.name);
                 $('#email').val(data.email);
-                $('#select-role').val(itens).trigger('change');
+                $('#select-roleS').val(itens).trigger('change');
                 $('#id').val(data.id);
             }
         );
@@ -201,7 +175,7 @@
 
         $.ajax({
             url: "{{ route('users.index') }}" + '/' + id,
-            type: 'PATCH',
+            type: 'PUT',
             dataType: 'json',
             data: $('#formUser').serialize(),
             success: function (data) {
@@ -281,5 +255,13 @@
         $('#id').val(item);
     }
 
+    /** CLEAN FORM VALIDATION */
+    function cleanFormValidation(selector, cls) {
+
+        $('input[name='+selector+']').each(function(){
+            $('input[name='+selector+']').removeClass(cls);
+        });
+
+    }
 </script>
 @stop

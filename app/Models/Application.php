@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Application extends Model
@@ -11,7 +12,17 @@ class Application extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = [
+        'name',
+        'description',
+        'start',
+        'platform',
+        'type',
+        'directory_app',
+        'uri_internet',
+        'uri_intranet',
+        'provider_id'
+    ];
 
     /**
      * Get the provider of the application.
@@ -22,19 +33,19 @@ class Application extends Model
     }
 
     /**
-     * Get the application of the service.
+     * Get the servers for the application.
      */
-    public function server()
+    public function servers()
     {
-        return $this->belongsTo(Server::class);
+        return $this->belongsToMany(Server::class);
     }
 
     /**
-     * Get the environment through the server.
+     * Get the users for the application.
      */
-    public function environment()
+    public function employees()
     {
-        return $this->hasOneThrough(Environment::class, Server::class);
+        return $this->belongsToMany(Employee::class);
     }
 
     /**
@@ -54,10 +65,10 @@ class Application extends Model
     }
 
     /**
-     * Get the application's credential.
+     * Get the server's credential.
      */
     public function credential()
     {
-        return $this->morphOne(Credential::class, 'credentailable');
+        return $this->morphOne(Credential::class, 'credentialable');
     }
 }

@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     background-color: #F4F6F9;
     margin: 0;
     font-size: 13px;
@@ -46,13 +47,15 @@ html, body {
     margin-bottom: 30px;
 }
 
-.dropdown-item.active, .dropdown-item:active {
+.dropdown-item.active,
+.dropdown-item:active {
     color: #ada5a5;
     text-decoration: none;
     background-color: #f4f6f9;
 }
 
-.dropdown-item.active, .dropdown-item:hover {
+.dropdown-item.active,
+.dropdown-item:hover {
     color: #292828;
     text-decoration: none;
     background-color: #f4f6f9;
@@ -70,4 +73,9 @@ html, body {
     background-color: transparent;
     border: 0;
     margin-left: 2px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #444;
+    line-height: 24px;
 }

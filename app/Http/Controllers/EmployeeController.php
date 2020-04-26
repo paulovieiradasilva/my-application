@@ -18,7 +18,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        return view('admin.employees.index')->with('page', 'Funcionarios');
+        return view('admin.employees.index')->with('page', 'Funcionários');
     }
 
     /** */
@@ -83,7 +83,7 @@ class EmployeeController extends Controller
      */
     public function edit($id)
     {
-        $employee = Employee::find($id);
+        $employee = Employee::findOrFail($id);
         $employee->contacts;
 
         return $employee;

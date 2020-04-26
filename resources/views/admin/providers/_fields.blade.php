@@ -49,8 +49,8 @@
 <div class="form-group row">
     <label for="on_duty" class="col-sm-2 col-form-label">Plantão</label>
     <div class="col-sm-10">
-        <select name="on_duty" id="on_duty" class="form-control" placeholder="Plantão">
-            <option disabled="disabled" selected="selected">Selecione um item</option>
+        <select name="on_duty" id="on_duty" class="form-control select2" data-placeholder="Plantão">
+            <option disabled selected></option>
             <option value="-">N/A</option>
             <option value="12/7">12/07</option>
             <option value="24/7">24/07</option>

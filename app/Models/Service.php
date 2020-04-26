@@ -11,7 +11,7 @@ class Service extends Model
      *
      * @var array
      */
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'description', 'start', 'application_id'];
 
     /**
      * Get the application of the service.
@@ -21,11 +21,4 @@ class Service extends Model
         return $this->belongsTo(Application::class);
     }
 
-    /**
-     * Get the server's credential.
-     */
-    public function credential()
-    {
-        return $this->morphOne(Credential::class, 'credentailable');
-    }
 }

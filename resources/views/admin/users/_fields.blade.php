@@ -17,7 +17,7 @@
 <div class="form-group row">
     <label for="description" class="col-sm-2 col-form-label">Papéis</label>
     <div class="col-sm-10">
-        <select name="roles[]" id="select-role" class="form-control select2" multiple="multiple"
+        <select name="roles[]" id="select-roles" class="form-control select2" multiple="multiple"
             data-placeholder="Papéis" style="width: 100%;">
         </select>
     </div>

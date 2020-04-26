@@ -17,7 +17,7 @@
                                 <th>Torre</th>
                                 <th>Criado</th>
                                 <th>Atualizado</th>
-                                <th></th>
+                                <th style="width: 35px;"></th>
                             </tr>
                         </thead>
                     </table>
@@ -42,6 +42,7 @@
             },
             processing: true,
             serverSide: true,
+            autoWidth: false,
             ajax: "{{ url('employees_datatables') }}",
             columns: [
                 { data: 'id' },
@@ -82,28 +83,14 @@
 
     /** RESET MODAL VALIDATIONS */
     $("#modalFormCreate").on("hide.bs.modal", function () {
-        $('#id').val('');
+        cleanFormValidation();
         $('#formEmployee').trigger('reset');
-        $('#name').removeClass('is-invalid');
-        $('#type').removeClass('is-invalid');
-        $('#send').removeClass('save');
-        $('#send').removeClass('edit');
-        $('#select-tower').removeClass('is-invalid');
-        $('#select-tower').val(null).trigger('change');
+        $('#select-towers').val(null).trigger('change');
     });
 
-    /** LIST PERMISSIONS */
+    /** LIST ALL */
     $(document).ready(function () {
-        $.ajax({
-            url: "{{ url('towers') }}",
-            type: "GET",
-            dataType: "json",
-            success: function (data) {
-                $.each(data, function (i, d) {
-                    $('#select-tower').append('<option value="' + d.id + '">' + d.name + '</option>');
-                });
-            }
-        })
+        getSelectOptions("{{ url('towers')}}", "GET", "json", "#select-towers");
     });
 
     /** ::::::::::::::::::::::::: FUNCTIONS ::::::::::::::::::::::::: */
@@ -237,6 +224,15 @@
         $("#id-item").html(item);
 
         $('#id').val(item);
+    }
+
+    /** CLEAN FORM VALIDATION */
+    function cleanFormValidation(selector, cls) {
+
+        $('input[name='+selector+']').each(function(){
+            $('input[name='+selector+']').removeClass(cls);
+        });
+
     }
 
 </script>

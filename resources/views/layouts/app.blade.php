@@ -5,111 +5,131 @@
 
 <body>
     <div id="wrapper">
-        <nav class="navbar navbar-expand-md navbar-light navbar-white shadow-sm">
+
+       <nav class="navbar navbar-expand-md navbar-light navbar-white shadow-sm" id="main_navbar">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'My Applications') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="{{ __('Toggle navigation') }}">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     @auth
-                    <ul class="navbar-nav mr-auto">
-                        @can('users.dashboard')
-                        <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
-                        </li>
-                        @endcan
+                        <ul class="navbar-nav mr-auto">
+                            @can('users.dashboard')
+                                <li
+                                    class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                                </li>
+                            @endcan
 
-                        @can('providers.index')
-                        <li class="nav-item {{ request()->is('fornecedores') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('providers.index') }}">Fornecedores</a>
-                        </li>
-                        @endcan
+                            @can('applications.index')
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle {{ request()->is(['aplicacoes','servicos', 'integracoes']) ? 'active' : '' }}"
+                                        href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Minhas aplicações
+                                    </a>
+                                    <ul class="dropdown-menu dropright" aria-labelledby="navbarDropdown">
+                                        <li class="nav-item dropdown">
+                                            <a class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="#">Listar</a>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item {{ request()->is('aplicacoes') ? 'active' : '' }}" href="{{ route('applications.index') }}">Aplicações </a></li>
+                                                <li><a class="dropdown-item {{ request()->is('servicos') ? 'active' : '' }}" href="{{ route('services.index') }}">Serviços </a></li>
+                                                <li><a class="dropdown-item {{ request()->is('integracoes') ? 'active' : '' }}" href="{{ route('integrations.index') }}">Integrações </a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            @endcan
 
-                        @can('environments.index')
-                        <li class="nav-item {{ request()->is('ambientes') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('environments.index') }}">Ambientes</a>
-                        </li>
-                        @endcan
+                            @can('providers.index')
+                                <li
+                                    class="nav-item {{ request()->is('fornecedores') ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{ route('providers.index') }}">Fornecedores</a>
+                                </li>
+                            @endcan
 
-                        @can('employees.index')
-                        <li class="nav-item {{ request()->is('funcionarios') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('employees.index') }}">Funcionarios</a>
-                        </li>
-                        @endcan
+                            @can('environments.index')
+                                <li
+                                    class="nav-item {{ request()->is('ambientes') ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{ route('environments.index') }}">Ambientes</a>
+                                </li>
+                            @endcan
 
-                        @can('towers.index')
-                        <li class="nav-item {{ request()->is('torres') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('towers.index') }}">Torres</a>
-                        </li>
-                        @endcan
+                            @can('employees.index')
+                                <li
+                                    class="nav-item {{ request()->is('funcionarios') ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{ route('employees.index') }}">Funcionários</a>
+                                </li>
+                            @endcan
 
-                        @can('servers.index')
-                        <li class="nav-item {{ request()->is('servidores') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('servers.index') }}">Servidores</a>
-                        </li>
-                        @endcan
+                            @can('towers.index')
+                                <li
+                                    class="nav-item {{ request()->is('torres') ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{ route('towers.index') }}">Torres</a>
+                                </li>
+                            @endcan
 
-                        @can('access.control')
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle {{ request()->is(['usuarios','papeis', 'permissoes']) ? 'active' : '' }}"
-                                href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                Controle de Acesso
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item {{ request()->is('usuarios') ? 'active' : '' }}"
-                                    href="{{ route('users.index') }}">Usuários</a>
-                                <a class="dropdown-item {{ request()->is('papeis') ? 'active' : '' }}"
-                                    href="{{ route('roles.index') }}">Papéis</a>
-                                <a class="dropdown-item {{ request()->is('permissoes') ? 'active' : '' }}"
-                                    href="{{ route('permissions.index') }}">Permissões</a>
-                            </div>
-                        </li>
-                        @endcan
+                            @can('servers.index')
+                                <li
+                                    class="nav-item {{ request()->is('servidores') ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{ route('servers.index') }}">Servidores</a>
+                                </li>
+                            @endcan
 
-                    </ul>
+                            @can('access.control')
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle {{ request()->is(['usuarios','papeis', 'permissoes']) ? 'active' : '' }}"
+                                        href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Controle de Acesso
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item {{ request()->is('usuarios') ? 'active' : '' }}" href="{{ route('users.index') }}">Usuários</a>
+                                        <a class="dropdown-item {{ request()->is('papeis') ? 'active' : '' }}" href="{{ route('roles.index') }}">Papéis</a>
+                                        <a class="dropdown-item {{ request()->is('permissoes') ? 'active' : '' }}" href="{{ route('permissions.index') }}">Permissões</a>
+                                    </div>
+                                </li>
+                            @endcan
+
+                        </ul>
                     @endauth
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                        </li>
-                        @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                        </li>
-                        @endif
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            </li>
+                            @if(Route::has('register'))
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                </li>
+                            @endif
                         @else
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <!-- <img src="img/default-150x150.png" width="25px" class="rounded-circle"
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <!-- <img src="img/default-150x150.png" width="25px" class="rounded-circle"
                                     data-holder-rendered="true" alt="User Image"> -->
-                                {{ Auth::user()->name }} <span class="caret"></span>
-                            </a>
-
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                    {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                    style="display: none;">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
                         @endguest
                     </ul>
                 </div>

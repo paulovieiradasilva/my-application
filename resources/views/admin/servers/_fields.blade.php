@@ -41,8 +41,8 @@
 <div class="form-group row">
     <label for="type" class="col-sm-2 col-form-label">Tipo</label>
     <div class="col-sm-10">
-        <select name="type" id="type" class="form-control" placeholder="Tipo">
-            <option disabled="disabled" selected="selected">Selecione um item</option>
+        <select name="type" id="type" class="form-control select2" data-placeholder="Tipo">
+            <option disabled selected></option>
             <option value="application">Aplicação</option>
             <option value="database">Banco de Dados</option>
         </select>
@@ -85,8 +85,8 @@
 <div class="form-group row">
     <label for="environment_id" class="col-sm-2 col-form-label">Ambientes</label>
     <div class="col-sm-10">
-        <select name="environment_id" id="select-environment" class="form-control" data-placeholder="Ambientes">
-            <option disabled="disabled" selected="selected">Selecione um item</option>
+        <select name="environment_id" id="select-environments" class="form-control select2" data-placeholder="Ambientes">
+            <option disabled selected></option>
         </select>
         <div id="environment-feedback" class="invalid-feedback"></div>
     </div>

@@ -24,8 +24,7 @@
 <div class="form-group row">
     <label for="description" class="col-sm-2 col-form-label">Permissões</label>
     <div class="col-sm-10">
-        <select name="permissions[]" id="select-permission" class="form-control select2" multiple="multiple"
-            data-placeholder="Permissões" style="width: 100%;">
+        <select name="permissions[]" id="select-permissions" class="form-control select2" multiple="multiple" data-placeholder="Permissões">
         </select>
     </div>
 </div>

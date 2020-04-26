@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Environment;
 use Illuminate\Database\Seeder;
 
 class EnvironmentsTableSeeder extends Seeder
@@ -11,6 +12,6 @@ class EnvironmentsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Environment::class, 3)->create();
+        factory(Environment::class, 3)->create();
     }
 }

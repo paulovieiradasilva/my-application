@@ -17,7 +17,7 @@
                                 <th>Descição</th>
                                 <th>Criado</th>
                                 <th>Atualizado</th>
-                                <th></th>
+                                <th style="width: 35px;"></th>
                             </tr>
                         </thead>
                     </table>
@@ -42,6 +42,7 @@
             },
             processing: true,
             serverSide: true,
+            autoWidth: false,
             ajax: "{{ url('roles_datatables') }}",
             columns: [
                 { data: 'id' },
@@ -84,25 +85,14 @@
 
     /** RESET MODAL VALIDATIONS */
     $("#modalFormCreate").on("hide.bs.modal", function () {
-        $('#id').val('');
+        cleanFormValidation();
         $('#formRole').trigger('reset');
-        $('#name').removeClass('is-invalid');
-        $('#slug').removeClass('is-invalid');
-        $('#select-permission').val(null).trigger('change');
+        $('#select-permissions').val(null).trigger('change');
     });
 
-    /** LIST PERMISSIONS */
+    /** LIST ALL */
     $(document).ready(function () {
-        $.ajax({
-            url: "{{ url('permissions') }}",
-            type: "GET",
-            dataType: "json",
-            success: function (data) {
-                $.each(data, function (i, d) {
-                    $('#select-permission').append('<option value="' + d.id + '">' + d.name + '</option>');
-                });
-            }
-        })
+        getSelectOptions("{{ url('permissions')}}", "GET", "json", "#select-permissions");
     });
 
     /** ::::::::::::::::::::::::: FUNCTIONS ::::::::::::::::::::::::: */
@@ -246,6 +236,15 @@
         $("#id-item").html(item);
 
         $('#id').val(item);
+    }
+
+    /** CLEAN FORM VALIDATION */
+    function cleanFormValidation(selector, cls) {
+
+        $('input[name='+selector+']').each(function(){
+            $('input[name='+selector+']').removeClass(cls);
+        });
+
     }
 
 </script>

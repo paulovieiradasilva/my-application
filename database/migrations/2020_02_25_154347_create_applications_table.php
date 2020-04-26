@@ -25,14 +25,8 @@ class CreateApplicationsTable extends Migration
             $table->string('uri_internet')->nullable();
             $table->string('uri_intranet')->nullable();
 
-            $table->unsignedBigInteger('server_id');
-            $table->foreign('server_id')->references('id')->on('servers');
-
             $table->unsignedBigInteger('provider_id');
             $table->foreign('provider_id')->references('id')->on('providers');
-
-            $table->unsignedBigInteger('employee_id');
-            $table->foreign('employee_id')->references('id')->on('employees');
 
             $table->timestamps();
         });

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Caffeinated\Shinobi\Models\Permission;
 
 class PermissionsTableSeeder extends Seeder
@@ -12,6 +13,9 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
+        DB::statement('SET FOREIGN_KEY_CHECKS=0;');
+        Permission::truncate();
+
         /** Users */
         Permission::create([
             'name' => 'Listar usuários',
@@ -265,5 +269,100 @@ class PermissionsTableSeeder extends Seeder
             'slug' => 'environments.destroy',
             'description' => 'Deletar ambientes'
         ]);
+
+        /** Applications */
+        Permission::create([
+            'name' => 'Criar novos aplicações',
+            'slug' => 'applications.create',
+            'description' => 'Cadastrar novas aplicações'
+        ]);
+
+        Permission::create([
+            'name' => 'Listar aplicações',
+            'slug' => 'applications.index',
+            'description' => 'Listar todas as aplicações'
+        ]);
+
+        Permission::create([
+            'name' => 'Visualizar detalhes de aplicações',
+            'slug' => 'applications.show',
+            'description' => 'Ver detalhe das aplicações'
+        ]);
+
+        Permission::create([
+            'name' => 'Atualizar aplicações',
+            'slug' => 'applications.edit',
+            'description' => 'Editar aplicações'
+        ]);
+
+        Permission::create([
+            'name' => 'Eliminar aplicações',
+            'slug' => 'applications.destroy',
+            'description' => 'Deletar aplicações'
+        ]);
+
+        /** Services */
+        Permission::create([
+            'name' => 'Criar novos serviços',
+            'slug' => 'services.create',
+            'description' => 'Cadastrar novos serviços'
+        ]);
+
+        Permission::create([
+            'name' => 'Listar serviços',
+            'slug' => 'services.index',
+            'description' => 'Listar todos os seriços'
+        ]);
+
+        Permission::create([
+            'name' => 'Visualizar detalhes de seriços',
+            'slug' => 'services.show',
+            'description' => 'Ver detalhe dos seriços'
+        ]);
+
+        Permission::create([
+            'name' => 'Atualizar seriços',
+            'slug' => 'services.edit',
+            'description' => 'Editar seriços'
+        ]);
+
+        Permission::create([
+            'name' => 'Eliminar seriços',
+            'slug' => 'services.destroy',
+            'description' => 'Deletar seriços'
+        ]);
+
+        /** Integrations */
+        Permission::create([
+            'name' => 'Criar novas integrações',
+            'slug' => 'integrations.create',
+            'description' => 'Cadastrar novas integrações'
+        ]);
+
+        Permission::create([
+            'name' => 'Listar integrações',
+            'slug' => 'integrations.index',
+            'description' => 'Listar todas as integrações'
+        ]);
+
+        Permission::create([
+            'name' => 'Visualizar detalhes de integrações',
+            'slug' => 'integrations.show',
+            'description' => 'Ver detalhe das integrações'
+        ]);
+
+        Permission::create([
+            'name' => 'Atualizar integrações',
+            'slug' => 'integrations.edit',
+            'description' => 'Editar integrações'
+        ]);
+
+        Permission::create([
+            'name' => 'Eliminar integrações',
+            'slug' => 'integrations.destroy',
+            'description' => 'Deletar integrações'
+        ]);
+
+        DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

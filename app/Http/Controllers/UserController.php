@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Http\Requests\UserCreateRequest;
@@ -26,6 +26,12 @@ class UserController extends Controller
         return DataTables::of(User::with(['roles'])->select(['id', 'name', 'email', 'created_at', 'updated_at']))
             ->addColumn('action', 'admin.users._actions')
             ->make(true);
+    }
+
+    /** */
+    public function get()
+    {
+        return $users = User::all();
     }
 
     /**

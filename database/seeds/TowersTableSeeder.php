@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Tower;
 use Illuminate\Database\Seeder;
 
 class TowersTableSeeder extends Seeder
@@ -11,6 +12,6 @@ class TowersTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Tower::class, 3)->create();
+        factory(Tower::class, 3)->create();
     }
 }

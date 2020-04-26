@@ -31,6 +31,12 @@ class ServerController extends Controller
             ->make(true);
     }
 
+    /** */
+    public function get()
+    {
+        return $servers = Server::all();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -49,7 +55,6 @@ class ServerController extends Controller
      */
     public function store(ServerCreateRequest $request)
     {
-        //dd($request->all());
         try {
             DB::beginTransaction();
 

@@ -19,7 +19,7 @@
                                 <th>Ambiente</th>
                                 <th>Criado</th>
                                 <th>Atualizado</th>
-                                <th></th>
+                                <th style="width: 35px;"></th>
                             </tr>
                         </thead>
                     </table>
@@ -44,6 +44,7 @@
             },
             processing: true,
             serverSide: true,
+            autoWidth: false,
             ajax: "{{ url('servers_datatables') }}",
             columns: [
                 { data: 'id' },
@@ -88,32 +89,15 @@
 
     /** RESET MODAL VALIDATIONS */
     $("#modalFormCreate").on("hide.bs.modal", function() {
-        cleanFormDB();
+        cleanFormValidation();
         $("#server-table").find("tr:not(:first)").remove();
         $('#formServer').trigger('reset');
-        $('#id').val(''); // verificar a possiblidade de remoção
-        $('#name').removeClass('is-invalid');
-        $('#ip').removeClass('is-invalid');
-        $('#os').removeClass('is-invalid');
-        $('#type').removeClass('is-invalid');
-        $('#send').removeClass('save');
-        $('#send').removeClass('edit');
-        $('#select-environment').removeClass('is-invalid');
-        $('#select-environment').val(null).trigger('change');
+        $('#select-environments').val(null).trigger('change');
     });
 
-    /** LIST PERMISSIONS */
+    /** LIST ALL */
     $(document).ready(function() {
-        $.ajax({
-            url: "{{ url('environments') }}",
-            type: "GET",
-            dataType: "json",
-            success: function(data) {
-                $.each(data, function(i, d) {
-                    $('#select-environment').append('<option value="' + d.id + '">' + d.name + '</option>');
-                });
-            }
-        })
+        getSelectOptions("{{ url('environments')}}", "GET", "json", "#select-environments");
     });
 
     /** CHANGE TYPE SERVER */
@@ -299,7 +283,7 @@
                 inputs.push(value);
             }
             count++;
-            
+
         });
 
         return (inputs.length == count) ? true : false;
@@ -499,6 +483,15 @@
         (data.id === undefined) ? $('.update-item-databases').addClass('disabled'): '';
 
         return newRow;
+    }
+
+    /** CLEAN FORM VALIDATION */
+    function cleanFormValidation(selector, cls) {
+
+        $('input[name='+selector+']').each(function(){
+            $('input[name='+selector+']').removeClass(cls);
+        });
+
     }
 
 </script>
