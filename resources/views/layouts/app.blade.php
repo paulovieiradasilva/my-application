@@ -6,7 +6,7 @@
 <body>
     <div id="wrapper">
 
-       <nav class="navbar navbar-expand-md navbar-light navbar-white shadow-sm" id="main_navbar">
+        <nav class="navbar navbar-expand-md navbar-light navbar-white shadow-sm" id="main_navbar">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'My Applications') }}
@@ -22,8 +22,8 @@
                         <ul class="navbar-nav mr-auto">
                             @can('users.dashboard')
                                 <li
-                                    class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
-                                    <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                                    class="nav-item {{ request()->is('home') ? 'active' : '' }}">
+                                    <a class="nav-link" href="{{ route('home') }}">Home</a>
                                 </li>
                             @endcan
 
@@ -37,9 +37,12 @@
                                         <li class="nav-item dropdown">
                                             <a class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="#">Listar</a>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item {{ request()->is('aplicacoes') ? 'active' : '' }}" href="{{ route('applications.index') }}">Aplicações </a></li>
-                                                <li><a class="dropdown-item {{ request()->is('servicos') ? 'active' : '' }}" href="{{ route('services.index') }}">Serviços </a></li>
-                                                <li><a class="dropdown-item {{ request()->is('integracoes') ? 'active' : '' }}" href="{{ route('integrations.index') }}">Integrações </a></li>
+                                                <li><a class="dropdown-item {{ request()->is('aplicacoes') ? 'active' : '' }}"
+                                                        href="{{ route('applications.index') }}">Aplicações </a></li>
+                                                <li><a class="dropdown-item {{ request()->is('servicos') ? 'active' : '' }}"
+                                                        href="{{ route('services.index') }}">Serviços </a></li>
+                                                <li><a class="dropdown-item {{ request()->is('integracoes') ? 'active' : '' }}"
+                                                        href="{{ route('integrations.index') }}">Integrações </a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -88,9 +91,12 @@
                                         Controle de Acesso
                                     </a>
                                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item {{ request()->is('usuarios') ? 'active' : '' }}" href="{{ route('users.index') }}">Usuários</a>
-                                        <a class="dropdown-item {{ request()->is('papeis') ? 'active' : '' }}" href="{{ route('roles.index') }}">Papéis</a>
-                                        <a class="dropdown-item {{ request()->is('permissoes') ? 'active' : '' }}" href="{{ route('permissions.index') }}">Permissões</a>
+                                        <a class="dropdown-item {{ request()->is('usuarios') ? 'active' : '' }}"
+                                            href="{{ route('users.index') }}">Usuários</a>
+                                        <a class="dropdown-item {{ request()->is('papeis') ? 'active' : '' }}"
+                                            href="{{ route('roles.index') }}">Papéis</a>
+                                        <a class="dropdown-item {{ request()->is('permissoes') ? 'active' : '' }}"
+                                            href="{{ route('permissions.index') }}">Permissões</a>
                                     </div>
                                 </li>
                             @endcan
@@ -145,8 +151,11 @@
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                            <li class="breadcrumb-item active">{{ ucfirst(request()->path()) }}</li>
+                            @if(request()->path() == 'home')
+                            @else
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                                <li class="breadcrumb-item active">{{ ucfirst(request()->path()) }}</li>
+                            @endif
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->

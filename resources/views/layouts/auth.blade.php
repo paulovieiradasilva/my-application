@@ -5,15 +5,14 @@
 
 <body>
     <div id="app">
-
         <main class="py-4">
             @yield('content')
         </main>
-
     </div>
 
-<!-- Scripts -->
-@include('layouts.partials._scripts')
+    <!-- Scripts -->
+    @include('layouts.partials._scripts')
 
 </body>
+
 </html>

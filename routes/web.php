@@ -19,7 +19,7 @@ Auth::routes();
 Route::middleware(['auth'])->group(function () {
 
     // Dashboard
-    Route::get('/dashboard', 'HomeController@index')->name('dashboard');
+    Route::get('/home', 'HomeController@index')->name('home');
 
     // Users
     Route::get('usuarios', 'UserController@index')->name('users.index')->middleware('can:users.index');
@@ -184,6 +184,6 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/', function () {
-        return view('welcome');
+        return redirect()->route('home');
     });
 });
