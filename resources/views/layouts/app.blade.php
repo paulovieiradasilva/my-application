@@ -152,6 +152,10 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             @if(request()->path() == 'home')
+                                <div class="buscar-caja">
+                                    <input type="text" id="search-app" name="search" class="buscar-txt" placeholder="Buscar ....." autocomplete="off"/>
+                                    <a class="buscar-btn"> <i class="fa fa-search"></i> </a>
+                                </div>
                             @else
                                 <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                                 <li class="breadcrumb-item active">{{ ucfirst(request()->path()) }}</li>
