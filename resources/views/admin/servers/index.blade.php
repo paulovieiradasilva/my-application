@@ -183,16 +183,16 @@
                     $('#username').val(data.data.server.credential.username);
                     $('#password').val(data.data.server.credential.password);
                 }
-                $('#type').val(data.data.server.type);
+                $('#type').val(data.data.server.type).trigger('change');
                 (data.data.server.type == 'database') ? $('#table').show(): $('#table').hide();
-                $('#select-environment').val(data.data.server.environment_id).trigger('change');
+                $('#select-environments').val(data.data.server.environment_id).trigger('change');
                 $('#description').val(data.data.server.description);
                 $('#id').val(data.data.server.id);
             });
     }
 
     /** UPDATE */
-    function update(id) {
+    function update() {
 
         var id = $('#id').val();
 
@@ -325,6 +325,7 @@
 
         if (result) {
 
+            var $i = Math.floor((Math.random() * 100) + 1);
             var name = $('#dbn').val();
             var sgdb = $('#sgdb').val();
             var port = $('#port').val();
@@ -349,7 +350,7 @@
                     cleanFormDB();
 
                     /** */
-                    addRowTable('#server-table', data.data);
+                    addRowTable('#server-table', data.data, $i);
 
                     if (data.success) {
                         toastr.success(data.success);

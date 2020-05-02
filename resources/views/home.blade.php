@@ -1,26 +1,41 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row justify-content-center">
-    <div class="col-md-12">
-        <div class="card">
+
+<div class="row">
+    <div class="col-sm-3">
+        <div class="card card-danger card-outline">
             <div class="card-body">
-
-                @if(session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                    </div>
-                @endif
-
-                @if(!Auth::user()->hasRole('admin'))
-
-                    @can('users.dashboard')
-                        Seja bem vindo(a), {{ Auth::user()->name }} ! </br>
-                    @endcan
-
-                @else
-                    Seja bem vindo(a), <b>{{ Auth::user()->name }}</b> você é um Administrador !
-                @endif
+                <h4>Portal de Serviços</h4>
+                <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+                <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-info-circle"></i> Detalhes</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card card-danger card-outline">
+            <div class="card-body">
+                <h4>Hemera - SP</h4>
+                <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+                <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-info-circle"></i> Detalhes</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card card-danger card-outline">
+            <div class="card-body">
+                <h4>GTI SGL</h4>
+                <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+                <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-info-circle"></i> Detalhes</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <div class="card card-danger card-outline">
+            <div class="card-body">
+                <h4>PIM</h4>
+                <!-- <p class="card-text">With supporting text below as a natural lead-in to additional content.</p> -->
+                <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-info-circle"></i> Detalhes</a>
             </div>
         </div>
     </div>

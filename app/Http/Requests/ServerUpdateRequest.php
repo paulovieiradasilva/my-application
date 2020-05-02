@@ -26,6 +26,20 @@ class ServerUpdateRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'environment_id' => ['required'],
+            'type' => ['required']
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'environment_id.required' => 'O campo ambiente é obrigatório.',
+            'type.required' => 'O campo tipo é obrigatório.',
         ];
     }
 }
