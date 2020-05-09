@@ -143,8 +143,8 @@
                     $('#phone').val(data.contacts.phone);
                     $('#cellphone').val(data.contacts.cellphone);
                 }
-                $('#type').val(data.type);
-                $('#select-tower').val(data.tower_id).trigger('change');
+                $('#type').val(data.type).trigger('change');
+                $('#select-towers').val(data.tower_id).trigger('change');
                 $('#id').val(data.id);
             }
         );

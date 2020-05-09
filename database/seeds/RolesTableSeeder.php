@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Caffeinated\Shinobi\Models\Role;
 
 class RolesTableSeeder extends Seeder
@@ -24,5 +25,8 @@ class RolesTableSeeder extends Seeder
             'slug' => 'users',
             'description' => 'Papél default para usuários do sistema'
         ]);
+
+        /** */
+        DB::table('role_user')->insert(['role_id' => 1, 'user_id' => 1, 'created_at' => now(), 'updated_at' => now()]);
     }
 }

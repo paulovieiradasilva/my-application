@@ -49,6 +49,16 @@
 </div>
 
 <div class="form-group row">
+    <label for="tower_id" class="col-sm-2 col-form-label">Torres</label>
+    <div class="col-sm-10">
+        <select name="tower_id" id="select-towers" class="form-control select2" data-placeholder="Torres">
+            <option disabled selected></option>
+        </select>
+        <div id="tower-feedback" class="invalid-feedback"></div>
+    </div>
+</div>
+
+<div class="form-group row">
     <label for="directory_app" class="col-sm-2 col-form-label">Diretório</label>
     <div class="col-sm-10">
         <input type="text" id="directory_app" name="directory_app" class="form-control" placeholder="Diretório da Aplicação">

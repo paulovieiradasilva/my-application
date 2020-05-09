@@ -8,7 +8,7 @@
             <div class="card card-danger card-outline">
                 <div class="card-body">
                     <h4>{{ $app->name }}</h4>
-                    <h6 class="text-danger card-subtitle mb-2">R3</h6>
+                    <h6 class="text-danger card-subtitle mb-2">{{ $app->tower->name }}</h6>
                     <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-info-circle"></i> Detalhes</a>
                 </div>
             </div>

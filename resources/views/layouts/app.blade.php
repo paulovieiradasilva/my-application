@@ -30,14 +30,15 @@
                             @can('applications.index')
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle {{ request()->is(['aplicacoes','servicos', 'integracoes']) ? 'active' : '' }}"
-                                        href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        href="#" id="dropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Minhas aplicações
                                     </a>
-                                    <ul class="dropdown-menu dropright" aria-labelledby="navbarDropdown">
+                                    <ul class="dropdown-menu dropright" aria-labelledby="dropdown1">
                                         <li class="nav-item dropdown">
-                                            <a class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="#">Listar</a>
-                                            <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item {{ request()->is('aplicacoes') ? 'active' : '' }}"
+                                            <a class="dropdown-item dropdown-toggle" href="#" id="dropdown1-1" data-toggle="dropdown"
+                                                aria-expanded="false">Listar</a>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdown1-1-1">
+                                                <li><a class="dropdown-item {{ request()->is('applicacoes') ? 'active' : '' }}"
                                                         href="{{ route('applications.index') }}">Aplicações </a></li>
                                                 <li><a class="dropdown-item {{ request()->is('servicos') ? 'active' : '' }}"
                                                         href="{{ route('services.index') }}">Serviços </a></li>
@@ -153,7 +154,8 @@
                         <ol class="breadcrumb float-sm-right">
                             @if(request()->path() == 'home')
                                 <div class="buscar-caja">
-                                    <input type="text" id="search-app" name="search" class="buscar-txt" placeholder="Buscar ....." autocomplete="off"/>
+                                    <input type="text" id="search-app" name="search" class="buscar-txt" placeholder="Buscar ....."
+                                        autocomplete="off" />
                                     <a class="buscar-btn"> <i class="fa fa-search"></i> </a>
                                 </div>
                             @else

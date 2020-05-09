@@ -36,9 +36,9 @@
 @section('scripts')
 <script>
     /** LIST SERVERS */
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#applications_table').DataTable({
-            initComplete: function() {
+            initComplete: function () {
                 $('#loader').hide();
                 $('#applications_table').css('display', 'inline-table').css('width', 'inherit');
             },
@@ -46,16 +46,33 @@
             applicationSide: true,
             autoWidth: false,
             ajax: "{{ url('applications_datatables') }}",
-            columns: [
-                { data: 'id' },
-                { data: 'name' },
-                { data: 'start' },
-                { data: 'platform' },
-                { data: 'type' },
-                { data: 'provider.name' },
-                { data: 'created_at' },
-                { data: 'updated_at' },
-                { data: 'action' }
+            columns: [{
+                    data: 'id'
+                },
+                {
+                    data: 'name'
+                },
+                {
+                    data: 'start'
+                },
+                {
+                    data: 'platform'
+                },
+                {
+                    data: 'type'
+                },
+                {
+                    data: 'provider.name'
+                },
+                {
+                    data: 'created_at'
+                },
+                {
+                    data: 'updated_at'
+                },
+                {
+                    data: 'action'
+                }
             ],
             order: [
                 [0, 'desc']
@@ -69,7 +86,7 @@
                 className: 'btn btn-default'
             }, {
                 text: 'Novo',
-                action: function(e, dt, node, config) {
+                action: function (e, dt, node, config) {
                     $('#edit-item-table').hide();
                     $('#add-item-table').show();
                     $('#modalTitle').html('Nova aplicação');
@@ -87,7 +104,7 @@
     });
 
     /** RESET MODAL VALIDATIONS */
-    $("#modalFormCreate").on("hide.bs.modal", function() {
+    $("#modalFormCreate").on("hide.bs.modal", function () {
         cleanFormValidation();
         $("#services-table").find("tr:not(:first)").remove();
         $('#formApplication').trigger('reset');
@@ -103,6 +120,7 @@
         getSelectOptions("{{ url('providers') }}", "GET", "json", "#select-providers");
         getSelectOptions("{{ url('servers') }}", "GET", "json", "#select-servers");
         getSelectOptions("{{ url('users') }}", "GET", "json", "#select-users");
+        getSelectOptions("{{ url('towers') }}", "GET", "json", "#select-towers");
     });
 
     /** ::::::::::::::::::::::::: FUNCTIONS ::::::::::::::::::::::::: */
@@ -115,7 +133,7 @@
             type: 'POST',
             dataType: 'json',
             data: $('#formApplication').serialize(),
-            success: function(data) {
+            success: function (data) {
                 cleanFormValidation();
                 $('#formApplication').trigger('reset');
                 $('#modalFormCreate').modal('hide');
@@ -127,8 +145,8 @@
                     toastr.error(data.error);
                 }
             },
-            complete: function(data) {},
-            error: function(data) {
+            complete: function (data) {},
+            error: function (data) {
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
                     $('#name').addClass('is-invalid');
@@ -177,7 +195,9 @@
 
         $.get(
             "{{ route('applications.index') }}" + '/' + id + '/edit',
-            function(data) {
+            function (data) {
+
+                console.log(data);
 
                 /** */
                 let servers = [];
@@ -199,6 +219,7 @@
                 $('#select-users').val(employees).trigger('change');
                 $('#type').val(data.data.application.type).trigger('change');
                 $('#start').val(data.data.application.start).trigger('change');
+                $('#select-towers').val(data.data.application.tower_id).trigger('change');
                 $('#directory_app').val(data.data.application.directory_app).trigger('change');
                 $('#uri_internet').val(data.data.application.uri_internet);
                 $('#uri_intranet').val(data.data.application.uri_intranet);
@@ -219,12 +240,14 @@
 
         var id = $('#id').val();
 
+        console.log(id);
+
         $.ajax({
             url: "{{ route('applications.index') }}" + '/' + id,
             type: 'PATCH',
             dataType: 'json',
             data: $('#formApplication').serialize(),
-            success: function(data) {
+            success: function (data) {
                 $('#formApplication').trigger('reset');
                 $('#modalFormCreate').modal('hide');
                 $('#applications_table').DataTable().ajax.reload(null, false);
@@ -235,8 +258,8 @@
                     toastr.error(data.error);
                 }
             },
-            complete: function(data) {},
-            error: function(data) {
+            complete: function (data) {},
+            error: function (data) {
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
                     $('#name').addClass('is-invalid');
@@ -268,7 +291,7 @@
             url: "{{ route('applications.index') }}" + '/' + id,
             type: 'DELETE',
             dataType: 'json',
-            success: function(data) {
+            success: function (data) {
                 $('#applications_table').DataTable().ajax.reload(null, false);
                 $('#deleteModalCenter').modal('hide');
                 if (data.success) {
@@ -278,8 +301,8 @@
                     toastr.error(data.error);
                 }
             },
-            complete: function(data) {},
-            error: function(data) {
+            complete: function (data) {},
+            error: function (data) {
                 /** Criar as validações dos inputs para erros */
             }
         });
@@ -303,7 +326,7 @@
         var inputs = new Array();
         var count = 0;
 
-        $('input[name='+selector+']').each(function(){
+        $('input[name=' + selector + ']').each(function () {
 
             var value = $(this).val();
             if (value) {
@@ -332,12 +355,23 @@
             var username = $('#usr').val();
             var password = $('#pwd').val();
 
-            var data = { data: { id, name, sgdb, port, credential: { username, password }}};
+            var data = {
+                data: {
+                    id,
+                    name,
+                    sgdb,
+                    port,
+                    credential: {
+                        username,
+                        password
+                    }
+                }
+            };
 
             /** */
             addRowTable('#application-table', data.data, $i);
 
-            cleanFormDB('is-empty','is-invalid');
+            cleanFormDB('is-empty', 'is-invalid');
 
         } else {
             $('#error-msg').show();
@@ -372,7 +406,7 @@
                 url: "{{ route('database.store') }}",
                 type: 'POST',
                 dataType: 'json',
-                success: function(data) {
+                success: function (data) {
                     cleanFormDB();
 
                     /** */
@@ -385,8 +419,8 @@
                         toastr.error(data.error);
                     }
                 },
-                complete: function(data) {},
-                error: function(data) {
+                complete: function (data) {},
+                error: function (data) {
                     /** Criar as validações dos inputs para erros */
                 }
             });
@@ -419,7 +453,7 @@
             url: "{{ url('database') }}" + '/' + id,
             type: 'PATCH',
             dataType: 'json',
-            success: function(data) {
+            success: function (data) {
 
                 if (data.success) {
                     toastr.success(data.success);
@@ -428,8 +462,8 @@
                     toastr.error(data.error);
                 }
             },
-            complete: function(data) {},
-            error: function(data) {
+            complete: function (data) {},
+            error: function (data) {
                 /** Criar as validações dos inputs para erros */
             }
         });
@@ -447,7 +481,7 @@
                 url: "{{ url('database') }}" + '/' + id,
                 type: 'DELETE',
                 dataType: 'json',
-                success: function(data) {
+                success: function (data) {
                     $("#row-" + index).remove();
                     if (data.success) {
                         toastr.success(data.success);
@@ -456,8 +490,8 @@
                         toastr.error(data.error);
                     }
                 },
-                complete: function(data) {},
-                error: function(data) {
+                complete: function (data) {},
+                error: function (data) {
                     /** Criar as validações dos inputs para erros */
                 }
             });
@@ -470,8 +504,8 @@
     /** CLEAN FORM VALIDATION */
     function cleanFormValidation(selector, cls) {
 
-        $('input[name='+selector+']').each(function(){
-            $('input[name='+selector+']').removeClass(cls);
+        $('input[name=' + selector + ']').each(function () {
+            $('input[name=' + selector + ']').removeClass(cls);
         });
 
     }
@@ -495,8 +529,7 @@
                     </a>
                 </td>
             </tr>
-        `
-        );
+        `);
 
         /** */
         (data.id === undefined) ? $('.update-item-databases').addClass('disabled'): '';

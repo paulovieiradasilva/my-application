@@ -10,7 +10,7 @@ $factory->define(Server::class, function (Faker $faker) {
         'name' => $faker->domainWord,
         'ip' => $faker->ipv4,
         'os' => $faker->randomElement(['Windows Server 2008', 'Linux Debian', 'Ubuntu Server 18.04 LTS']),
-        'type' => $faker->randomElement(['application', 'database']),
+        'type' => $faker->randomElement(['Aplicação', 'Banco de Dados']),
         'environment_id' => $faker->numberBetween(1, 3),
     ];
 });

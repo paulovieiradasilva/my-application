@@ -21,6 +21,7 @@ class Application extends Model
         'directory_app',
         'uri_internet',
         'uri_intranet',
+        'tower_id',
         'provider_id'
     ];
 
@@ -30,6 +31,14 @@ class Application extends Model
     public function provider()
     {
         return $this->belongsTo(Provider::class);
+    }
+
+    /**
+     * Get the tower of the application.
+     */
+    public function tower()
+    {
+        return $this->belongsTo(Tower::class);
     }
 
     /**

@@ -16,7 +16,6 @@ mix.copyDirectory('resources/img', 'public/img');
 mix.sass('resources/sass/app.scss', 'public/css');
 
 mix.styles([
-    'resource/css/bootnavbar.css',
     'resources/css/fontawesome-all.css',
     'resources/css/ionicons.min.css',
     'resources/css/icheck-bootstrap.min.css',
@@ -32,7 +31,6 @@ mix.styles([
 mix.scripts([
     'resources/js/jquery.min.js',
     'resources/js/jquery-ui.min.js',
-    'resources/js/bootnavbar.js',
     'resources/js/toastr.min.js',
     'resources/js/select2.full.js',
     'resources/js/jquery.dataTables.js',

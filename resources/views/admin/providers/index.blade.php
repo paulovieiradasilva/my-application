@@ -131,12 +131,15 @@
         $.get(
             "{{ route('providers.index') }}" + "/" + id + "/edit",
             function (data) {
+
+                console.log(data);
+
                 $("#modalTitle").html("Editar forncedor");
                 $("#updated").html("Atualizar");
                 $("#modalFormCreate").modal("show");
                 $("#name").val(data.name);
                 $("#opening_hours").val(data.opening_hours);
-                $("#on_duty").val(data.on_duty);
+                $("#on_duty").val(data.on_duty).trigger("change");
                 $("#description").val(data.description);
                 if (data.contacts != null) {
                     $("#email").val(data.contacts.email);

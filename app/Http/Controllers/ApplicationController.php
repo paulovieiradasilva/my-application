@@ -23,7 +23,7 @@ class ApplicationController extends Controller
     /** */
     public function list()
     {
-        return DataTables::of(Application::with(['provider'])
+        return DataTables::of(Application::with(['provider','tower'])
             ->select(['id', 'name', 'description', 'start', 'platform', 'type', 'directory_app', 'uri_internet', 'uri_intranet', 'provider_id', 'created_at', 'updated_at']))
             ->addColumn('action', 'admin.applications._actions')
             ->make(true);

@@ -20,7 +20,7 @@ class CreateServersTable extends Migration
             $table->string('ip')->nullable();
             $table->string('os')->nullable();
             $table->string('version_os')->nullable();
-            $table->enum('type', ['application', 'database'])->nullable();
+            $table->enum('type', ['Aplicação', 'Banco de Dados'], 100)->nullable();
 
             $table->unsignedBigInteger('environment_id');
             $table->foreign('environment_id')->references('id')->on('environments');

@@ -103,7 +103,7 @@
     /** CHANGE TYPE SERVER */
     $(document).on('change', '#type', function() {
         var item = $('#type').val();
-        (item == 'database') ? $('#table').show(): $('#table').hide();
+        (item == 'Banco de Dados') ? $('#table').show(): $('#table').hide();
     });
 
     /** ::::::::::::::::::::::::: FUNCTIONS ::::::::::::::::::::::::: */
@@ -184,7 +184,7 @@
                     $('#password').val(data.data.server.credential.password);
                 }
                 $('#type').val(data.data.server.type).trigger('change');
-                (data.data.server.type == 'database') ? $('#table').show(): $('#table').hide();
+                (data.data.server.type == 'Banco de Dados') ? $('#table').show(): $('#table').hide();
                 $('#select-environments').val(data.data.server.environment_id).trigger('change');
                 $('#description').val(data.data.server.description);
                 $('#id').val(data.data.server.id);

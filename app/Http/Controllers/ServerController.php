@@ -174,7 +174,7 @@ class ServerController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
 
-            return response()->json(['error' => 'Não foi possivel deletar este servidor, pois existe banco de dados cadastrado']);
+            return response()->json(['error' => 'Não foi possivel deletar este servidor.']);
         }
 
         return response()->json(['success' => 'Servidor deletado com sucesso!']);

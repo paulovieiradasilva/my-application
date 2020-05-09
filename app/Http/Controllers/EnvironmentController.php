@@ -94,7 +94,7 @@ class EnvironmentController extends Controller
 
         $environment->update($request->all());
 
-        return response()->json(['success' => 'Fornecedor atualizado com sucesso!']);
+        return response()->json(['success' => 'Ambiente atualizado com sucesso!']);
     }
 
     /**
