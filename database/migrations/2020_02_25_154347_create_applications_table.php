@@ -18,9 +18,9 @@ class CreateApplicationsTable extends Migration
 
             $table->string('name');
             $table->text('description')->nullable();
-            $table->enum('start', ['automatic', 'manual'])->nullable();
+            $table->enum('start', ['Automático', 'Manual'])->nullable();
             $table->string('platform')->nullable();
-            $table->enum('type', ['web', 'executable'])->nullable();
+            $table->enum('type', ['Web', 'Executável'])->nullable();
             $table->string('directory_app')->nullable();
             $table->string('uri_internet')->nullable();
             $table->string('uri_intranet')->nullable();

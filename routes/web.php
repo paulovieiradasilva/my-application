@@ -186,4 +186,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/', function () {
         return redirect()->route('home');
     });
+
+    Route::get('my-app/{id}', 'HomeController@myApp');
 });

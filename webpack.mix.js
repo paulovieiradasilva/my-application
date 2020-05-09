@@ -13,6 +13,8 @@ const mix = require('laravel-mix');
 
 mix.copyDirectory('resources/img', 'public/img');
 
+mix.sass('resources/sass/app.scss', 'public/css');
+
 mix.styles([
     'resource/css/bootnavbar.css',
     'resources/css/fontawesome-all.css',
@@ -23,6 +25,7 @@ mix.styles([
     'resources/css/select2-bootstrap4.css',
     'resources/css/dataTables.bootstrap4.min.css',
     'resources/css/adminlte.css',
+    'resources/css/animate.css',
     'resources/css/styles.css'
 ], 'public/css/app.css');
 
