@@ -199,7 +199,7 @@
 
                 $('#edit-item-table').show();
                 $('#add-item-table').hide();
-                $('#modalTitle').html('Editar servidor');
+                $('#modalTitle').html('Editar aplicação');
                 $('#updated').html('Atualizar');
                 $('#modalFormCreate').modal('show');
                 $('#name').val(data.data.application.name);
