@@ -8855,3 +8855,9 @@ table.dataTable{clear:both;margin-top:6px !important;margin-bottom:6px !importan
         line-height: 40px;
         width: 0px;
     }
+    
+    .card-title {
+        font-size: 20px;
+        font-weight: 400;
+        margin-bottom: 5px;
+    }

@@ -58,51 +58,30 @@
     </div>
 </div>
 
-<div class="form-group row">
-    <label for="directory_app" class="col-sm-2 col-form-label">Diretório</label>
-    <div class="col-sm-10">
-        <input type="text" id="directory_app" name="directory_app" class="form-control" placeholder="Diretório da Aplicação">
-        <div id="directory_app-feedback" class="invalid-feedback"></div>
-    </div>
-</div>
-
-<div class="form-group row">
-    <label for="uri_internet" class="col-sm-2 col-form-label">Internet</label>
-    <div class="col-sm-10">
-        <input type="text" id="uri_internet" name="uri_internet" class="form-control" placeholder="URI Internet">
-        <div id="uri_internet-feedback" class="invalid-feedback"></div>
-    </div>
-</div>
-
-<div class="form-group row">
-    <label for="uri_intranet" class="col-sm-2 col-form-label">Intranet</label>
-    <div class="col-sm-10">
-        <input type="text" id="uri_intranet" name="uri_intranet" class="form-control" placeholder="URI Intranet">
-        <div id="uri_intranet-feedback" class="invalid-feedback"></div>
-    </div>
-</div>
-
-<!-- <div id="table" class="form-group row">
+<div id="table" class="form-group row">
     <label for="type" class="col-sm-2 col-form-label"></label>
     <div class="col-sm-10">
-        <h6 class="m-0 mb-2">Informe abaixo o(s) servico(s) para esta apllicação</h6>
+        <h6 class="m-0 mb-2">Informe abaixo o(s) link(s) e/ou diretório(s) para esta apllicação</h6>
         <small id="error-msg" style="display: none;" class="text-danger">
             <i class="fas fa-exclamation-circle"></i>
-            <b>NOME</b>, <b>TIPO</b>, <b>DESCRIÇÃO</b>, são de preenchimento obrigatorio.
+            <b>AMBIENTE</b>, <b>TIPO</b>, <b>CONTEÚDO</b>, são de preenchimento obrigatorio.
         </small>
         <div class="content">
-            <table id="services-table" class="table table-hover table-bordered table-sm">
+            <table id="application-details" class="table table-hover table-bordered table-sm">
                 <thead>
-                    <th><input class="form-control form-control-sm" name="is-empty" type="text" id="service_name" placeholder="Nome"></th>
-                    <th>
-                        <select name="services_start" id="services_start" class="form-control form-control-sm" placeholder="Start">
-                            <option disabled="disabled" selected="selected">Start</option>
-                            <option value="Automático">Automático</option>
-                            <option value="Manual">Manual</option>
+                    <th style="width: 70px;">
+                        <select name="is-empty" id="select-environments" class="form-control form-control-sm" placeholder="Ambiente">
+                            <option disabled selected></option>
                         </select>
                     </th>
-                    <th><input class="form-control form-control-sm" name="is-empty" type="text" id="services_descriptions" placeholder="Descrição">
+                    <th style="width: 90px;">
+                        <select name="is-empty" class="location_type form-control form-control-sm" placeholder="select your beverage">
+                            <option disabled selected></option>
+                            <option value="Link">Link</option>
+                            <option value="Diretório">Diretório</option>
+                        </select>
                     </th>
+                    <th><input class="form-control form-control-sm" name="is-empty" type="text" id="location_content" placeholder="Conteúdo"></th>
                     <th>
                         <a href="#" style="display: none;" onclick="addItemToTable()" id="add-item-table" class="btn btn-xs btn-primary my-1 p-1">
                             Adicionar
@@ -117,7 +96,7 @@
             </table>
         </div>
     </div>
-</div> -->
+</div>
 
 <div class="form-group row">
     <label for="server_id" class="col-sm-2 col-form-label">Servidores</label>

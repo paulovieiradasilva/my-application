@@ -46,33 +46,16 @@
             applicationSide: true,
             autoWidth: false,
             ajax: "{{ url('applications_datatables') }}",
-            columns: [{
-                    data: 'id'
-                },
-                {
-                    data: 'name'
-                },
-                {
-                    data: 'start'
-                },
-                {
-                    data: 'platform'
-                },
-                {
-                    data: 'type'
-                },
-                {
-                    data: 'provider.name'
-                },
-                {
-                    data: 'created_at'
-                },
-                {
-                    data: 'updated_at'
-                },
-                {
-                    data: 'action'
-                }
+            columns: [
+                { data: 'id' },
+                { data: 'name' },
+                { data: 'start' },
+                { data: 'platform' },
+                { data: 'type' },
+                { data: 'provider.name' },
+                { data: 'created_at' },
+                { data: 'updated_at' },
+                { data: 'action' }
             ],
             order: [
                 [0, 'desc']
@@ -121,6 +104,7 @@
         getSelectOptions("{{ url('servers') }}", "GET", "json", "#select-servers");
         getSelectOptions("{{ url('users') }}", "GET", "json", "#select-users");
         getSelectOptions("{{ url('towers') }}", "GET", "json", "#select-towers");
+        getSelectOptions("{{ url('environments') }}", "GET", "json", "#select-environments");
     });
 
     /** ::::::::::::::::::::::::: FUNCTIONS ::::::::::::::::::::::::: */
@@ -197,7 +181,13 @@
             "{{ route('applications.index') }}" + '/' + id + '/edit',
             function (data) {
 
-                console.log(data);
+                console.log(data.data.application.details);
+
+                /** */
+                data.data.application.details.forEach(function(item) {
+                    console.log(item);
+                    addRowTable('#application-details', item);
+                })
 
                 /** */
                 let servers = [];
@@ -220,9 +210,6 @@
                 $('#type').val(data.data.application.type).trigger('change');
                 $('#start').val(data.data.application.start).trigger('change');
                 $('#select-towers').val(data.data.application.tower_id).trigger('change');
-                $('#directory_app').val(data.data.application.directory_app).trigger('change');
-                $('#uri_internet').val(data.data.application.uri_internet);
-                $('#uri_intranet').val(data.data.application.uri_intranet);
 
                 /** */
                 if (data.data.application.credential != null) {
@@ -239,8 +226,6 @@
     function update(id) {
 
         var id = $('#id').val();
-
-        console.log(id);
 
         $.ajax({
             url: "{{ route('applications.index') }}" + '/' + id,
@@ -336,6 +321,18 @@
 
         });
 
+        $('select[name=' + selector + ']').each(function () {
+
+            var value = $(this).val();
+            if (value) {
+            inputs.push(value);
+            }
+            count++;
+
+        });
+
+        console.log(inputs, count);
+
         return (inputs.length == count) ? true : false;
 
     }
@@ -345,33 +342,34 @@
 
         var result = validate('is-empty');
 
+        console.log(result);
+
         if (result) {
 
             var $i = Math.floor((Math.random() * 100) + 1);
             var id;
-            var name = $('#dbn').val();
-            var sgdb = $('#sgdb').val();
-            var port = $('#port').val();
-            var username = $('#usr').val();
-            var password = $('#pwd').val();
+            var environment_id = $('#select-environments').val();
+            var environment = $('#select-environments option:selected').text();
+            var location_type = $('#location_type').val();
+            var content = $('#location_content').val();
 
             var data = {
                 data: {
                     id,
-                    name,
-                    sgdb,
-                    port,
-                    credential: {
-                        username,
-                        password
-                    }
+                    environment_id,
+                    environment,
+                    location_type,
+                    content
                 }
             };
 
             /** */
-            addRowTable('#application-table', data.data, $i);
+            addRowTable('#application-details', data.data, $i);
 
-            cleanFormDB('is-empty', 'is-invalid');
+            //cleanFormDB('is-empty', 'is-invalid');
+            var environment_id = $('#select-environments').val('');
+            var location_type = $('#location_type').val('').trigger('change');
+            var content = $('#location_content').val('');
 
         } else {
             $('#error-msg').show();
@@ -512,14 +510,21 @@
 
     /** RETURN NEW TR TO TABLE */
     function addRowTable(selector, data, index = null) {
-
+        getSelectOptions("{{ url('environments') }}", "GET", "json", ".select-environments");
         newRow = $(selector).find('tbody').append(`
             <tr id="row-${index}">
-                <td><input class="form-control form-control-sm" id="name_${data.id}" type="text" name="db[]" value="${data.name}"></td>
-                <td><input class="form-control form-control-sm" id="sgdb_${data.id}" type="text" name="sgdb[]" value="${data.sgdb}"></td>
-                <td><input class="form-control form-control-sm" id="port_${data.id}" type="text" name="port[]" value="${data.port}"></td>
-                <td><input class="form-control form-control-sm" id="username_${data.id}" type="text" name="usr[]" value="${data.credential.username}"></td>
-                <td><input class="form-control form-control-sm" id="password_${data.id}" type="text" name="pwd[]" value="${data.credential.password}"></td>
+                <td>
+                    <select name="is-empty" class="select-environments form-control form-control-sm" placeholder="Ambiente">
+                        <option disabled selected></option>
+                    </select>
+                </td>
+                <td>
+                    <select name="is-empty" class="location_type form-control form-control-sm" placeholder="">
+                        <option selected="${data.type}">Link</option>
+                        <option selected="${data.type}">Diretório</option>
+                    </select>
+                </td>
+                <td><input class="form-control form-control-sm" id="content_${data.id}" type="text" name="contents[]" value="${data.content}"></td>
                 <td>
                     <a href="#" title="Update" onclick="updateItem(${data.id})" class="btn btn-primary btn-xs update-item-databases">
                         <i class="fas fa-sync-alt"></i>

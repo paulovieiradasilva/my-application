@@ -18,9 +18,6 @@ class Application extends Model
         'start',
         'platform',
         'type',
-        'directory_app',
-        'uri_internet',
-        'uri_intranet',
         'tower_id',
         'provider_id'
     ];
@@ -55,6 +52,14 @@ class Application extends Model
     public function employees()
     {
         return $this->belongsToMany(Employee::class);
+    }
+
+    /**
+     * The details that belong to the application.
+     */
+    public function details()
+    {
+        return $this->hasMany(Detail::class);
     }
 
     /**

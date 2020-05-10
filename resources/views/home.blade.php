@@ -5,11 +5,11 @@
 <div class="row">
     @foreach($applications as $app)
         <div class="col-sm-3">
-            <div class="card card-danger card-outline">
+            <div class="card card-primary card-outline">
                 <div class="card-body">
                     <h4>{{ $app->name }}</h4>
-                    <h6 class="text-danger card-subtitle mb-2">{{ $app->tower->name }}</h6>
-                    <a href="#" class="btn btn-sm btn-danger"><i class="fas fa-info-circle"></i> Detalhes</a>
+                    <h6 class="text-primary card-subtitle mb-2">{{ $app->tower->name }}</h6>
+                    <a href="{{ route('applications.index')}}/{{$app->id}}" class="btn btn-sm btn-primary">Detalhes</a>
                 </div>
             </div>
         </div>

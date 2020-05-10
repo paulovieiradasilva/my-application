@@ -21,9 +21,6 @@ class CreateApplicationsTable extends Migration
             $table->enum('start', ['Automático', 'Manual'])->nullable();
             $table->string('platform')->nullable();
             $table->enum('type', ['Web', 'Executável'])->nullable();
-            $table->string('directory_app')->nullable();
-            $table->string('uri_internet')->nullable();
-            $table->string('uri_intranet')->nullable();
 
             $table->unsignedBigInteger('provider_id');
             $table->foreign('provider_id')->references('id')->on('providers');

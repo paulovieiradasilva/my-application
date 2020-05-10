@@ -23,6 +23,7 @@ mix.styles([
     'resources/css/select2.css',
     'resources/css/select2-bootstrap4.css',
     'resources/css/dataTables.bootstrap4.min.css',
+    'responses/css/bootstrap.css',
     'resources/css/adminlte.css',
     'resources/css/animate.css',
     'resources/css/styles.css'
