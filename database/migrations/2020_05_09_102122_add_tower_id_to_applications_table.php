@@ -14,7 +14,7 @@ class AddTowerIdToApplicationsTable extends Migration
     public function up()
     {
         Schema::table('applications', function (Blueprint $table) {
-            $table->unsignedBigInteger('tower_id')->after('uri_intranet')->nullable();
+            $table->unsignedBigInteger('tower_id')->after('type')->nullable();
             $table->foreign('tower_id')->references('id')->on('towers');
         });
     }
