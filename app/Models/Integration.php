@@ -21,4 +21,12 @@ class Integration extends Model
         return $this->belongsTo(Application::class);
     }
 
+    /**
+     * Get the server's credential.
+     */
+    public function credential()
+    {
+        return $this->morphOne(Credential::class, 'credentialable');
+    }
+
 }

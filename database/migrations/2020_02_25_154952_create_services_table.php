@@ -18,7 +18,7 @@ class CreateServicesTable extends Migration
 
             $table->string('name');
             $table->text('description')->nullable();
-            $table->enum('start', ['automatic', 'manual'])->nullable();
+            $table->enum('start', ['Automático', 'Manual'])->nullable();
 
             $table->unsignedBigInteger('application_id');
             $table->foreign('application_id')->references('id')->on('applications');

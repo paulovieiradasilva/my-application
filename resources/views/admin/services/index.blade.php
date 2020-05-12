@@ -136,10 +136,15 @@
         $.get(
             "{{ route('services.index') }}" + '/' + id + '/edit',
             function (data) {
+ 
                 $('#modalTitle').html('Editar serviço');
                 $('#updated').html('Atualizar');
                 $('#modalFormCreate').modal('show');
                 $('#name').val(data.name);
+                if (data.credential != null) {
+                    $('#username').val(data.credential.username);
+                    $('#password').val(data.credential.password);
+                }
                 $('#start').val(data.start).trigger('change');
                 $('#description').val(data.description);
                 $('#select-applications').val(data.application_id).trigger('change');

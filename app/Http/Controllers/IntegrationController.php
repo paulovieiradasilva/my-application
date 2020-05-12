@@ -52,6 +52,10 @@ class IntegrationController extends Controller
 
             $integration = Integration::create($request->all());
 
+            if ($request->get('username') && $request->get('password')) {
+                $integration->credential()->create($request->all());
+            }
+
             DB::commit();
 
         } catch (\Exception $e) {
@@ -82,7 +86,7 @@ class IntegrationController extends Controller
      */
     public function edit($id)
     {
-        $integration = Integration::findOrFail($id);
+        $integration = Integration::with(['credential'])->where('id', $id)->first();
 
         return $integration;
     }

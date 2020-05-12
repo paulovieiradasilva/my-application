@@ -57,7 +57,10 @@ class ProviderController extends Controller
             DB::beginTransaction();
 
             $provider = Provider::create($request->all());
-            $provider->contacts()->create($request->all());
+
+            if ($request->get('username') && $request->get('password')) {
+                $provider->contacts()->create($request->all());
+            }
 
             DB::commit();
 

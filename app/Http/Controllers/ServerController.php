@@ -59,7 +59,10 @@ class ServerController extends Controller
             DB::beginTransaction();
 
             $server = Server::create($request->all());
-            $server->credential()->create($request->all());
+            
+            if ($request->get('username') && $request->get('password')) {
+                $server->credential()->create($request->all());
+            }
 
             /** Databases */
             $name = $request->get('db');

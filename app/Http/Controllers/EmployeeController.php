@@ -51,7 +51,10 @@ class EmployeeController extends Controller
             DB::beginTransaction();
 
             $employee = Employee::create($request->all());
-            $employee->contacts()->create($request->all());
+
+            if ($request->get('username') && $request->get('password')) {
+                $employee->contacts()->create($request->all());
+            }
 
             DB::commit();
 

@@ -7,6 +7,22 @@
 </div>
 
 <div class="form-group row">
+    <label for="username" class="col-sm-2 col-form-label">Usuário</label>
+    <div class="col-sm-10">
+        <input type="text" id="username" name="username" class="form-control" placeholder="Usuário">
+        <div id="username-feedback" class="invalid-feedback"></div>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="password" class="col-sm-2 col-form-label">Senha</label>
+    <div class="col-sm-10">
+        <input type="text" id="password" name="password" class="form-control" placeholder="Senha">
+        <div id="password-feedback" class="invalid-feedback"></div>
+    </div>
+</div>
+
+<div class="form-group row">
     <label for="start" class="col-sm-2 col-form-label">Start</label>
     <div class="col-sm-10">
         <select name="start" id="start" class="form-control select2" data-placeholder="Start">

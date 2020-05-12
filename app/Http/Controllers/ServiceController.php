@@ -52,6 +52,10 @@ class ServiceController extends Controller
 
             $service = Service::create($request->all());
 
+            if ($request->get('username') && $request->get('password')) {
+                $service->credential()->create($request->all());
+            }
+
             DB::commit();
 
         } catch (\Exception $e) {
@@ -82,7 +86,7 @@ class ServiceController extends Controller
      */
     public function edit($id)
     {
-        $service = Service::findOrFail($id);
+        $service = Service::with(['credential'])->where('id', $id)->first();
 
         return $service;
     }
