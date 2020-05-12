@@ -58,7 +58,7 @@ class ProviderController extends Controller
 
             $provider = Provider::create($request->all());
 
-            if ($request->get('username') && $request->get('password')) {
+            if ($request->get('email') || $request->get('site') || $request->get('phone') || $request->get('cellphone')) {
                 $provider->contacts()->create($request->all());
             }
 

@@ -75,6 +75,9 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('funcionarios/{id}', 'EmployeeController@update')->name('employees.update');
     Route::delete('funcionarios/{id}', 'EmployeeController@destroy')->name('employees.destroy')->middleware('can:employees.destroy');
 
+    /** All towers */
+    Route::get('employees', 'EmployeeController@get');
+
     /** Datatables */
     Route::get('employees_datatables', 'EmployeeController@list');
 

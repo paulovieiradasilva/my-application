@@ -27,6 +27,7 @@ class AddTowerIdToApplicationsTable extends Migration
     public function down()
     {
         Schema::table('applications', function (Blueprint $table) {
+            $table->dropForeign('applications_tower_id_foreign');
             $table->dropColumn('tower_id');
         });
     }

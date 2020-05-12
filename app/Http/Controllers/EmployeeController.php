@@ -29,6 +29,12 @@ class EmployeeController extends Controller
             ->make(true);
     }
 
+    /** */
+    public function get()
+    {
+        return $employees = Employee::all();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -52,7 +58,7 @@ class EmployeeController extends Controller
 
             $employee = Employee::create($request->all());
 
-            if ($request->get('username') && $request->get('password')) {
+            if ($request->get('email') || $request->get('phone') || $request->get('cellphone')) {
                 $employee->contacts()->create($request->all());
             }
 

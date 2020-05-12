@@ -102,7 +102,7 @@
     $(document).ready(function () {
         getSelectOptions("{{ url('providers') }}", "GET", "json", "#select-providers");
         getSelectOptions("{{ url('servers') }}", "GET", "json", "#select-servers");
-        getSelectOptions("{{ url('users') }}", "GET", "json", "#select-users");
+        getSelectOptions("{{ url('employees') }}", "GET", "json", "#select-users");
         getSelectOptions("{{ url('towers') }}", "GET", "json", "#select-towers");
         getSelectOptions("{{ url('environments') }}", "GET", "json", "#select-environments");
     });
