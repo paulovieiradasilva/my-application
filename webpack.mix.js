@@ -32,6 +32,7 @@ mix.styles([
 mix.scripts([
     'resources/js/jquery.min.js',
     'resources/js/jquery-ui.min.js',
+    'resources/js/jquery.inputmask.bundle.min.js',
     'resources/js/toastr.min.js',
     'resources/js/select2.full.js',
     'resources/js/jquery.dataTables.js',
