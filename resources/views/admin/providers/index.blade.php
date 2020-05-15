@@ -85,9 +85,6 @@
 
     /** RESET MODAL VALIDATIONS */
     $("#modalFormCreate").on("hide.bs.modal", function () {
-        cleanFormValidation();
-        $("#formProvider").trigger("reset");
-        $('#on_duty').val(null).trigger('change');
     });
 
     /** ::::::::::::::::::::::::: FUNCTIONS ::::::::::::::::::::::::: */
@@ -131,9 +128,6 @@
         $.get(
             "{{ route('providers.index') }}" + "/" + id + "/edit",
             function (data) {
-
-                console.log(data);
-
                 $("#modalTitle").html("Editar forncedor");
                 $("#updated").html("Atualizar");
                 $("#modalFormCreate").modal("show");
@@ -163,6 +157,7 @@
             dataType: "json",
             data: $("#formProvider").serialize(),
             success: function (data) {
+                $('#id').val('');
                 $("#formProvider").trigger("reset");
                 $("#modalFormCreate").modal("hide");
                 $("#providers_table").DataTable().ajax.reload(null, false);
@@ -182,8 +177,6 @@
                 }
             }
         });
-
-        $('#id').val('');
     }
 
     /** DELETE */
@@ -200,6 +193,7 @@
             type: "DELETE",
             dataType: "json",
             success: function (data) {
+                $('#id').val('');
                 $("#providers_table").DataTable().ajax.reload(null, false);
                 $("#deleteModalCenter").modal("hide");
                 if (data.success) {
@@ -214,8 +208,6 @@
                 /** Criar as validações dos inputs para erros */
             }
         });
-
-        $('#id').val('');
     }
 
     /** DELETE CONFIRMATION */

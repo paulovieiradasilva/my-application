@@ -85,9 +85,6 @@
 
     /** RESET MODAL VALIDATIONS */
     $("#modalFormCreate").on("hide.bs.modal", function () {
-        cleanFormValidation();
-        $('#formIntegration').trigger('reset');
-        $('#select-applications').val(null).trigger('change');
     });
 
     /** LIST ALL */
@@ -136,7 +133,6 @@
         $.get(
             "{{ route('integrations.index') }}" + '/' + id + '/edit',
             function (data) {
-     
                 $('#modalTitle').html('Editar integração');
                 $('#updated').html('Atualizar');
                 $('#modalFormCreate').modal('show');
@@ -164,6 +160,7 @@
             dataType: 'json',
             data: $('#formIntegration').serialize(),
             success: function (data) {
+                $('#id').val('');
                 $('#formIntegration').trigger('reset');
                 $('#modalFormCreate').modal('hide');
                 $('#integrations_table').DataTable().ajax.reload(null, false);
@@ -183,8 +180,6 @@
                 }
             }
         });
-
-        $('#id').val('');
     }
 
     /** DELETE  */
@@ -216,8 +211,6 @@
                 /** Criar as validações dos inputs para erros */
             }
         });
-
-        $('#id').val('');
     }
 
     /** DELETE CONFIRMATION */

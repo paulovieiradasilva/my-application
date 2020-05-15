@@ -83,8 +83,6 @@
 
     /** RESET MODAL VALIDATIONS */
     $("#modalFormCreate").on("hide.bs.modal", function () {
-        cleanFormValidation();
-        $('#formTower').trigger('reset');
     });
 
     /** ::::::::::::::::::::::::: FUNCTIONS ::::::::::::::::::::::::: */
@@ -148,6 +146,7 @@
             dataType: 'json',
             data: $('#formTower').serialize(),
             success: function (data) {
+                $('#id').val('');
                 $('#formTower').trigger('reset');
                 $('#modalFormCreate').modal('hide');
                 $('#towers_table').DataTable().ajax.reload(null, false);
@@ -171,8 +170,6 @@
                 }
             }
         });
-
-        $('#id').val('');
     }
 
     /** DELETE  */
@@ -189,6 +186,7 @@
             type: 'DELETE',
             dataType: 'json',
             success: function (data) {
+                $('#id').val('');
                 $('#towers_table').DataTable().ajax.reload(null, false);
                 $('#deleteModalCenter').modal('hide');
                 toastr.success(data.success);
@@ -198,8 +196,6 @@
                 /** Criar as validações dos inputs para erros */
             }
         });
-
-        $('#id').val('');
     }
 
     /** DELETE CONFIRMATION */

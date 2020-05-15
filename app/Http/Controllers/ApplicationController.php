@@ -7,7 +7,9 @@ use App\Models\Application;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use App\Http\Requests\ApplicationCreateRequest;
+use App\Http\Requests\ApplicationUpdateRequest;
 
 class ApplicationController extends Controller
 {
@@ -104,7 +106,29 @@ class ApplicationController extends Controller
      */
     public function show($id)
     {
-        //
+        $application = Application::with([])->where('id', $id)->first();
+        
+        $provider = \App\Models\Provider::with([])->where('id', $application->provider_id)->first();
+        $provider->contacts;
+
+        $integrations = \App\Models\Integration::with(['credential'])
+            ->select('*')
+            ->where('application_id', $application->id)
+            ->get();
+
+        $servers = \App\Models\Server::with(['credential', 'environment'])
+            ->select('*')
+            ->join('application_server', 'servers.id', '=', 'application_server.id')
+            ->where('application_server.application_id', $application->id)
+            ->get();
+
+        $employees = \App\Models\Employee::with(['contacts'])
+            ->select('*')
+            ->join('application_employee', 'employees.id', '=', 'application_employee.employee_id')
+            ->where('application_employee.application_id', $application->id)
+            ->get();
+
+        return ['application' => $application, 'provider' => $provider, 'employess' => $employees, 'integrations' => $integrations, 'servers' => $servers];
     }
 
     /**
@@ -131,12 +155,12 @@ class ApplicationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ApplicationUpdateRequest $request, $id)
     {
         try {
             $application = Application::findOrFail($id);
             $application->update($request->all());
-
+            
             $application->servers()->sync($request->get('servers'));
             $application->employees()->sync($request->get('employees'));
 

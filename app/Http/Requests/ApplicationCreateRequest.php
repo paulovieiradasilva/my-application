@@ -25,9 +25,10 @@ class ApplicationCreateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+            'provider_id' => ['required', 'max:255'],
             'start' => ['required'],
             'type' => ['required'],
-            'provider_id' => ['required', 'max:255']
+            'tower_id' => ['required']
         ];
     }
 
@@ -41,6 +42,7 @@ class ApplicationCreateRequest extends FormRequest
         return [
             'provider_id.required' => 'O campo fornecedor é obrigatório.',
             'type.required' => 'O campo tipo é obrigatório.',
+            'tower_id.required' => 'O campo torre é obrigatório.',
         ];
     }
 }

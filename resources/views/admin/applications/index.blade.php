@@ -88,14 +88,6 @@
 
     /** RESET MODAL VALIDATIONS */
     $("#modalFormCreate").on("hide.bs.modal", function () {
-        cleanFormValidation();
-        $("#services-table").find("tr:not(:first)").remove();
-        $('#formApplication').trigger('reset');
-        $('#type').val(null).trigger('change');
-        $('#start').val(null).trigger('change');
-        $('#select-providers').val(null).trigger('change');
-        $('#select-servers').val(null).trigger('change');
-        $('#select-users').val(null).trigger('change');
     });
 
     /** GET LISTS */
@@ -167,6 +159,13 @@
                     $('#select-provider').removeClass('is-invalid');
                     $('#provider-feedback').val('');
                 }
+                if (data.responseJSON.errors.tower_id) {
+                    $('#select-towers').addClass('is-invalid');
+                    $('#tower-feedback').html(data.responseJSON.errors.tower_id);
+                } else {
+                    $('#select-towers').removeClass('is-invalid');
+                    $('#tower-feedback').val('');
+                }
             }
         });
     }
@@ -181,11 +180,8 @@
             "{{ route('applications.index') }}" + '/' + id + '/edit',
             function (data) {
 
-                console.log(data.data.application.details);
-
                 /** */
                 data.data.application.details.forEach(function(item) {
-                    console.log(item);
                     addRowTable('#application-details', item);
                 })
 
@@ -223,9 +219,9 @@
     }
 
     /** UPDATE */
-    function update(id) {
+    function update() {
 
-        var id = $('#id').val();
+        var id = $('#id').val();        
 
         $.ajax({
             url: "{{ route('applications.index') }}" + '/' + id,
@@ -233,6 +229,7 @@
             dataType: 'json',
             data: $('#formApplication').serialize(),
             success: function (data) {
+                $('#id').val('');
                 $('#formApplication').trigger('reset');
                 $('#modalFormCreate').modal('hide');
                 $('#applications_table').DataTable().ajax.reload(null, false);
@@ -257,16 +254,12 @@
             }
         });
 
-        $('#id').val('');
     }
 
     /** DELETE  */
     function destroy(id) {
 
         var id = $('#id').val();
-
-        console.log(id);
-
 
         $.ajax({
             data: {

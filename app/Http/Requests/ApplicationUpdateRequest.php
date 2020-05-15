@@ -13,7 +13,7 @@ class ApplicationUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,25 @@ class ApplicationUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'provider_id' => ['required', 'max:255'],
+            'start' => ['required'],
+            'type' => ['required'],
+            'tower_id' => ['required']
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'provider_id.required' => 'O campo fornecedor é obrigatório.',
+            'type.required' => 'O campo tipo é obrigatório.',
+            'tower_id.required' => 'O campo torre é obrigatório.',
         ];
     }
 }

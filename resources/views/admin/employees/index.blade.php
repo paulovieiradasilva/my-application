@@ -83,9 +83,6 @@
 
     /** RESET MODAL VALIDATIONS */
     $("#modalFormCreate").on("hide.bs.modal", function () {
-        cleanFormValidation();
-        $('#formEmployee').trigger('reset');
-        $('#select-towers').val(null).trigger('change');
     });
 
     /** LIST ALL */
@@ -161,6 +158,7 @@
             dataType: 'json',
             data: $('#formEmployee').serialize(),
             success: function (data) {
+                $('#id').val('');
                 $('#formEmployee').trigger('reset');
                 $('#modalFormCreate').modal('hide');
                 $('#employees_table').DataTable().ajax.reload(null, false);
@@ -180,8 +178,6 @@
                 }
             }
         });
-
-        $('#id').val('');
     }
 
     /** DELETE  */
@@ -213,8 +209,6 @@
                 /** Criar as validações dos inputs para erros */
             }
         });
-
-        $('#id').val('');
     }
 
     /** DELETE CONFIRMATION */

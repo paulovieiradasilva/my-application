@@ -85,9 +85,6 @@
 
     /** RESET MODAL VALIDATIONS */
     $("#modalFormCreate").on("hide.bs.modal", function () {
-        cleanFormValidation();
-        $('#formRole').trigger('reset');
-        $('#select-permissions').val(null).trigger('change');
     });
 
     /** LIST ALL */
@@ -169,7 +166,7 @@
             dataType: 'json',
             data: $('#formRole').serialize(),
             success: function (data) {
-
+                $('#id').val('');
                 $('#formRole').trigger('reset');
                 $('#modalFormCreate').modal('hide');
                 $('#roles_table').DataTable().ajax.reload(null, false);
@@ -193,8 +190,6 @@
                 }
             }
         });
-
-        $('#id').val('');
     }
 
     /** DELETE  */
@@ -211,6 +206,7 @@
             type: 'DELETE',
             dataType: 'json',
             success: function (data) {
+                $('#id').val('');
                 $('#roles_table').DataTable().ajax.reload(null, false);
                 $('#deleteModalCenter').modal('hide');
                 if (data.success) {
@@ -225,8 +221,6 @@
                 /** Criar as validações dos inputs para erros */
             }
         });
-
-        $('#id').val('');
     }
 
     /** DELETE CONFIRMATION */
