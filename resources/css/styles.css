@@ -4,35 +4,35 @@
         margin: 0;
         font-size: 13px;
     }
-    
+
     .full-height {
         height: 100vh;
     }
-    
+
     .flex-center {
         align-items: center;
         display: flex;
         justify-content: center;
     }
-    
+
     .position-ref {
         position: relative;
     }
-    
+
     .top-right {
         position: absolute;
         right: 10px;
         top: 18px;
     }
-    
+
     .content {
         text-align: center;
     }
-    
+
     .title {
         font-size: 84px;
     }
-    
+
     .links>a {
         color: #636b6f;
         padding: 0 25px;
@@ -42,25 +42,25 @@
         text-decoration: none;
         text-transform: uppercase;
     }
-    
+
     .m-b-md {
         margin-bottom: 30px;
     }
-    
+
     .dropdown-item.active,
     .dropdown-item:active {
         color: #ada5a5;
         text-decoration: none;
         background-color: #f4f6f9;
     }
-    
+
     .dropdown-item.active,
     .dropdown-item:hover {
         color: #292828;
         text-decoration: none;
         background-color: #f4f6f9;
     }
-    
+
     .dropdown-item {
         display: block;
         width: 96%;
@@ -74,28 +74,28 @@
         border: 0;
         margin-left: 2px;
     }
-    
+
     .select2-container--default .select2-selection--single .select2-selection__rendered {
         color: #444;
         line-height: 24px;
     }
-    
+
     .buscar-caja {
         position: relative;
         background: #fff;
         border-radius: 100px;
     }
-    
+
     .buscar-caja:hover>.buscar-txt {
         width: 240px;
         padding: 0 13px;
     }
-    
+
     .buscar-caja:hover>.buscar-btn {
         background: white;
         color: black;
     }
-    
+
     .buscar-btn {
         float: right;
         width: 40px;
@@ -108,13 +108,13 @@
         color: white;
         cursor: pointer;
     }
-    
+
     .buscar-btn>i {
         font-size: 13px;
         color: #a5a6a7;
         margin-top: 2px;
     }
-    
+
     .buscar-txt {
         border: none;
         background: none;
@@ -127,7 +127,7 @@
         line-height: 40px;
         width: 0px;
     }
-    
+
     .card-title {
         font-size: 20px;
         font-weight: 400;
@@ -160,4 +160,10 @@
         border-radius: .25rem;
         box-shadow: inset 0 0 0 transparent;
         transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+
+    /** */
+    div.dataTables_wrapper div.dataTables_length select {
+        width: 54px;
+        display: inline-block;
     }

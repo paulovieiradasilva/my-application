@@ -107,7 +107,7 @@ class ApplicationController extends Controller
     public function show($id)
     {
         $application = Application::with([])->where('id', $id)->first();
-        
+
         $provider = \App\Models\Provider::with([])->where('id', $application->provider_id)->first();
         $provider->contacts;
 
@@ -160,7 +160,7 @@ class ApplicationController extends Controller
         try {
             $application = Application::findOrFail($id);
             $application->update($request->all());
-            
+
             $application->servers()->sync($request->get('servers'));
             $application->employees()->sync($request->get('employees'));
 

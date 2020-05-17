@@ -13,38 +13,27 @@ const mix = require('laravel-mix');
 
 mix.copyDirectory('resources/img', 'public/img');
 
-mix.sass('resources/sass/app.scss', 'public/css');
-
-mix.styles([
-    'resources/css/fontawesome-all.css',
-    'resources/css/ionicons.min.css',
-    'resources/css/icheck-bootstrap.min.css',
-    'resources/css/toastr.min.css',
-    'resources/css/select2.css',
-    'resources/css/select2-bootstrap4.css',
-    'resources/css/dataTables.bootstrap4.min.css',
-    'responses/css/bootstrap.css',
-    'resources/css/adminlte.css',
-    'resources/css/animate.css',
-    'resources/css/styles.css'
-], 'public/css/app.css');
+mix.sass('resources/sass/AdminLTE.scss', 'public/css/app.css')
+   .options({
+        processCssUrls: false,
+    });
 
 mix.scripts([
-    'resources/js/jquery.min.js',
-    'resources/js/jquery-ui.min.js',
-    'resources/js/jquery.inputmask.bundle.min.js',
-    'resources/js/toastr.min.js',
+    'resources/js/jquery.js',
+    'resources/js/jquery-ui.js',
+    'resources/js/jquery.inputmask.js',
+    'resources/js/toastr.js',
     'resources/js/select2.full.js',
     'resources/js/jquery.dataTables.js',
     'resources/js/dataTables.bootstrap4.js',
-    'resources/js/dataTables.buttons.min.js',
-    'resources/js/buttons.bootstrap.min.js',
-    'resources/js/jszip.min.js',
-    'resources/js/pdfmake.min.js',
+    'resources/js/dataTables.buttons.js',
+    'resources/js/buttons.bootstrap.js',
+    'resources/js/jszip.js',
+    'resources/js/pdfmake.js',
     'resources/js/vfs_fonts.js',
-    'resources/js/buttons.html5.min.js',
-    'resources/js/buttons.print.min.js.js',
-    'resources/js/buttons.colVis.min.js.js',
+    'resources/js/buttons.html5.js',
+    'resources/js/buttons.print.js.js',
+    'resources/js/buttons.colVis.js.js',
     'resources/js/adminlte.js',
     'resources/js/bootstrap.js',
     'resources/js/scripts.js'
