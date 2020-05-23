@@ -221,7 +221,7 @@
     /** UPDATE */
     function update() {
 
-        var id = $('#id').val();        
+        var id = $('#id').val();
 
         $.ajax({
             url: "{{ route('applications.index') }}" + '/' + id,

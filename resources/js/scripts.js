@@ -1,7 +1,7 @@
-$(function() {
+$(function () {
     // Initialize Select2 Elements
     $(".select2").select2({
-        placeholder: function() {
+        placeholder: function () {
             $(this).data("placeholder");
         }
     });
@@ -10,10 +10,14 @@ $(function() {
     $(".select2bs4").select2({
         theme: "bootstrap4",
         multiple: true,
-        placeholder: function() {
+        placeholder: function () {
             $(this).data("placeholder");
         }
     });
+
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    })
 
     //Datemask dd/mm/yyyy
     $("#datemask").inputmask("dd/mm/yyyy", { placeholder: "dd/mm/yyyy" });
@@ -43,7 +47,7 @@ $(function() {
         hideMethod: "fadeOut"
     };
 
-    $(".dropdown-menu .dropdown-toggle").on("click", function(e) {
+    $(".dropdown-menu .dropdown-toggle").on("click", function (e) {
         if (
             !$(this)
                 .next()
@@ -60,7 +64,7 @@ $(function() {
 
         $(this)
             .parents("li.nav-item.dropdown.show")
-            .on("hidden.bs.dropdown", function(e) {
+            .on("hidden.bs.dropdown", function (e) {
                 $(".dropdown-submenu .show").removeClass("show");
             });
 
@@ -74,8 +78,8 @@ function getSelectOptions(url, type, dataType, seletor) {
         url: url,
         type: type,
         dataType: dataType,
-        success: function(data) {
-            $.each(data, function(i, d) {
+        success: function (data) {
+            $.each(data, function (i, d) {
                 $(seletor).append(
                     '<option value="' + d.id + '">' + d.name + "</option>"
                 );

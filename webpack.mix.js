@@ -34,7 +34,8 @@ mix.scripts([
     'resources/js/buttons.html5.js',
     'resources/js/buttons.print.js.js',
     'resources/js/buttons.colVis.js.js',
-    'resources/js/adminlte.js',
     'resources/js/bootstrap.js',
+    'resources/js/adminlte.js',
+    'resources/js/popper.js',
     'resources/js/scripts.js'
 ], 'public/js/app.js');

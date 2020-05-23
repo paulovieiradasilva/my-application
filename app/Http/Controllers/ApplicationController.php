@@ -26,7 +26,7 @@ class ApplicationController extends Controller
     /** */
     public function list()
     {
-        return DataTables::of(Application::with(['provider','tower'])
+        return DataTables::of(Application::with(['provider', 'tower'])
             ->select(['id', 'name', 'description', 'start', 'platform', 'type', 'provider_id', 'created_at', 'updated_at']))
             ->addColumn('action', 'admin.applications._actions')
             ->make(true);
@@ -122,13 +122,18 @@ class ApplicationController extends Controller
             ->where('application_server.application_id', $application->id)
             ->get();
 
-        $employees = \App\Models\Employee::with(['contacts'])
+        $employees = \App\Models\Employee::with([])
             ->select('*')
             ->join('application_employee', 'employees.id', '=', 'application_employee.employee_id')
+            ->join('contacts', 'contacts.contactable_id', '=', 'employees.id')
             ->where('application_employee.application_id', $application->id)
+            ->where('contacts.contactable_type', 'App\Models\Employee')
             ->get();
 
-        return ['application' => $application, 'provider' => $provider, 'employess' => $employees, 'integrations' => $integrations, 'servers' => $servers];
+
+        // return ['application' => $application, 'provider' => $provider, 'employess' => $employees, 'integrations' => $integrations, 'servers' => $servers];
+
+        return view('admin.applications.show', ['application' => $application, 'provider' => $provider, 'employess' => $employees, 'integrations' => $integrations, 'servers' => $servers])->with('page', 'Aplicações');
     }
 
     /**
@@ -163,7 +168,6 @@ class ApplicationController extends Controller
 
             $application->servers()->sync($request->get('servers'));
             $application->employees()->sync($request->get('employees'));
-
         } catch (\Exception $e) {
             return response()->json(['error' => 'Não foi possivel atualizar apllicação.']);
         }
@@ -182,7 +186,6 @@ class ApplicationController extends Controller
         try {
             $server = Application::findOrFail($id);
             $server->delete();
-
         } catch (\Exception $e) {
             return response()->json(['error' => 'Não foi possivel deletar apllicação.']);
         }
