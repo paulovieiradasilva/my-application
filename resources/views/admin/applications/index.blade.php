@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="card" style="display: none;">
                 <!-- <div class="card-header"></div> -->
-                <div id="buttons"></div>
+                <div style="display: none;" id="buttons"></div>
                 <div class="card-body">
                     <table id="applications_table" class="table table-hover table-sm animated fadeIn" style="display: none;">
                         <thead>
@@ -42,7 +42,7 @@
                 $('#applications_table').css('display', 'inline-table').css('width', 'inherit');
             },
             processing: true,
-            applicationSide: true,
+            serverSide: true,
             autoWidth: false,
             ajax: "{{ url('applications_datatables') }}",
             columns: [

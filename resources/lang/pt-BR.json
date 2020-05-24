@@ -43,5 +43,26 @@
   "You are receiving this email because we received a password reset request for your account.": "Você recebeu esse e-mail porque foi solicitado uma redefinição de senha na sua conta.",
   "Your email address is not verified.": "Seu endereço de e-mail não está verificado.",
   "Whoops!": "Ops!",
-  "See details": "Ver detalhes"
+  "See details": "Ver detalhes",
+  "You forgot your password? Here you can easily retrieve a new password.": "Esqueceu sua senha? Aqui você pode recuperar facilmente uma nova senha.",
+  "Request new password": "Solicitar nova senha",
+  "You are only one step a way from your new password, recover your password now.": "Você está a apenas um passo de sua nova senha, recupere sua senha agora.",
+  "Come back": "Voltar",
+  "Applications": "Aplicações",
+  "Application": "Aplicação",
+  "Providers": "Fornecedores",
+  "Provider": "Fornecedor",
+  "Employees": "Funcionários",
+  "Employee": "Funcionário",
+  "Users": "Usuários",
+  "User": "Usuário",
+  "Servers": "Servidores",
+  "Server": "Servidor",
+  "Services": "Serviços",
+  "Service": "Serviço",
+  "Integrations": "Integrações",
+  "Integration": "Integração",
+  "Details": "Detalhes",
+  "Detail": "Detalhe"
+
 }

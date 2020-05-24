@@ -65,7 +65,6 @@
             }, {
                 text: 'Novo',
                 action: function (e, dt, node, config) {
-                    $('#id').val('');
                     $('#modalTitle').html('Novo funcionario');
                     $("#created").html("Cadastrar");
                     $("#updated").hide();

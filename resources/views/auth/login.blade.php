@@ -11,16 +11,7 @@
         <div class="card-body login-card-body">
             <p class="login-box-msg">Faça login para iniciar sua sessão</p>
 
-            @if($errors->any())
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    @foreach($errors->all() as $error)
-                        <span style="color: white">{!! $error !!}</span><br>
-                    @endforeach
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
+            @include('auth.erros.erros')
 
             <form method="POST" action="{{ route('login') }}">
                 @csrf
