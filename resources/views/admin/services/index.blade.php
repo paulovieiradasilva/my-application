@@ -8,7 +8,7 @@
                 <div style="display: none;" id="buttons"></div>
                 <div class="card-body">
                     <div id="loader">Carregando... <img src="{{ asset('img/loaders/loader-grey.gif') }}"></div>
-                    <table id="services_table" class="table table-hover table-sm" style="display: none;">
+                    <table id="services_table" class="table table-hover table-sm animated fadeIn" style="display: none;">
                         <thead>
                             <tr>
                                 <th>#</th>

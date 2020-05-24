@@ -11,7 +11,8 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.copyDirectory('resources/img', 'public/img');
+mix.copyDirectory('resources/img', 'public/img')
+   .copyDirectory('resources/css/pace/themes', 'public/pace/css/themes');
 
 mix.sass('resources/sass/AdminLTE.scss', 'public/css/app.css')
    .options({
@@ -20,6 +21,7 @@ mix.sass('resources/sass/AdminLTE.scss', 'public/css/app.css')
 
 mix.scripts([
     'resources/js/jquery.js',
+    'resources/js/pace.js',
     'resources/js/jquery-ui.js',
     'resources/js/jquery.inputmask.js',
     'resources/js/toastr.js',

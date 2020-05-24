@@ -10,7 +10,7 @@ body {
 
 /** */
 .navbar-badge {
-    font-size: .6rem !important;
+    font-size: 0.6rem !important;
     font-weight: 300 !important;
     padding: 2px 4px !important;
     position: absolute !important;
@@ -19,7 +19,8 @@ body {
 }
 
 /** */
-.dropdown-item.active, .dropdown-item:active {
+.dropdown-item.active,
+.dropdown-item:active {
     color: #ada5a5;
     text-decoration: none;
     background-color: #f4f6f9;
@@ -27,7 +28,8 @@ body {
     margin-left: 1px;
 }
 
-.dropdown-item.active, .dropdown-item:hover {
+.dropdown-item.active,
+.dropdown-item:hover {
     color: #292828;
     text-decoration: none;
     background-color: #f4f6f9;
@@ -35,14 +37,14 @@ body {
     margin-left: 1px;
 }
 
-.dropdown-item.active, .dropdown-item:focus {
+.dropdown-item.active,
+.dropdown-item:focus {
     color: #292828;
     text-decoration: none;
     background-color: #f4f6f9;
     width: 99%;
     margin-left: 1px;
 }
-
 
 .dropdown-item {
     display: block;
@@ -59,7 +61,9 @@ body {
 }
 /** */
 
-.select2-container--default .select2-selection--single .select2-selection__rendered {
+.select2-container--default
+    .select2-selection--single
+    .select2-selection__rendered {
     color: #444;
     line-height: 24px;
 }
@@ -148,10 +152,4 @@ body {
 div.dataTables_wrapper div.dataTables_length select {
     width: 54px;
     display: inline-block;
-}
-
-/** FLEXBOX */
-.my-content {
-    display: flex;
-    flex-direction: column;
 }
