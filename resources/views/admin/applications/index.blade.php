@@ -3,11 +3,10 @@
 <section>
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
+            <div class="card" style="display: none;">
                 <!-- <div class="card-header"></div> -->
                 <div id="buttons"></div>
                 <div class="card-body">
-                    <div id="loader">Carregando...<img src="{{ asset('img/loaders/loader-grey.gif') }}"></div>
                     <table id="applications_table" class="table table-hover table-sm animated fadeIn" style="display: none;">
                         <thead>
                             <tr>
@@ -39,7 +38,7 @@
     $(document).ready(function () {
         $('#applications_table').DataTable({
             initComplete: function () {
-                $('#loader').hide();
+                $('.card').show();
                 $('#applications_table').css('display', 'inline-table').css('width', 'inherit');
             },
             processing: true,
