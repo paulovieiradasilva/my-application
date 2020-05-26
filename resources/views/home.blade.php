@@ -15,6 +15,7 @@
         </div>
         @endforeach
     </div>
+    {{ $applications->links() }}
 </section>
 
 @endsection

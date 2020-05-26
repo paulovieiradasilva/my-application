@@ -7,10 +7,10 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h2 class="text-primary">{{ $application->name }}</h2>
+                    <h2 class="text-primary">{{ $application[0]->name }}</h2>
                     <blockquote>
-                        <p>{{ $application->description }}</p>
-                        <small>Torre: <cite title="Source Title">{{ $application->tower->name }}</cite></small>
+                        <p>{{ $application[0]->description }}</p>
+                        <small>Torre: <cite title="Source Title">{{ $application[0]->tower->name }}</cite></small>
                     </blockquote>
                 </div>
                 <!-- /.card-body -->
@@ -49,30 +49,46 @@
                                 <div class="tab-pane fade active show" id="custom-tabs-three-provider" role="tabpanel" aria-labelledby="custom-tabs-three-provider-tab">
                                     <div class="card-body">
                                         <div>
-                                            <h4>{{ $application->provider->name }}</h4>
+                                            <h4>{{ $application[0]->provider->name }}</h4>
                                             <dl>
                                                 <dd>
-                                                    <strong>Site:</strong> {{ $application->provider->contacts->site }}<br />
-                                                    <strong>E-mail:</strong> {{ $application->provider->contacts->email }}<br />
-                                                    <strong>Telefone:</strong> {{ $application->provider->contacts->phone }}<br />
-                                                    <strong>Celular:</strong> {{ $application->provider->contacts->cellphone }}<br />
-                                                    <strong>Atendimento:</strong> {{ $application->provider->opening_hours }}<br />
-                                                    <strong>Plantão:</strong> {{ $application->provider->on_duty }}<br />
+                                                    <strong>Site:</strong> {{ $application[0]->provider->contacts->site }}<br />
+                                                    <strong>E-mail:</strong> {{ $application[0]->provider->contacts->email }}<br />
+                                                    <strong>Telefone:</strong> {{ $application[0]->provider->contacts->phone }}<br />
+                                                    <strong>Celular:</strong> {{ $application[0]->provider->contacts->cellphone }}<br />
+                                                    <strong>Atendimento:</strong> {{ $application[0]->provider->opening_hours }}<br />
+                                                    <strong>Plantão:</strong> {{ $application[0]->provider->on_duty }}<br />
                                                 </dd>
                                             </dl>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="custom-tabs-three-employee" role="tabpanel" aria-labelledby="custom-tabs-three-employee-tab">
-                                    ...
-                                </div>
-                                <div class="tab-pane fade" id="custom-tabs-three-integration" role="tabpanel" aria-labelledby="custom-tabs-three-integration-tab">
-                                    ...
+                                <div class="tab-pane fade" id="custom-tabs-three-server" role="tabpanel" aria-labelledby="custom-tabs-three-server-tab">
+                                    <div class="row">
+                                        @foreach($application[0]->servers as $server)
+                                        <div class="col-md-4">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h5>{{ $server->name }}</h5>
+                                                    <strong>Tipo:</strong> {{ $server->type }}<br />
+                                                    <strong>IP:</strong> {{ $server->ip }}<br />
+                                                    <strong>Sist. Operacional:</strong> {{ $server->os }}<br />
+                                                    <strong>Ambiente:</strong> {{ $server->environment->name }}<br />
+                                                    <strong>Usuário:</strong> -- <br />
+                                                    <strong>Senha:</strong> -- <br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-three-service" role="tabpanel" aria-labelledby="custom-tabs-three-service-tab">
                                     ...
                                 </div>
-                                <div class="tab-pane fade" id="custom-tabs-three-server" role="tabpanel" aria-labelledby="custom-tabs-three-server-tab">
+                                <div class="tab-pane fade" id="custom-tabs-three-employee" role="tabpanel" aria-labelledby="custom-tabs-three-employee-tab">
+                                    ...
+                                </div>
+                                <div class="tab-pane fade" id="custom-tabs-three-integration" role="tabpanel" aria-labelledby="custom-tabs-three-integration-tab">
                                     ...
                                 </div>
                                 <div class="tab-pane fade" id="custom-tabs-three-detail" role="tabpanel" aria-labelledby="custom-tabs-three-detail-tab">

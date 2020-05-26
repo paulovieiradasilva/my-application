@@ -25,7 +25,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $applications = Application::paginate(9);
+        $applications = Application::paginate(12);
         return view('home', ['applications' => $applications])->with('page', 'Home');
     }
 }

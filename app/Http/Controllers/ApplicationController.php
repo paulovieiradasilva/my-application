@@ -109,14 +109,15 @@ class ApplicationController extends Controller
         $application = Application::with([
             'tower',
             'servers.credential',
+            'servers.environment',
             'provider.contacts',
             'employees.contacts',
             'integrations.credential',
             'services.credential',
             'details' // corrigir.
-        ])->where('id', $id)->first();
+        ])->where('id', $id)->get();
 
-        //return $application;
+        //return $application[0]->servers[0]->credential;
         return view('admin.applications.show', compact('application'))->with('page', 'Aplicações');
     }
 
