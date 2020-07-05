@@ -4,8 +4,6 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card" style="display: none;">
-                <!-- <div class="card-header"></div> -->
-                <div id="buttons"></div>
                 <div class="card-body">
                     <table id="servers_table" class="table table-hover table-sm animated fadeIn" style="display: none;">
                         <thead>
@@ -18,7 +16,7 @@
                                 <th>Ambiente</th>
                                 <th>Criado</th>
                                 <th>Atualizado</th>
-                                <th style="width: 35px;"></th>
+                                <th class="myWidth"></th>
                             </tr>
                         </thead>
                     </table>
@@ -462,12 +460,14 @@
                 <td><input class="form-control form-control-sm" id="username_${data.id}" type="text" name="usr[]" value="${data.credential.username}"></td>
                 <td><input class="form-control form-control-sm" id="password_${data.id}" type="text" name="pwd[]" value="${data.credential.password}"></td>
                 <td>
-                    <a href="#" title="Update" onclick="updateItem(${data.id})" class="btn btn-primary btn-xs update-item-databases">
-                        <i class="fas fa-sync-alt"></i>
-                    </a>
-                    <a href="#" title="Delete" onclick="removeItem(${data.id},${index})" class="btn btn-danger btn-xs">
-                        <i class="fas fa-trash-alt"></i>
-                    </a>
+                    <div class="my-1 p-1">
+                        <a href="#" title="Update" onclick="updateItem(${data.id})" class="btn btn-primary btn-xs update-item-databases">
+                            <i class="fas fa-sync-alt"></i>
+                        </a>
+                        <a href="#" title="Delete" onclick="removeItem(${data.id},${index})" class="btn btn-danger btn-xs">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </div>
                 </td>
             </tr>
         `

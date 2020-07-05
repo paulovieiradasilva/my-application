@@ -25,7 +25,7 @@ class ServiceController extends Controller
     public function list()
     {
         return DataTables::of(Service::with('application')->select(['id', 'name', 'description', 'start', 'application_id', 'created_at', 'updated_at']))
-            ->addColumn('action', 'admin.services._actions')
+            ->addColumn('action', 'components.button._actions')
             ->make(true);
     }
 
@@ -57,7 +57,6 @@ class ServiceController extends Controller
             }
 
             DB::commit();
-
         } catch (\Exception $e) {
             DB::rollback();
 

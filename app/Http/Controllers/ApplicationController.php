@@ -28,7 +28,7 @@ class ApplicationController extends Controller
     {
         return DataTables::of(Application::with(['provider', 'tower'])
             ->select(['id', 'name', 'description', 'start', 'platform', 'type', 'provider_id', 'created_at', 'updated_at']))
-            ->addColumn('action', 'admin.applications._actions')
+            ->addColumn('action', 'components.button._actions')
             ->make(true);
     }
 

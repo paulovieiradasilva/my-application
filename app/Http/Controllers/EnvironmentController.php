@@ -24,7 +24,7 @@ class EnvironmentController extends Controller
     public function list()
     {
         return DataTables::of(Environment::select(['id', 'name', 'description', 'created_at', 'updated_at']))
-            ->addColumn('action', 'admin.environments._actions')
+            ->addColumn('action', 'components.button._actions')
             ->make(true);
     }
 

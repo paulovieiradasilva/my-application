@@ -27,7 +27,7 @@ class ServerController extends Controller
     {
         return DataTables::of(Server::with(['environment'])
             ->select(['id', 'name', 'ip', 'os', 'type', 'environment_id', 'description', 'created_at', 'updated_at']))
-            ->addColumn('action', 'admin.servers._actions')
+            ->addColumn('action', 'components.button._actions')
             ->make(true);
     }
 
@@ -59,7 +59,7 @@ class ServerController extends Controller
             DB::beginTransaction();
 
             $server = Server::create($request->all());
-            
+
             if ($request->get('username') && $request->get('password')) {
                 $server->credential()->create($request->all());
             }

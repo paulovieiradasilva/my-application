@@ -25,7 +25,7 @@ class EmployeeController extends Controller
     public function list()
     {
         return DataTables::of(Employee::with(['tower', 'contacts'])->select(['id', 'name', 'type', 'tower_id', 'created_at', 'updated_at']))
-            ->addColumn('action', 'admin.employees._actions')
+            ->addColumn('action', 'components.button._actions')
             ->make(true);
     }
 

@@ -24,7 +24,7 @@ class RoleController extends Controller
     public function list()
     {
         return DataTables::of(Role::select(['id', 'name', 'slug', 'description', 'created_at', 'updated_at']))
-            ->addColumn('action', 'admin.roles._actions')
+            ->addColumn('action', 'components.button._actions')
             ->make(true);
     }
 

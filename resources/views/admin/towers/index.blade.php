@@ -4,8 +4,6 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card" style="display: none;">
-                <!-- <div class="card-header"></div> -->
-                <div style="display: none;" id="buttons"></div>
                 <div class="card-body">
                     <table id="towers_table" class="table table-hover table-sm animated fadeIn" style="display: none;">
                         <thead>
@@ -15,7 +13,7 @@
                                 <th>Descição</th>
                                 <th>Criado</th>
                                 <th>Atualizado</th>
-                                <th style="width: 35px;"></th>
+                                <th class="myWidth"></th>
                             </tr>
                         </thead>
                     </table>

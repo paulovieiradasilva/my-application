@@ -8,7 +8,7 @@
     <title>{{ config('app.name', 'My Applications') }} - {{ ucfirst(request()->path()) }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('pace/css/themes/red/pace-theme-minimal.css') }}" rel="stylesheet">
+    <link href="{{ asset('pace/css/themes/blue/pace-theme-minimal.css') }}" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" id="bootstrap-css">
 
     <!-- Google Font: Source Sans Pro -->

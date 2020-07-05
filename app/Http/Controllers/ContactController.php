@@ -3,12 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\PermissionCreateRequest;
-use App\Http\Requests\PermissionUpdateRequest;
-use Yajra\DataTables\DataTables;
-use Caffeinated\Shinobi\Models\Permission;
 
-class PermissionController extends Controller
+class ContactController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,21 +13,7 @@ class PermissionController extends Controller
      */
     public function index()
     {
-        return view('admin.permissions.index')->with('page', 'Permissões');
-    }
-
-    /** */
-    public function list()
-    {
-        return DataTables::of(Permission::select(['id', 'name', 'slug', 'description', 'created_at', 'updated_at']))
-            ->addColumn('action', 'components.button._actions')
-            ->make(true);
-    }
-
-    /** */
-    public function get()
-    {
-        return $permissions = Permission::all();
+        //
     }
 
     /**
@@ -50,10 +32,9 @@ class PermissionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PermissionCreateRequest $request)
+    public function store(Request $request)
     {
-        Permission::create($request->all());
-        return response()->json(['success' => 'Permissão cadastrada com sucesso!']);
+        //
     }
 
     /**
@@ -75,7 +56,7 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        return $permission = Permission::find($id);
+        //
     }
 
     /**
@@ -85,12 +66,9 @@ class PermissionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PermissionUpdateRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $permission = Permission::find($id);
-        $permission->update($request->all());
-
-        return response()->json(['success' => 'Permissão atualizada com sucesso!']);
+        //
     }
 
     /**
@@ -101,9 +79,6 @@ class PermissionController extends Controller
      */
     public function destroy($id)
     {
-        $permission = Permission::find($id);
-        $permission->delete();
-
-        return response()->json(['success' => 'Permissão deletada com sucesso!']);
+        //
     }
 }

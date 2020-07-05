@@ -12,14 +12,12 @@ const mix = require('laravel-mix');
  */
 
 mix.copyDirectory('resources/img', 'public/img')
-   .copyDirectory('resources/css/pace/themes', 'public/pace/css/themes');
-
-mix.sass('resources/sass/AdminLTE.scss', 'public/css/app.css')
+   .copyDirectory('resources/css/pace/themes', 'public/pace/css/themes')
+   .sass('resources/sass/AdminLTE.scss', 'public/css/app.css')
    .options({
         processCssUrls: false,
-    });
-
-mix.scripts([
+    })
+    .scripts([
     'resources/js/jquery.js',
     'resources/js/pace.js',
     'resources/js/jquery-ui.js',
@@ -40,4 +38,9 @@ mix.scripts([
     'resources/js/adminlte.js',
     'resources/js/popper.js',
     'resources/js/scripts.js'
-], 'public/js/app.js');
+], 'public/js/app.js')
+.browserSync({
+    hot: true,
+    host: 'localhost',
+    proxy: 'http://localhost:8000'
+ });

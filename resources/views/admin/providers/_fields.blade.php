@@ -15,6 +15,37 @@
 </div>
 
 <div class="form-group row">
+    <label for="email" class="col-sm-2 col-form-label">Contatos</label>
+    <div class="col-sm-10">
+        <table id="providers_table" class="table table-bordered table-hover table-sm animated fadeIn">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>E-mail</th>
+                    <th>Telefone</th>
+                    <th>Celular</th>
+                    <th>Site</th>
+                    <th class="myWidth"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>01</td>
+                    <td>01@email.com</td>
+                    <td>813333-4444</td>
+                    <td>8199999-8888</td>
+                    <td>www.fornecedor.com.br</td>
+                    <td>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+    </div>
+</div>
+
+<div class="form-group row">
     <label for="email" class="col-sm-2 col-form-label">E-mail</label>
     <div class="col-sm-10">
         <input type="text" id="email" name="email" class="form-control" placeholder="E-mail">

@@ -25,7 +25,7 @@ class ProviderController extends Controller
     public function list()
     {
         return DataTables::of(Provider::with(['contacts'])->select(['id', 'name', 'opening_hours', 'on_duty', 'description', 'created_at', 'updated_at']))
-            ->addColumn('action', 'admin.providers._actions')
+            ->addColumn('action', 'components.button._actions')
             ->make(true);
     }
 
@@ -63,7 +63,6 @@ class ProviderController extends Controller
             }
 
             DB::commit();
-
         } catch (\Exception $e) {
             DB::rollback();
 
@@ -71,7 +70,6 @@ class ProviderController extends Controller
         }
 
         return response()->json(['success' => 'Fornecedor cadastrado com sucesso!']);
-
     }
 
     /**
@@ -124,7 +122,6 @@ class ProviderController extends Controller
         }
 
         return response()->json(['success' => 'Fornecedor atualizado com sucesso!']);
-
     }
 
     /**
@@ -150,6 +147,5 @@ class ProviderController extends Controller
         }
 
         return response()->json(['success' => 'Fornecedor deletado com sucesso!']);
-
     }
 }

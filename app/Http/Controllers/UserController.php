@@ -24,7 +24,7 @@ class UserController extends Controller
     public function list()
     {
         return DataTables::of(User::with(['roles'])->select(['id', 'name', 'email', 'created_at', 'updated_at']))
-            ->addColumn('action', 'admin.users._actions')
+            ->addColumn('action', 'components.button._actions')
             ->make(true);
     }
 

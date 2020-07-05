@@ -25,7 +25,7 @@ class IntegrationController extends Controller
     public function list()
     {
         return DataTables::of(Integration::with('application')->select(['id', 'name', 'description', 'type', 'application_id', 'created_at', 'updated_at']))
-            ->addColumn('action', 'admin.integrations._actions')
+            ->addColumn('action', 'components.button._actions')
             ->make(true);
     }
 
@@ -57,7 +57,6 @@ class IntegrationController extends Controller
             }
 
             DB::commit();
-
         } catch (\Exception $e) {
             DB::rollback();
 

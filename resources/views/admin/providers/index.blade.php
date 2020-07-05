@@ -4,9 +4,8 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card" style="display: none;">
-                <!-- <div class="card-header"></div> -->
-                <div style="display: none;" id="buttons"></div>
                 <div class="card-body">
+                    <!-- <a style="float: left;" class="btn btn-default" href="{{ route('providers.create') }}">Novo</a> -->
                     <table id="providers_table" class="table table-hover table-sm animated fadeIn" style="display: none;">
                         <thead>
                             <tr>
@@ -16,7 +15,7 @@
                                 <th>Plantão</th>
                                 <th>Criado</th>
                                 <th>Atualizado</th>
-                                <th style="width: 35px;"></th>
+                                <th class="myWidth"></th>
                             </tr>
                         </thead>
                     </table>
@@ -44,37 +43,37 @@
             autoWidth: false,
             ajax: "{{ url('providers_datatables') }}",
             columns: [
-                {data: "id"},
-                {data: "name"},
-                {data: "opening_hours"},
-                {data: "on_duty"},
-                {data: "created_at"},
-                {data: "updated_at"},
-                {data: "action"}
+                { data: "id" },
+                { data: "name" },
+                { data: "opening_hours" },
+                { data: "on_duty" },
+                { data: "created_at" },
+                { data: "updated_at" },
+                { data: "action" }
             ],
             order: [
                 [0, "desc"]
             ],
             dom: "<'row'<'col-md-4'B><'col-md-5'l><'col-md-3'f>><'row'<'col-md-12'tr>><'row'<'col-md-3'i><'col-md-3'><'col-md-6'p>>",
             buttons: [{
-                    extend: "pdf",
-                    className: "btn btn-default"
-                },
-                {
-                    extend: "excel",
-                    className: "btn btn-default"
-                },
-                {
-                    text: "Novo",
-                    action: function () {
-                        $("#modalTitle").html("Novo fornecedor");
-                        $("#created").html("Cadastrar");
-                        $("#updated").hide();
-                        $("#created").show();
-                        $("#formProvider").trigger("reset");
-                        $("#modalFormCreate").modal("show");
-                    }
+                extend: "pdf",
+                className: "btn btn-default"
+            },
+            {
+                extend: "excel",
+                className: "btn btn-default"
+            },
+            {
+                text: "Novo",
+                action: function () {
+                    $("#modalTitle").html("Novo fornecedor");
+                    $("#created").html("Cadastrar");
+                    $("#updated").hide();
+                    $("#created").show();
+                    $("#formPermission").trigger("reset");
+                    $("#modalFormCreate").modal("show");
                 }
+            }
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Portuguese-Brasil.json"
@@ -88,7 +87,7 @@
 
     /** ::::::::::::::::::::::::: FUNCTIONS ::::::::::::::::::::::::: */
 
-    /** CREATE  */
+    /** CREATE */
     function store() {
 
         $.ajax({
@@ -107,7 +106,7 @@
                     toastr.error(data.error);
                 }
             },
-            complete: function (data) {},
+            complete: function (data) { },
             error: function (data) {
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
@@ -167,7 +166,7 @@
                     toastr.error(data.error);
                 }
             },
-            complete: function (data) {},
+            complete: function (data) { },
             error: function (data) {
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
@@ -202,7 +201,7 @@
                     toastr.error(data.error);
                 }
             },
-            complete: function (data) {},
+            complete: function (data) { },
             error: function (data) {
                 /** Criar as validações dos inputs para erros */
             }
@@ -221,8 +220,8 @@
     /** CLEAN FORM VALIDATION */
     function cleanFormValidation(selector, cls) {
 
-        $('input[name='+selector+']').each(function(){
-            $('input[name='+selector+']').removeClass(cls);
+        $('input[name=' + selector + ']').each(function () {
+            $('input[name=' + selector + ']').removeClass(cls);
         });
 
     }

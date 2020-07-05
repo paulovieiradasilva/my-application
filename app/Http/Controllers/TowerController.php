@@ -24,7 +24,7 @@ class TowerController extends Controller
     public function list()
     {
         return DataTables::of(Tower::select(['id', 'name', 'description', 'created_at', 'updated_at']))
-            ->addColumn('action', 'admin.towers._actions')
+            ->addColumn('action', 'components.button._actions')
             ->make(true);
     }
 
