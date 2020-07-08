@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Environment;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\EnvironmentCreateRequest;
 use App\Http\Requests\EnvironmentUpdateRequest;
 
@@ -52,7 +53,7 @@ class EnvironmentController extends Controller
      */
     public function store(EnvironmentCreateRequest $request)
     {
-        $environment = Environment::create($request->all());
+        Environment::create($request->all());
 
         return response()->json(['success' => 'Ambiente cadastrado com sucesso!']);
     }
@@ -90,9 +91,17 @@ class EnvironmentController extends Controller
      */
     public function update(EnvironmentUpdateRequest $request, $id)
     {
-        $environment = Environment::find($id);
+        try {
+            DB::beginTransaction();
 
-        $environment->update($request->all());
+            $environment = Environment::find($id);
+            $environment->update($request->all());
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return response()->json(['error' => 'Erro ao atualizar ambinente']);
+        }
 
         return response()->json(['success' => 'Ambiente atualizado com sucesso!']);
     }

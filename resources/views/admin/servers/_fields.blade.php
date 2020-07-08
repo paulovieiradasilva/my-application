@@ -9,7 +9,7 @@
 <div class="form-group row">
     <label for="ip" class="col-sm-2 col-form-label">IP</label>
     <div class="col-sm-10">
-        <input type="text" id="ip" name="ip" class="form-control" data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask im-insert="true" placeholder="IP">
+        <input type="text" id="ip" name="ip" class="form-control" placeholder="IP">
         <div id="ip-feedback" class="invalid-feedback"></div>
     </div>
 </div>
@@ -49,8 +49,6 @@
         <div id="type-feedback" class="invalid-feedback"></div>
     </div>
 </div>
-
-@include('admin.servers._database')
 
 <div class="form-group row">
     <label for="environment_id" class="col-sm-2 col-form-label">Ambiente</label>

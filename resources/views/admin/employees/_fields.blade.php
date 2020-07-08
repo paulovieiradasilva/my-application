@@ -7,30 +7,6 @@
 </div>
 
 <div class="form-group row">
-    <label for="email" class="col-sm-2 col-form-label">E-mail</label>
-    <div class="col-sm-10">
-        <input type="text" id="email" name="email" class="form-control" placeholder="E-mail">
-        <div id="email-feedback" class="invalid-feedback"></div>
-    </div>
-</div>
-
-<div class="form-group row">
-    <label for="phone" class="col-sm-2 col-form-label">Telefone</label>
-    <div class="col-sm-10">
-        <input type="text" id="phone" name="phone" class="form-control" placeholder="Telefone" data-inputmask='"mask": "(99) 9999-9999"' data-mask>
-        <div id="phone-feedback" class="invalid-feedback"></div>
-    </div>
-</div>
-
-<div class="form-group row">
-    <label for="cellphone" class="col-sm-2 col-form-label">Celular</label>
-    <div class="col-sm-10">
-        <input type="text" id="cellphone" name="cellphone" class="form-control" placeholder="Celular" data-inputmask='"mask": "(99) 9 9999-9999"' data-mask>
-        <div id="cellphone-feedback" class="invalid-feedback"></div>
-    </div>
-</div>
-
-<div class="form-group row">
     <label for="type" class="col-sm-2 col-form-label">Tipo</label>
     <div class="col-sm-10">
         <select name="type" id="type" class="form-control select2" data-placeholder="Tipo">

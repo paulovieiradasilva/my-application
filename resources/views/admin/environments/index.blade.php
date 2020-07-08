@@ -62,12 +62,12 @@
                 {
                     text: 'Novo',
                     action: function () {
+                        cleanFormDB('#formEnvironment');
                         $('#id').val('');
                         $('#modalTitle').html('Novo ambiente');
                         $('#created').html('Cadastrar');
                         $("#updated").hide();
                         $("#created").show();
-                        $('#formEnvironment').trigger('reset');
                         $('#modalFormCreate').modal('show');
                     }
                 }
@@ -94,7 +94,7 @@
             dataType: "json",
             data: $("#formEnvironment").serialize(),
             success: function (data) {
-                $("#formEnvironment").trigger("reset");
+                cleanFormDB('#formEnvironment');
                 $("#modalFormCreate").modal("hide");
                 $("#environments_table")
                     .DataTable()
@@ -152,8 +152,8 @@
             dataType: "json",
             data: $("#formEnvironment").serialize(),
             success: function (data) {
+                cleanFormDB('#formEnvironment');
                 $('#id').val('');
-                $("#formEnvironment").trigger("reset");
                 $("#modalFormCreate").modal("hide");
                 $("#environments_table")
                     .DataTable()
@@ -218,15 +218,6 @@
         $("#id-item").html(item);
 
         $('#id').val(item);
-    }
-
-    /** CLEAN FORM VALIDATION */
-    function cleanFormValidation(selector, cls) {
-
-        $('input[name='+selector+']').each(function(){
-            $('input[name='+selector+']').removeClass(cls);
-        });
-
     }
 
 </script>

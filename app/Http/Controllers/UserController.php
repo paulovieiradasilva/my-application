@@ -52,9 +52,13 @@ class UserController extends Controller
      */
     public function store(UserCreateRequest $request)
     {
-        $user = User::create($request->all());
+        try {
+            $user = User::create($request->all());
+            $user->roles()->sync($request->get('roles'));
 
-        $user->roles()->sync($request->get('roles'));
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao cadastrar usuário']);
+        }
 
         return response()->json(['success' => 'Usuário cadastrado com sucesso!']);
     }
@@ -93,11 +97,14 @@ class UserController extends Controller
      */
     public function update(UserUpdateRequest $request, $id)
     {
-        $user = User::find($id);
+        try {
+            $user = User::find($id);
+            $user->update($request->all());
+            $user->roles()->sync($request->get('roles'));
 
-        $user->update($request->all());
-
-        $user->roles()->sync($request->get('roles'));
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao atualizar usuário']);
+        }
 
         return response()->json(['success' => 'Usuário atualizado com sucesso!']);
     }
@@ -110,8 +117,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
-        $user->delete();
+        try {
+            $user = User::find($id);
+            $user->delete();
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao deletar usuário']);
+        }
 
         return response()->json(['success' => 'Usuário deletado com sucesso!']);
     }

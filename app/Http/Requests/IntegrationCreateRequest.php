@@ -24,7 +24,22 @@ class IntegrationCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => ['required', 'string', 'max:255'],
+            'type' => ['required'],
+            'application_id' => ['required'],
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'application_id.required' => 'O campo aplicação é obrigatório.',
+            'type.required' => 'O campo tipo é obrigatório.',
         ];
     }
 }

@@ -58,46 +58,6 @@
     </div>
 </div>
 
-<div id="table" class="form-group row">
-    <label for="type" class="col-sm-2 col-form-label"></label>
-    <div class="col-sm-10">
-        <h6 class="m-0 mb-2">Informe abaixo o(s) link(s) e/ou diretório(s) para esta apllicação</h6>
-        <small id="error-msg" style="display: none;" class="text-danger">
-            <i class="fas fa-exclamation-circle"></i>
-            <b>AMBIENTE</b>, <b>TIPO</b>, <b>CONTEÚDO</b>, são de preenchimento obrigatorio.
-        </small>
-        <div class="content">
-            <table id="application-details" class="table table-hover table-bordered table-sm">
-                <thead>
-                    <th style="width: 70px;">
-                        <select name="is-empty" id="select-environments" class="form-control form-control-sm" placeholder="Ambiente">
-                            <option disabled selected></option>
-                        </select>
-                    </th>
-                    <th style="width: 90px;">
-                        <select name="is-empty" class="location_type form-control form-control-sm" placeholder="select your beverage">
-                            <option disabled selected></option>
-                            <option value="Link">Link</option>
-                            <option value="Diretório">Diretório</option>
-                        </select>
-                    </th>
-                    <th><input class="form-control form-control-sm" name="is-empty" type="text" id="location_content" placeholder="Conteúdo"></th>
-                    <th>
-                        <a href="#" style="display: none;" onclick="addItemToTable()" id="add-item-table" class="btn btn-xs btn-primary my-1 p-1">
-                            Adicionar
-                        </a>
-                        <a href="#" style="display: none;" onclick="addItem()" id="edit-item-table" class="btn btn-xs btn-success my-1 p-1">
-                            Adicionar
-                        </a>
-                    </th>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
 <div class="form-group row">
     <label for="server_id" class="col-sm-2 col-form-label">Servidores</label>
     <div class="col-sm-10">

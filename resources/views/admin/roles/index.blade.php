@@ -64,7 +64,7 @@
                 },
                 {
                     text: 'Novo',
-                    action: function (e, dt, node, config) {
+                    action: function () {
                         $('#modalTitle').html('Novo papél');
                         $("#created").html("Cadastrar");
                         $("#updated").hide();

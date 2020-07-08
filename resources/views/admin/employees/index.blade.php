@@ -63,6 +63,7 @@
             }, {
                 text: 'Novo',
                 action: function (e, dt, node, config) {
+                    cleanFormDB('#formEmployee');
                     $('#modalTitle').html('Novo funcionario');
                     $("#created").html("Cadastrar");
                     $("#updated").hide();
@@ -83,7 +84,7 @@
 
     /** LIST ALL */
     $(document).ready(function () {
-        getSelectOptions("{{ url('towers')}}", "GET", "json", "#select-towers");
+        getSelectOptions("{{ url('towers-all')}}", "GET", "json", "#select-towers");
     });
 
     /** ::::::::::::::::::::::::: FUNCTIONS ::::::::::::::::::::::::: */
@@ -97,7 +98,7 @@
             dataType: 'json',
             data: $('#formEmployee').serialize(),
             success: function (data) {
-                $('#formEmployee').trigger('reset');
+                cleanFormDB('#formEmployee');
                 $('#modalFormCreate').modal('hide');
                 $('#employees_table').DataTable().ajax.reload(null, false);
                 if (data.success) {
@@ -154,8 +155,8 @@
             dataType: 'json',
             data: $('#formEmployee').serialize(),
             success: function (data) {
+                cleanFormDB('#formEmployee');
                 $('#id').val('');
-                $('#formEmployee').trigger('reset');
                 $('#modalFormCreate').modal('hide');
                 $('#employees_table').DataTable().ajax.reload(null, false);
                 if (data.success) {
@@ -214,15 +215,6 @@
         $("#id-item").html(item);
 
         $('#id').val(item);
-    }
-
-    /** CLEAN FORM VALIDATION */
-    function cleanFormValidation(selector, cls) {
-
-        $('input[name='+selector+']').each(function(){
-            $('input[name='+selector+']').removeClass(cls);
-        });
-
     }
 
 </script>

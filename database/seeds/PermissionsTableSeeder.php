@@ -146,6 +146,37 @@ class PermissionsTableSeeder extends Seeder
             'description' => 'Deletar os servidores'
         ]);
 
+        /** Databases */
+        Permission::create([
+            'name' => 'Criar novos databases',
+            'slug' => 'databases.create',
+            'description' => 'Cadastrar novas databases'
+        ]);
+
+        Permission::create([
+            'name' => 'Listar databases',
+            'slug' => 'databases.index',
+            'description' => 'Listar todas as databases'
+        ]);
+
+        Permission::create([
+            'name' => 'Visualizar detalhes de databases',
+            'slug' => 'databases.show',
+            'description' => 'Ver detalhe das databases'
+        ]);
+
+        Permission::create([
+            'name' => 'Atualizar databases',
+            'slug' => 'databases.edit',
+            'description' => 'Editar databases'
+        ]);
+
+        Permission::create([
+            'name' => 'Eliminar databases',
+            'slug' => 'databases.destroy',
+            'description' => 'Deletar databases'
+        ]);
+
         /** Employee */
         Permission::create([
             'name' => 'Criar novos funcionários',
@@ -206,6 +237,37 @@ class PermissionsTableSeeder extends Seeder
             'name' => 'Eliminar fornecedores',
             'slug' => 'providers.destroy',
             'description' => 'Deletar os fornecedores'
+        ]);
+
+        /** Contacts */
+        Permission::create([
+            'name' => 'Criar novos contatos',
+            'slug' => 'contacts.create',
+            'description' => 'Cadastrar novos contatos'
+        ]);
+
+        Permission::create([
+            'name' => 'Listar contatos',
+            'slug' => 'contacts.index',
+            'description' => 'Listar todos os contatos'
+        ]);
+
+        Permission::create([
+            'name' => 'Visualizar detalhes de contatos',
+            'slug' => 'contacts.show',
+            'description' => 'Ver detalhe dos contatos'
+        ]);
+
+        Permission::create([
+            'name' => 'Atualizar contatos',
+            'slug' => 'contacts.edit',
+            'description' => 'Editar os contatos'
+        ]);
+
+        Permission::create([
+            'name' => 'Eliminar contatos',
+            'slug' => 'contacts.destroy',
+            'description' => 'Deletar os contatos'
         ]);
 
         /** Towers */

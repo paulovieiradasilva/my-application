@@ -64,13 +64,13 @@
                 {
                     text: 'Novo',
                     action: function () {
+                        cleanFormDB('#formUser');
                         $('.password').show(); // Mostrando o input PASSWORD
                         $('.password-confirm').show(); // Mostrando o input PASSWORD CONFIRM
                         $('#modalTitle').html('Novo usuário');
                         $("#created").html("Cadastrar");
                         $("#updated").hide();
                         $("#created").show();
-                        $('#formUser').trigger('reset');
                         $('#modalFormCreate').modal('show');
                     }
                 }
@@ -101,7 +101,7 @@
             dataType: 'json',
             data: $('#formUser').serialize(),
             success: function (data) {
-                $('#formUser').trigger('reset');
+                cleanFormDB('#formUser');
                 $('#modalFormCreate').modal('hide');
                 $('#users_table').DataTable().ajax.reload(null, false);
                 if (data.success) {
@@ -174,8 +174,8 @@
             dataType: 'json',
             data: $('#formUser').serialize(),
             success: function (data) {
+                cleanFormDB('#formUser');
                 $('#id').val('');
-                $('#formUser').trigger('reset');
                 $('#modalFormCreate').modal('hide');
                 $('#users_table').DataTable().ajax.reload(null, false);
                 if (data.success) {
@@ -248,13 +248,5 @@
         $('#id').val(item);
     }
 
-    /** CLEAN FORM VALIDATION */
-    function cleanFormValidation(selector, cls) {
-
-        $('input[name='+selector+']').each(function(){
-            $('input[name='+selector+']').removeClass(cls);
-        });
-
-    }
 </script>
 @stop

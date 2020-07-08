@@ -31,7 +31,7 @@ class TowerController extends Controller
     /** */
     public function get()
     {
-        return $towers = Tower::all();
+        return Tower::all();
     }
 
     /**
@@ -52,7 +52,12 @@ class TowerController extends Controller
      */
     public function store(TowerCreateRequest $request)
     {
-        $tower = Tower::create($request->all());
+        try {
+            Tower::create($request->all());
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao cadastrar torre']);
+        }
 
         return response()->json(['success' => 'Torre cadastrada com sucesso!']);
     }
@@ -90,9 +95,13 @@ class TowerController extends Controller
      */
     public function update(TowerUpdateRequest $request, $id)
     {
-        $tower = Tower::find($id);
+        try {
+            $tower = Tower::find($id);
+            $tower->update($request->all());
 
-        $tower->update($request->all());
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao atualizar torre']);
+        }
 
         return response()->json(['success' => 'Torre atualizada com sucesso!']);
     }
@@ -105,8 +114,13 @@ class TowerController extends Controller
      */
     public function destroy($id)
     {
-        $tower = Tower::find($id);
-        $tower->delete();
+        try {
+            $tower = Tower::find($id);
+            $tower->delete();
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao deletar torre']);
+        }
 
         return response()->json(['success' => 'Torre deletada com sucesso!']);
     }

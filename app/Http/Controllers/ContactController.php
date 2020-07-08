@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
@@ -13,7 +16,16 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.contacts.index')->with('page', 'Contatos');
+    }
+
+    /** */
+    public function list()
+    {
+        return DataTables::of(Contact::query()
+            ->select(['id', 'email', 'phone', 'cellphone', 'site', 'contactable_type', 'contactable_id', 'created_at', 'updated_at']))
+            ->addColumn('action', 'components.button._actions')
+            ->make(true);
     }
 
     /**
@@ -34,7 +46,14 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+        try {
+            Contact::create($request->all());
+            return response()->json(['success' => 'Contato cadastrado com sucesso!']);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao cadastrar contato']);
+        }
     }
 
     /**
@@ -56,7 +75,9 @@ class ContactController extends Controller
      */
     public function edit($id)
     {
-        //
+        $contact = Contact::findOrFail($id);
+
+        return $contact;
     }
 
     /**
@@ -68,7 +89,19 @@ class ContactController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // dd($request->all());
+        try {
+            DB::beginTransaction();
+
+            $contact = Contact::findOrFail($id);
+            $contact->update($request->all());
+
+            DB::commit();
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao atualizar contato']);
+        }
+
+        return response()->json(['success' => 'Contato atualizar com sucesso!']);
     }
 
     /**
@@ -79,6 +112,14 @@ class ContactController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $contact = Contact::findOrFail($id);
+            $contact->delete();
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao deletar contato']);
+        }
+
+        return response()->json(['success' => 'Contato deletado com sucesso!']);
     }
 }

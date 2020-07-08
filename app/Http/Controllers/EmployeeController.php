@@ -143,7 +143,6 @@ class EmployeeController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-
             return response()->json(['error' => 'Erro ao deletar funcionario']);
         }
 

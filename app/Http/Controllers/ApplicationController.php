@@ -64,35 +64,9 @@ class ApplicationController extends Controller
             $application->servers()->attach($request->get('servers'));
             $application->employees()->attach($request->get('employees'));
 
-            /** Details */
-            $environments = $request->get('environments');
-            $locations = $request->get('locations');
-            $contents = $request->get('contents');
-
-            /** Depois do PHP 7.2.X */
-            $pkCount = (is_array($environments) ? count($environments) : 0);
-
-            /** */
-            $i = 0;
-
-            while ($i < $pkCount) {
-
-                $envs = DB::table('environments')->where('name', $environments[$i])->first();
-
-                /** */
-                $details = new Detail();
-                $details->application_id = $application->id;
-                $details->environment_id = $envs->id;
-                $details->type = $locations[$i];
-                $details->content = $contents[$i];
-                $details->save();
-
-                $i++;
-            }
-
             DB::commit();
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Não foi possivel cadastrar apllicação.', $e]);
+            return response()->json(['error' => 'Não foi possivel cadastrar aplicação.']);
         }
 
         return response()->json(['success' => 'Aplicação cadastrada com sucesso!']);
@@ -148,12 +122,17 @@ class ApplicationController extends Controller
     public function update(ApplicationUpdateRequest $request, $id)
     {
         try {
-            $application = Application::findOrFail($id);
-            $application->update($request->all());
+            DB::beginTransaction();
 
+            $application = Application::findOrFail($id);
+
+            $application->update($request->all());
             $application->servers()->sync($request->get('servers'));
             $application->employees()->sync($request->get('employees'));
+
+            DB::commit();
         } catch (\Exception $e) {
+            DB::rollback();
             return response()->json(['error' => 'Não foi possivel atualizar apllicação.']);
         }
 

@@ -24,7 +24,8 @@ class ServiceController extends Controller
     /** */
     public function list()
     {
-        return DataTables::of(Service::with('application')->select(['id', 'name', 'description', 'start', 'application_id', 'created_at', 'updated_at']))
+        return DataTables::of(Service::with(['application'])
+            ->select(['id', 'name', 'description', 'start', 'application_id', 'created_at', 'updated_at']))
             ->addColumn('action', 'components.button._actions')
             ->make(true);
     }
@@ -105,6 +106,10 @@ class ServiceController extends Controller
             $service = Service::findOrFail($id);
             $service->update($request->all());
 
+            if ($request->get('username') && $request->get('password')) {
+                $service->credential()->updateOrCreate([], $request->all());
+            }
+
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
@@ -128,11 +133,11 @@ class ServiceController extends Controller
 
             $service = Service::findOrFail($id);
             $service->delete();
+            $service->credential()->delete();
 
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-
             return response()->json(['error' => 'Erro ao deletar serviço']);
         }
 

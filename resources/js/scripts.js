@@ -88,3 +88,17 @@ function getSelectOptions(url, type, dataType, seletor) {
         }
     });
 }
+
+/** CLEAN FORM */
+function cleanFormDB(selector) {
+    document.querySelector(selector).reset();
+    $('#start').val("").trigger('change');
+    $('#type').val("").trigger('change');
+    $('#select-applications').val("").trigger('change');
+    $('#select-environments').val("").trigger('change');
+    $('#select-providers').val("").trigger('change');
+    $('#select-servers').val("").trigger('change');
+    $('#select-towers').val("").trigger('change');
+    $('#select-users').val("").trigger('change');
+
+}

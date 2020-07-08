@@ -64,13 +64,13 @@
                 className: 'btn btn-default'
             }, {
                 text: 'Novo',
-                action: function (e, dt, node, config) {
+                action: function () {
+                    cleanFormDB('#formIntegration');
                     $('#id').val('');
                     $('#modalTitle').html('Nova integração');
                     $("#created").html("Cadastrar");
                     $("#updated").hide();
                     $("#created").show();
-                    $('#formIntegration').trigger('reset');
                     $('#modalFormCreate').modal('show');
                 }
             }],
@@ -86,7 +86,7 @@
 
     /** LIST ALL */
     $(document).ready(function () {
-        getSelectOptions("{{ url('applications')}}", "GET", "json", "#select-applications");
+        getSelectOptions("{{ url('applications-all')}}", "GET", "json", "#select-applications");
     });
 
     /** ::::::::::::::::::::::::: FUNCTIONS ::::::::::::::::::::::::: */
@@ -100,7 +100,7 @@
             dataType: 'json',
             data: $('#formIntegration').serialize(),
             success: function (data) {
-                $('#formIntegration').trigger('reset');
+                cleanFormDB('#formIntegration');
                 $('#modalFormCreate').modal('hide');
                 $('#integrations_table').DataTable().ajax.reload(null, false);
                 if (data.success) {
@@ -116,6 +116,37 @@
                 if (data.responseJSON.errors.name) {
                     $('#name').addClass('is-invalid');
                     $('#name-feedback').html(data.responseJSON.errors.name);
+                } else {
+                    $('#name').removeClass('is-invalid');
+                    $('#name-feedback').val('');
+                }
+                if (data.responseJSON.errors.username) {
+                    $('#username').addClass('is-invalid');
+                    $('#username-feedback').html(data.responseJSON.errors.username);
+                } else {
+                    $('#username').removeClass('is-invalid');
+                    $('#username-feedback').val('');
+                }
+                if (data.responseJSON.errors.password) {
+                    $('#password').addClass('is-invalid');
+                    $('#password-feedback').html(data.responseJSON.errors.password);
+                } else {
+                    $('#password').removeClass('is-invalid');
+                    $('#password-feedback').val('');
+                }
+                if (data.responseJSON.errors.type) {
+                    $('#type').addClass('is-invalid');
+                    $('#type-feedback').html(data.responseJSON.errors.type);
+                } else {
+                    $('#type').removeClass('is-invalid');
+                    $('#type-feedback').val('');
+                }
+                if (data.responseJSON.errors.application_id) {
+                    $('#select-applications').addClass('is-invalid');
+                    $('#application-feedback').html(data.responseJSON.errors.application_id);
+                } else {
+                    $('#application').removeClass('is-invalid');
+                    $('#application-feedback').val('');
                 }
             }
         });
@@ -157,8 +188,8 @@
             dataType: 'json',
             data: $('#formIntegration').serialize(),
             success: function (data) {
+                cleanFormDB('#formIntegration');
                 $('#id').val('');
-                $('#formIntegration').trigger('reset');
                 $('#modalFormCreate').modal('hide');
                 $('#integrations_table').DataTable().ajax.reload(null, false);
                 if (data.success) {
@@ -217,15 +248,6 @@
         $("#id-item").html(item);
 
         $('#id').val(item);
-    }
-
-    /** CLEAN FORM VALIDATION */
-    function cleanFormValidation(selector, cls) {
-
-        $('input[name='+selector+']').each(function(){
-            $('input[name='+selector+']').removeClass(cls);
-        });
-
     }
 
 </script>

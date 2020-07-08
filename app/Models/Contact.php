@@ -11,7 +11,7 @@ class Contact extends Model
      *
      * @var array
      */
-    protected $fillable = ['email', 'phone', 'cellphone', 'site'];
+    protected $fillable = ['email', 'phone', 'cellphone', 'site', 'contactable_type', 'contactable_id'];
 
     /**
      * Get the parent of the contact record.
@@ -19,6 +19,14 @@ class Contact extends Model
     public function contactable()
     {
         return $this->morphTo();
+    }
+
+    /**
+     * Get the providers for the application.
+     */
+    public function providers()
+    {
+        return $this->HasMany(Provider::class);
     }
 
 }

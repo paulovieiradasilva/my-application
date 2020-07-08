@@ -24,7 +24,8 @@ class IntegrationController extends Controller
     /** */
     public function list()
     {
-        return DataTables::of(Integration::with('application')->select(['id', 'name', 'description', 'type', 'application_id', 'created_at', 'updated_at']))
+        return DataTables::of(Integration::with(['application'])
+            ->select(['id', 'name', 'description', 'type', 'application_id', 'created_at', 'updated_at']))
             ->addColumn('action', 'components.button._actions')
             ->make(true);
     }
@@ -59,7 +60,6 @@ class IntegrationController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-
             return response()->json(['error' => 'Erro ao cadastrar integração']);
         }
 
@@ -108,7 +108,6 @@ class IntegrationController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-
             return response()->json(['error' => 'Erro ao atualizar integração']);
         }
 
@@ -124,15 +123,10 @@ class IntegrationController extends Controller
     public function destroy($id)
     {
         try {
-            DB::beginTransaction();
-
             $integration = Integration::findOrFail($id);
             $integration->delete();
 
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollback();
-
             return response()->json(['error' => 'Erro ao deletar integração']);
         }
 

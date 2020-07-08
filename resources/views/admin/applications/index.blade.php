@@ -66,9 +66,8 @@
                 className: 'btn btn-default'
             }, {
                 text: 'Novo',
-                action: function (e, dt, node, config) {
-                    $('#edit-item-table').hide();
-                    $('#add-item-table').show();
+                action: function () {
+                    cleanFormDB('#formApplication');
                     $('#modalTitle').html('Nova aplicação');
                     $("#created").html("Cadastrar");
                     $("#updated").hide();
@@ -89,11 +88,11 @@
 
     /** GET LISTS */
     $(document).ready(function () {
-        getSelectOptions("{{ url('providers') }}", "GET", "json", "#select-providers");
-        getSelectOptions("{{ url('servers') }}", "GET", "json", "#select-servers");
-        getSelectOptions("{{ url('employees') }}", "GET", "json", "#select-users");
-        getSelectOptions("{{ url('towers') }}", "GET", "json", "#select-towers");
-        getSelectOptions("{{ url('environments') }}", "GET", "json", "#select-environments");
+        getSelectOptions("{{ url('providers-all') }}", "GET", "json", "#select-providers");
+        getSelectOptions("{{ url('servers-all') }}", "GET", "json", "#select-servers");
+        getSelectOptions("{{ url('employees-all') }}", "GET", "json", "#select-users");
+        getSelectOptions("{{ url('towers-all') }}", "GET", "json", "#select-towers");
+        getSelectOptions("{{ url('environments-all') }}", "GET", "json", "#select-environments");
     });
 
     /** ::::::::::::::::::::::::: FUNCTIONS ::::::::::::::::::::::::: */
@@ -107,8 +106,7 @@
             dataType: 'json',
             data: $('#formApplication').serialize(),
             success: function (data) {
-                cleanFormValidation();
-                $('#formApplication').trigger('reset');
+                cleanFormDB('#formApplication');
                 $('#modalFormCreate').modal('hide');
                 $('#applications_table').DataTable().ajax.reload(null, false);
                 if (data.success) {
@@ -190,8 +188,6 @@
                 let employees = [];
                 data.data.application.employees.forEach(element => employees.push(element.id));
 
-                $('#edit-item-table').show();
-                $('#add-item-table').hide();
                 $('#modalTitle').html('Editar aplicação');
                 $('#updated').html('Atualizar');
                 $('#modalFormCreate').modal('show');
@@ -226,8 +222,8 @@
             dataType: 'json',
             data: $('#formApplication').serialize(),
             success: function (data) {
+                cleanFormDB('#formApplication');
                 $('#id').val('');
-                $('#formApplication').trigger('reset');
                 $('#modalFormCreate').modal('hide');
                 $('#applications_table').DataTable().ajax.reload(null, false);
                 if (data.success) {
@@ -294,243 +290,5 @@
         $('#id').val(item);
 
     }
-
-    /** VALIDATE */
-    function validate(selector) {
-
-        var inputs = new Array();
-        var count = 0;
-
-        $('input[name=' + selector + ']').each(function () {
-
-            var value = $(this).val();
-            if (value) {
-                inputs.push(value);
-            }
-            count++;
-
-        });
-
-        $('select[name=' + selector + ']').each(function () {
-
-            var value = $(this).val();
-            if (value) {
-            inputs.push(value);
-            }
-            count++;
-
-        });
-
-        console.log(inputs, count);
-
-        return (inputs.length == count) ? true : false;
-
-    }
-
-    /** ADD ITEM TO TABLE */
-    function addItemToTable() {
-
-        var result = validate('is-empty');
-
-        console.log(result);
-
-        if (result) {
-
-            var $i = Math.floor((Math.random() * 100) + 1);
-            var id;
-            var environment_id = $('#select-environments').val();
-            var environment = $('#select-environments option:selected').text();
-            var location_type = $('#location_type').val();
-            var content = $('#location_content').val();
-
-            var data = {
-                data: {
-                    id,
-                    environment_id,
-                    environment,
-                    location_type,
-                    content
-                }
-            };
-
-            /** */
-            addRowTable('#application-details', data.data, $i);
-
-            //cleanFormDB('is-empty', 'is-invalid');
-            var environment_id = $('#select-environments').val('');
-            var location_type = $('#location_type').val('').trigger('change');
-            var content = $('#location_content').val('');
-
-        } else {
-            $('#error-msg').show();
-        }
-
-    }
-
-    /** ADD ITEM DATABASE AND TABLE*/
-    function addItem() {
-
-        var result = validate('is-empty');
-
-        if (result) {
-
-            var name = $('#dbn').val();
-            var sgdb = $('#sgdb').val();
-            var port = $('#port').val();
-            var username = $('#usr').val();
-            var password = $('#pwd').val();
-            let application_id = $('#id').val();
-
-            $.ajax({
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "name": name,
-                    "sgdb": sgdb,
-                    "port": port,
-                    "username": username,
-                    "password": password,
-                    "application_id": application_id
-                },
-                url: "{{ route('database.store') }}",
-                type: 'POST',
-                dataType: 'json',
-                success: function (data) {
-                    cleanFormDB();
-
-                    /** */
-                    addRowTable('#application-table', data.data);
-
-                    if (data.success) {
-                        toastr.success(data.success);
-                    }
-                    if (data.error) {
-                        toastr.error(data.error);
-                    }
-                },
-                complete: function (data) {},
-                error: function (data) {
-                    /** Criar as validações dos inputs para erros */
-                }
-            });
-
-        } else {
-            $('#error-msg').show();
-        }
-
-    }
-
-    /** UPDATE ITEM DATABASE AND TABLE*/
-    function updateItem(id) {
-        var name = $('#name_' + id).val();
-        var sgdb = $('#sgdb_' + id).val();
-        var port = $('#port_' + id).val();
-        var username = $('#username_' + id).val();
-        var password = $('#password_' + id).val();
-        var application_id = $('#id').val();
-
-        $.ajax({
-            data: {
-                "_token": "{{ csrf_token() }}",
-                "name": name,
-                "sgdb": sgdb,
-                "port": port,
-                "username": username,
-                "password": password,
-                "application_id": application_id
-            },
-            url: "{{ url('database') }}" + '/' + id,
-            type: 'PATCH',
-            dataType: 'json',
-            success: function (data) {
-
-                if (data.success) {
-                    toastr.success(data.success);
-                }
-                if (data.error) {
-                    toastr.error(data.error);
-                }
-            },
-            complete: function (data) {},
-            error: function (data) {
-                /** Criar as validações dos inputs para erros */
-            }
-        });
-    }
-
-    /** REMOVE ITEM TABLE AND DATABASE */
-    function removeItem(id, index) {
-
-        if (id != undefined) {
-            $.ajax({
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    id: id
-                },
-                url: "{{ url('database') }}" + '/' + id,
-                type: 'DELETE',
-                dataType: 'json',
-                success: function (data) {
-                    $("#row-" + index).remove();
-                    if (data.success) {
-                        toastr.success(data.success);
-                    }
-                    if (data.error) {
-                        toastr.error(data.error);
-                    }
-                },
-                complete: function (data) {},
-                error: function (data) {
-                    /** Criar as validações dos inputs para erros */
-                }
-            });
-        } else {
-            $("#row-" + index).remove();
-        }
-
-    }
-
-    /** CLEAN FORM VALIDATION */
-    function cleanFormValidation(selector, cls) {
-
-        $('input[name=' + selector + ']').each(function () {
-            $('input[name=' + selector + ']').removeClass(cls);
-        });
-
-    }
-
-    /** RETURN NEW TR TO TABLE */
-    function addRowTable(selector, data, index = null) {
-        getSelectOptions("{{ url('environments') }}", "GET", "json", ".select-environments");
-        newRow = $(selector).find('tbody').append(`
-            <tr id="row-${index}">
-                <td>
-                    <select name="is-empty" class="select-environments form-control form-control-sm" placeholder="Ambiente">
-                        <option disabled selected></option>
-                    </select>
-                </td>
-                <td>
-                    <select name="is-empty" class="location_type form-control form-control-sm" placeholder="">
-                        <option selected="${data.type}">Link</option>
-                        <option selected="${data.type}">Diretório</option>
-                    </select>
-                </td>
-                <td><input class="form-control form-control-sm" id="content_${data.id}" type="text" name="contents[]" value="${data.content}"></td>
-                <td>
-                    <a href="#" title="Update" onclick="updateItem(${data.id})" class="btn btn-primary btn-xs update-item-databases">
-                        <i class="fas fa-sync-alt"></i>
-                    </a>
-                    <a href="#" title="Delete" onclick="removeItem(${data.id},${index})" class="btn btn-danger btn-xs">
-                        <i class="fas fa-trash-alt"></i>
-                    </a>
-                </td>
-            </tr>
-        `);
-
-        /** */
-        (data.id === undefined) ? $('.update-item-databases').addClass('disabled'): '';
-
-        return newRow;
-    }
-
 </script>
 @stop

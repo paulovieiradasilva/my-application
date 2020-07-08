@@ -63,11 +63,11 @@
                 {
                     text: 'Novo',
                     action: function () {
+                        cleanFormDB('#formTower');
                         $('#modalTitle').html('Nova torre');
                         $("#created").html("Cadastrar");
                         $("#updated").hide();
                         $("#created").show();
-                        $('#formTower').trigger('reset');
                         $('#modalFormCreate').modal('show');
                     }
                 }
@@ -93,7 +93,7 @@
             dataType: 'json',
             data: $('#formTower').serialize(),
             success: function (data) {
-                $('#formTower').trigger('reset');
+                cleanFormDB('#formTower');
                 $('#modalFormCreate').modal('hide');
                 $('#towers_table').DataTable().ajax.reload(null, false);
                 toastr.success(data.success);
@@ -143,8 +143,8 @@
             dataType: 'json',
             data: $('#formTower').serialize(),
             success: function (data) {
+                cleanFormDB('#formTower');
                 $('#id').val('');
-                $('#formTower').trigger('reset');
                 $('#modalFormCreate').modal('hide');
                 $('#towers_table').DataTable().ajax.reload(null, false);
                 if (data.success) {
@@ -202,15 +202,6 @@
         $("#id-item").html(item);
 
         $('#id').val(item);
-    }
-
-    /** CLEAN FORM VALIDATION */
-    function cleanFormValidation(selector, cls) {
-
-        $('input[name='+selector+']').each(function(){
-            $('input[name='+selector+']').removeClass(cls);
-        });
-
     }
 
 </script>

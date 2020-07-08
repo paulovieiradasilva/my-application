@@ -24,7 +24,8 @@ class ProviderController extends Controller
     /** */
     public function list()
     {
-        return DataTables::of(Provider::with(['contacts'])->select(['id', 'name', 'opening_hours', 'on_duty', 'description', 'created_at', 'updated_at']))
+        return DataTables::of(Provider::with(['contacts'])
+            ->select(['id', 'name', 'opening_hours', 'on_duty', 'description', 'created_at', 'updated_at']))
             ->addColumn('action', 'components.button._actions')
             ->make(true);
     }
@@ -32,7 +33,7 @@ class ProviderController extends Controller
     /** */
     public function get()
     {
-        return $providers = Provider::all();
+        return Provider::all();
     }
 
     /**
@@ -54,18 +55,9 @@ class ProviderController extends Controller
     public function store(ProviderCreateRequest $request)
     {
         try {
-            DB::beginTransaction();
+            Provider::create($request->all());
 
-            $provider = Provider::create($request->all());
-
-            if ($request->get('email') || $request->get('site') || $request->get('phone') || $request->get('cellphone')) {
-                $provider->contacts()->create($request->all());
-            }
-
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollback();
-
             return response()->json(['error' => 'Erro ao cadastrar fornecedor']);
         }
 
@@ -107,17 +99,10 @@ class ProviderController extends Controller
     public function update(ProviderUpdateRequest $request, $id)
     {
         try {
-            DB::beginTransaction();
-
             $provider = Provider::find($id);
             $provider->update($request->all());
-            $provider->contacts()->updateOrCreate([], $request->all());
-            // event();
 
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollback();
-
             return response()->json(['error' => 'Erro ao atualizar fornecedor']);
         }
 
@@ -133,16 +118,11 @@ class ProviderController extends Controller
     public function destroy($id)
     {
         try {
-            DB::beginTransaction();
-
             $provider = Provider::find($id);
             $provider->delete();
             $provider->contacts()->delete();
 
-            DB::commit();
         } catch (\Exception $e) {
-            DB::rollback();
-
             return response()->json(['error' => 'Erro ao deletar fornecedor']);
         }
 

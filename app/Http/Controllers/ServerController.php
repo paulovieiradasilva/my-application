@@ -64,43 +64,11 @@ class ServerController extends Controller
                 $server->credential()->create($request->all());
             }
 
-            /** Databases */
-            $name = $request->get('db');
-            $sgdb = $request->get('sgdb');
-            $port = $request->get('port');
-
-            /** Crendentials */
-            $user = $request->get('usr');
-            $pass = $request->get('pwd');
-
-            // Depois do PHP 7.2.X
-            $pkCount = (is_array($name) ? count($name) : 0);
-
-            /** */
-            $i = 0;
-
-            while ($i < $pkCount) {
-
-                $database = new Database;
-                $database->name = $name[$i];
-                $database->sgdb = $sgdb[$i];
-                $database->port = $port[$i];
-                $database->server_id = $server->id;
-                $database->save();
-
-                $database->credential()->create([
-                    'username' => $user[$i],
-                    'password' => $pass[$i]
-                ]);
-
-                $i++;
-            }
-
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
 
-            return response()->json(['error' => 'Erro ao cadastrar servidor'.$e]);
+            return response()->json(['error' => 'Erro ao cadastrar servidor']);
         }
 
         return response()->json(['success' => 'Servidor cadastrado com sucesso!']);
@@ -125,10 +93,9 @@ class ServerController extends Controller
      */
     public function edit($id)
     {
-        $server = Server::with(['credential'])->where('id', $id)->first();
-        $databases = Database::with(['credential'])->where('server_id', $server->id)->get();
+        $server = Server::with(['credential', 'databases.credential'])->where('id', $id)->first();
 
-        return ['data' => ['server' => $server, 'databases' => $databases]];
+        return ['data' => ['server' => $server]];
     }
 
     /**
@@ -145,13 +112,14 @@ class ServerController extends Controller
 
             $server = Server::find($id);
             $server->update($request->all());
-            $server->credential()->updateOrCreate([], $request->all());
-            // event();
+
+            if ($request->get('username') && $request->get('password')) {
+                $server->credential()->updateOrCreate([], $request->all());
+            }
 
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-
             return response()->json(['error' => 'Erro ao atualizar servidor']);
         }
 
@@ -176,7 +144,6 @@ class ServerController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollback();
-
             return response()->json(['error' => 'Não foi possivel deletar este servidor.']);
         }
 

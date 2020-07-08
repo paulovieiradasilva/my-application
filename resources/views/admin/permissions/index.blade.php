@@ -62,11 +62,11 @@
             {
                 text: "Novo",
                 action: function () {
+                    cleanFormDB('#formPermission');
                     $("#modalTitle").html("Nova permissão");
                     $("#created").html("Cadastrar");
                     $("#updated").hide();
                     $("#created").show();
-                    $("#formPermission").trigger("reset");
                     $("#modalFormCreate").modal("show");
                 }
             }
@@ -92,7 +92,7 @@
             dataType: "json",
             data: $("#formPermission").serialize(),
             success: function (data) {
-                $("#formPermission").trigger("reset");
+                cleanFormDB('#formPermission');
                 $("#modalFormCreate").modal("hide");
                 $("#permissions_table").DataTable().ajax.reload(null, false);
                 if (data.success) {
@@ -148,8 +148,8 @@
             dataType: "json",
             data: $("#formPermission").serialize(),
             success: function (data) {
+                cleanFormDB('#formPermission');
                 $('#id').val('');
-                $("#formPermission").trigger("reset");
                 $("#modalFormCreate").modal("hide");
                 $("#permissions_table").DataTable().ajax.reload(null, false);
                 if (data.success) {
@@ -212,15 +212,6 @@
         $("#id-item").html(item);
 
         $('#id').val(item);
-    }
-
-    /** CLEAN FORM VALIDATION */
-    function cleanFormValidation(selector, cls) {
-
-        $('input[name=' + selector + ']').each(function () {
-            $('input[name=' + selector + ']').removeClass(cls);
-        });
-
     }
 
 </script>

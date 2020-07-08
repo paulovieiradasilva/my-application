@@ -66,10 +66,8 @@
                 className: 'btn btn-default'
             }, {
                 text: 'Novo',
-                action: function(e, dt, node, config) {
-                    $('#edit-item-table').hide();
-                    $('#add-item-table').show();
-                    $('#table').hide();
+                action: function() {
+                    cleanFormDB('#formServer');
                     $('#modalTitle').html('Novo servidor');
                     $("#created").html("Cadastrar");
                     $("#updated").hide();
@@ -90,13 +88,7 @@
 
     /** LIST ALL */
     $(document).ready(function() {
-        getSelectOptions("{{ url('environments')}}", "GET", "json", "#select-environments");
-    });
-
-    /** CHANGE TYPE SERVER */
-    $(document).on('change', '#type', function() {
-        var item = $('#type').val();
-        (item == 'Banco de Dados') ? $('#table').show(): $('#table').hide();
+        getSelectOptions("{{ url('environments-all')}}", "GET", "json", "#select-environments");
     });
 
     /** ::::::::::::::::::::::::: FUNCTIONS ::::::::::::::::::::::::: */
@@ -110,8 +102,7 @@
             dataType: 'json',
             data: $('#formServer').serialize(),
             success: function(data) {
-                cleanFormDB();
-                $('#formServer').trigger('reset');
+                cleanFormDB('#formServer');
                 $('#modalFormCreate').modal('hide');
                 $('#servers_table').DataTable().ajax.reload(null, false);
                 if (data.success) {
@@ -131,6 +122,34 @@
                     $('#name').removeClass('is-invalid');
                     $('#name-feedback').val('');
                 }
+                if (data.responseJSON.errors.id) {
+                    $('#id').addClass('is-invalid');
+                    $('#id-feedback').html(data.responseJSON.errors.id);
+                } else {
+                    $('#id').removeClass('is-invalid');
+                    $('#id-feedback').val('');
+                }
+                if (data.responseJSON.errors.os) {
+                    $('#os').addClass('is-invalid');
+                    $('#os-feedback').html(data.responseJSON.errors.os);
+                } else {
+                    $('#os').removeClass('is-invalid');
+                    $('#os-feedback').val('');
+                }
+                if (data.responseJSON.errors.username) {
+                    $('#username').addClass('is-invalid');
+                    $('#username-feedback').html(data.responseJSON.errors.username);
+                } else {
+                    $('#username').removeClass('is-invalid');
+                    $('#username-feedback').val('');
+                }
+                if (data.responseJSON.errors.password) {
+                    $('#password').addClass('is-invalid');
+                    $('#password-feedback').html(data.responseJSON.errors.password);
+                } else {
+                    $('#password').removeClass('is-invalid');
+                    $('#password-feedback').val('');
+                }
                 if (data.responseJSON.errors.type) {
                     $('#type').addClass('is-invalid');
                     $('#type-feedback').html(data.responseJSON.errors.type);
@@ -139,10 +158,10 @@
                     $('#type-feedback').val('');
                 }
                 if (data.responseJSON.errors.environment_id) {
-                    $('#select-environment').addClass('is-invalid');
+                    $('#select-environments').addClass('is-invalid');
                     $('#environment-feedback').html(data.responseJSON.errors.environment_id);
                 } else {
-                    $('#select-environment').removeClass('is-invalid');
+                    $('#select-environments').removeClass('is-invalid');
                     $('#environment-feedback').val('');
                 }
             }
@@ -158,14 +177,6 @@
         $.get(
             "{{ route('servers.index') }}" + '/' + id + '/edit',
             function(data) {
-
-                /** */
-                data.data.databases.forEach(function(item) {
-                    addRowTable('#server-table', item);
-                })
-
-                $('#edit-item-table').show();
-                $('#add-item-table').hide();
                 $('#modalTitle').html('Editar servidor');
                 $('#updated').html('Atualizar');
                 $('#modalFormCreate').modal('show');
@@ -177,7 +188,6 @@
                     $('#password').val(data.data.server.credential.password);
                 }
                 $('#type').val(data.data.server.type).trigger('change');
-                (data.data.server.type == 'Banco de Dados') ? $('#table').show(): $('#table').hide();
                 $('#select-environments').val(data.data.server.environment_id).trigger('change');
                 $('#description').val(data.data.server.description);
                 $('#id').val(data.data.server.id);
@@ -196,7 +206,7 @@
             data: $('#formServer').serialize(),
             success: function(data) {
                 $('#id').val('');
-                $('#formServer').trigger('reset');
+                cleanFormDB('#formServer');
                 $('#modalFormCreate').modal('hide');
                 $('#servers_table').DataTable().ajax.reload(null, false);
                 if (data.success) {
@@ -212,10 +222,51 @@
                 if (data.responseJSON.errors.name) {
                     $('#name').addClass('is-invalid');
                     $('#name-feedback').html(data.responseJSON.errors.name);
+                } else {
+                    $('#name').removeClass('is-invalid');
+                    $('#name-feedback').val('');
+                }
+                if (data.responseJSON.errors.id) {
+                    $('#id').addClass('is-invalid');
+                    $('#id-feedback').html(data.responseJSON.errors.id);
+                } else {
+                    $('#id').removeClass('is-invalid');
+                    $('#id-feedback').val('');
+                }
+                if (data.responseJSON.errors.os) {
+                    $('#os').addClass('is-invalid');
+                    $('#os-feedback').html(data.responseJSON.errors.os);
+                } else {
+                    $('#os').removeClass('is-invalid');
+                    $('#os-feedback').val('');
+                }
+                if (data.responseJSON.errors.username) {
+                    $('#username').addClass('is-invalid');
+                    $('#username-feedback').html(data.responseJSON.errors.username);
+                } else {
+                    $('#username').removeClass('is-invalid');
+                    $('#username-feedback').val('');
+                }
+                if (data.responseJSON.errors.password) {
+                    $('#password').addClass('is-invalid');
+                    $('#password-feedback').html(data.responseJSON.errors.password);
+                } else {
+                    $('#password').removeClass('is-invalid');
+                    $('#password-feedback').val('');
+                }
+                if (data.responseJSON.errors.type) {
+                    $('#type').addClass('is-invalid');
+                    $('#type-feedback').html(data.responseJSON.errors.type);
+                } else {
+                    $('#type').removeClass('is-invalid');
+                    $('#type-feedback').val('');
                 }
                 if (data.responseJSON.errors.environment_id) {
-                    $('#select-environment').addClass('is-invalid');
+                    $('#select-environments').addClass('is-invalid');
                     $('#environment-feedback').html(data.responseJSON.errors.environment_id);
+                } else {
+                    $('#select-environments').removeClass('is-invalid');
+                    $('#environment-feedback').val('');
                 }
             }
         });
@@ -260,233 +311,5 @@
 
         $('#id').val(item);
     }
-
-    /** VALIDATE */
-    function validate(selector) {
-
-        var inputs = new Array();
-        var count = 0;
-
-        $('input[name='+selector+']').each(function(){
-
-            var value = $(this).val();
-            if (value) {
-                inputs.push(value);
-            }
-            count++;
-
-        });
-
-        return (inputs.length == count) ? true : false;
-
-    }
-
-    /** ADD ITEM TO TABLE */
-    function addItemToTable() {
-
-        var result = validate('is-empty');
-
-        if (result) {
-
-            var $i = Math.floor((Math.random() * 100) + 1);
-            var id;
-            var name = $('#dbn').val();
-            var sgdb = $('#sgdb').val();
-            var port = $('#port').val();
-            var username = $('#usr').val();
-            var password = $('#pwd').val();
-
-            var data = { data: { id, name, sgdb, port, credential: { username, password }}};
-
-            /** */
-            addRowTable('#server-table', data.data, $i);
-
-            cleanFormDB('is-empty','is-invalid');
-
-        } else {
-            $('#error-msg').show();
-        }
-
-    }
-
-    /** ADD ITEM DATABASE AND TABLE*/
-    function addItem() {
-
-        var result = validate('is-empty');
-
-        if (result) {
-
-            var $i = Math.floor((Math.random() * 100) + 1);
-            var name = $('#dbn').val();
-            var sgdb = $('#sgdb').val();
-            var port = $('#port').val();
-            var username = $('#usr').val();
-            var password = $('#pwd').val();
-            let server_id = $('#id').val();
-
-            $.ajax({
-                data: {
-                    "_token": "{{ csrf_token() }}",
-                    "name": name,
-                    "sgdb": sgdb,
-                    "port": port,
-                    "username": username,
-                    "password": password,
-                    "server_id": server_id
-                },
-                url: "{{ route('database.store') }}",
-                type: 'POST',
-                dataType: 'json',
-                success: function(data) {
-                    cleanFormDB();
-
-                    /** */
-                    addRowTable('#server-table', data.data, $i);
-
-                    if (data.success) {
-                        toastr.success(data.success);
-                    }
-                    if (data.error) {
-                        toastr.error(data.error);
-                    }
-                },
-                complete: function(data) {},
-                error: function(data) {
-                    /** Criar as validações dos inputs para erros */
-                }
-            });
-
-        } else {
-            $('#error-msg').show();
-        }
-
-    }
-
-    /** UPDATE ITEM DATABASE AND TABLE*/
-    function updateItem(id) {
-        var name = $('#name_' + id).val();
-        var sgdb = $('#sgdb_' + id).val();
-        var port = $('#port_' + id).val();
-        var username = $('#username_' + id).val();
-        var password = $('#password_' + id).val();
-        var server_id = $('#id').val();
-
-        $.ajax({
-            data: {
-                "_token": "{{ csrf_token() }}",
-                "name": name,
-                "sgdb": sgdb,
-                "port": port,
-                "username": username,
-                "password": password,
-                "server_id": server_id
-            },
-            url: "{{ url('database') }}" + '/' + id,
-            type: 'PATCH',
-            dataType: 'json',
-            success: function(data) {
-
-                if (data.success) {
-                    toastr.success(data.success);
-                }
-                if (data.error) {
-                    toastr.error(data.error);
-                }
-            },
-            complete: function(data) {},
-            error: function(data) {
-                /** Criar as validações dos inputs para erros */
-            }
-        });
-    }
-
-    /** REMOVE ITEM TABLE AND DATABASE */
-    function removeItem(id, index) {
-
-        if (id != undefined) {
-            $.ajax({
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    id: id
-                },
-                url: "{{ url('database') }}" + '/' + id,
-                type: 'DELETE',
-                dataType: 'json',
-                success: function(data) {
-                    $("#row-" + index).remove();
-                    if (data.success) {
-                        toastr.success(data.success);
-                    }
-                    if (data.error) {
-                        toastr.error(data.error);
-                    }
-                },
-                complete: function(data) {},
-                error: function(data) {
-                    /** Criar as validações dos inputs para erros */
-                }
-            });
-        } else {
-            $("#row-" + index).remove();
-        }
-
-    }
-
-    /** CLEAN FORM DB */
-    function cleanFormDB(selector, cls) {
-
-        $('#error-msg').hide();
-
-        $('#dbn').val('');
-        $('#sgdb').val('');
-        $('#port').val('');
-        $('#usr').val('');
-        $('#pwd').val('');
-
-        $('input[name='+selector+']').each(function(){
-            $('input[name='+selector+']').removeClass(cls);
-        });
-
-    }
-
-    /** RETURN NEW TR TO TABLE */
-    function addRowTable(selector, data, index = null) {
-
-        newRow = $(selector).find('tbody').append(`
-            <tr id="row-${index}">
-                <td><input class="form-control form-control-sm" id="name_${data.id}" type="text" name="db[]" value="${data.name}"></td>
-                <td><input class="form-control form-control-sm" id="sgdb_${data.id}" type="text" name="sgdb[]" value="${data.sgdb}"></td>
-                <td><input class="form-control form-control-sm" id="port_${data.id}" type="text" name="port[]" value="${data.port}"></td>
-                <td><input class="form-control form-control-sm" id="username_${data.id}" type="text" name="usr[]" value="${data.credential.username}"></td>
-                <td><input class="form-control form-control-sm" id="password_${data.id}" type="text" name="pwd[]" value="${data.credential.password}"></td>
-                <td>
-                    <div class="my-1 p-1">
-                        <a href="#" title="Update" onclick="updateItem(${data.id})" class="btn btn-primary btn-xs update-item-databases">
-                            <i class="fas fa-sync-alt"></i>
-                        </a>
-                        <a href="#" title="Delete" onclick="removeItem(${data.id},${index})" class="btn btn-danger btn-xs">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
-                    </div>
-                </td>
-            </tr>
-        `
-        );
-
-        /** */
-        (data.id === undefined) ? $('.update-item-databases').addClass('disabled'): '';
-
-        return newRow;
-    }
-
-    /** CLEAN FORM VALIDATION */
-    function cleanFormValidation(selector, cls) {
-
-        $('input[name='+selector+']').each(function(){
-            $('input[name='+selector+']').removeClass(cls);
-        });
-
-    }
-
 </script>
 @stop

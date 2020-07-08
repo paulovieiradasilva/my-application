@@ -31,7 +31,7 @@ class RoleController extends Controller
     /** */
     public function get()
     {
-        return $roles = Role::all();
+        return Role::all();
     }
 
     /**
@@ -52,9 +52,13 @@ class RoleController extends Controller
      */
     public function store(RoleCreateRequest $request)
     {
-        $role = Role::create($request->all());
+        try {
+            $role = Role::create($request->all());
+            $role->permissions()->sync($request->get('permissions'));
 
-        $role->permissions()->sync($request->get('permissions'));
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao cadastrar papél']);
+        }
 
         return response()->json(['success' => 'Papél cadastrado com sucesso!']);
     }
@@ -93,10 +97,14 @@ class RoleController extends Controller
      */
     public function update(RoleUpdateRequest $request, $id)
     {
-        $role = Role::find($id);
-        $role->update($request->all());
+        try {
+            $role = Role::find($id);
+            $role->update($request->all());
+            $role->permissions()->sync($request->get('permissions'));
 
-        $role->permissions()->sync($request->get('permissions'));
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao atualizar papél']);
+        }
 
         return response()->json(['success' => 'Papél atualizado com sucesso!']);
     }
@@ -109,8 +117,13 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        $role = Role::find($id);
-        $role->delete();
+        try {
+            $role = Role::find($id);
+            $role->delete();
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao deletar papél']);
+        }
 
         return response()->json(['success' => 'Papél deletado com sucesso!']);
     }

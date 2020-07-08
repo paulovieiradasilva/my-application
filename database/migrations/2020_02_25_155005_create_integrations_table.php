@@ -18,7 +18,7 @@ class CreateIntegrationsTable extends Migration
 
             $table->string('name');
             $table->text('description')->nullable();
-            $table->enum('type', ['webservice', 'PI', 'xml', 'json'])->nullable();
+            $table->enum('type', ['Webservice', 'PI', 'xml', 'json'])->nullable();
 
             $table->unsignedBigInteger('application_id');
             $table->foreign('application_id')->references('id')->on('applications');

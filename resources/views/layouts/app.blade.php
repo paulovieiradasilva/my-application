@@ -27,6 +27,19 @@
 
                         @can('applications.index')
                         <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle {{ request()->is(['applications','services', 'integrations']) ? 'active' : '' }}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Minhas aplicações
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item {{ request()->is('applications') ? 'active' : '' }}" href="{{ route('applications.index') }}">Aplicações</a>
+                                <a class="dropdown-item {{ request()->is('services') ? 'active' : '' }}" href="{{ route('services.index') }}">Serviços</a>
+                                <a class="dropdown-item {{ request()->is('integrations') ? 'active' : '' }}" href="{{ route('integrations.index') }}">Integrações</a>
+                            </div>
+                        </li>
+                        @endcan
+
+                        <!-- @can('applications.index')
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle {{ request()->is(['aplicacoes','servicos', 'integracoes']) ? 'active' : '' }}" href="#" id="dropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Minhas aplicações
                             </a>
@@ -34,42 +47,55 @@
                                 <li class="nav-item dropdown">
                                     <a class="dropdown-item dropdown-toggle" href="#" id="dropdown1-1" data-toggle="dropdown" aria-expanded="false">Listar</a>
                                     <ul class="dropdown-menu" aria-labelledby="dropdown1-1-1">
-                                        <li><a class="dropdown-item {{ request()->is('applicacoes') ? 'active' : '' }}" href="{{ route('applications.index') }}">Aplicações </a></li>
-                                        <li><a class="dropdown-item {{ request()->is('servicos') ? 'active' : '' }}" href="{{ route('services.index') }}">Serviços </a></li>
-                                        <li><a class="dropdown-item {{ request()->is('integracoes') ? 'active' : '' }}" href="{{ route('integrations.index') }}">Integrações </a></li>
+                                        <li><a class="dropdown-item {{ request()->is('applications') ? 'active' : '' }}" href="{{ route('applications.index') }}">Aplicações </a></li>
+                                        <li><a class="dropdown-item {{ request()->is('services') ? 'active' : '' }}" href="{{ route('services.index') }}">Serviços </a></li>
+                                        <li><a class="dropdown-item {{ request()->is('integrations') ? 'active' : '' }}" href="{{ route('integrations.index') }}">Integrações </a></li>
                                     </ul>
                                 </li>
                             </ul>
                         </li>
-                        @endcan
+                        @endcan-->
 
                         @can('providers.index')
-                        <li class="nav-item {{ request()->is('fornecedores') ? 'active' : '' }}">
+                        <li class="nav-item {{ request()->is('providers') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('providers.index') }}">Fornecedores</a>
                         </li>
                         @endcan
 
-                        @can('environments.index')
-                        <li class="nav-item {{ request()->is('ambientes') ? 'active' : '' }}">
+                        <!-- @can('environments.index')
+                        <li class="nav-item {{ request()->is('environments') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('environments.index') }}">Ambientes</a>
                         </li>
-                        @endcan
+                        @endcan -->
 
                         @can('employees.index')
-                        <li class="nav-item {{ request()->is('funcionarios') ? 'active' : '' }}">
+                        <li class="nav-item {{ request()->is('employees') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('employees.index') }}">Funcionários</a>
                         </li>
                         @endcan
 
+                        @can('providers.index')
+                        <li class="nav-item {{ request()->is('contacts') ? 'active' : '' }}">
+                            <a class="nav-link" href="{{ route('contacts.index') }}">Contatos</a>
+                        </li>
+                        @endcan
+
                         @can('towers.index')
-                        <li class="nav-item {{ request()->is('torres') ? 'active' : '' }}">
+                        <li class="nav-item {{ request()->is('towers') ? 'active' : '' }}">
                             <a class="nav-link" href="{{ route('towers.index') }}">Torres</a>
                         </li>
                         @endcan
 
                         @can('servers.index')
-                        <li class="nav-item {{ request()->is('servidores') ? 'active' : '' }}">
-                            <a class="nav-link" href="{{ route('servers.index') }}">Servidores</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle {{ request()->is(['servers', 'databases']) ? 'active' : '' }}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Infraestrutura
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item {{ request()->is('environments') ? 'active' : '' }}" href="{{ route('environments.index') }}">Ambientes</a>
+                                <a class="dropdown-item {{ request()->is('servers') ? 'active' : '' }}" href="{{ route('servers.index') }}">Servidores</a>
+                                <a class="dropdown-item {{ request()->is('databases') ? 'active' : '' }}" href="{{ route('databases.index') }}">Banco de Dados</a>
+                            </div>
                         </li>
                         @endcan
 
