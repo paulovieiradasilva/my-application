@@ -68,7 +68,6 @@
                     $("#created").html("Cadastrar");
                     $("#updated").hide();
                     $("#created").show();
-                    $('#formEmployee').trigger('reset');
                     $('#modalFormCreate').modal('show');
                 }
             }],

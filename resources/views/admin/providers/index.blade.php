@@ -66,11 +66,11 @@
             {
                 text: "Novo",
                 action: function () {
+                    cleanFormDB('#formProvider');
                     $("#modalTitle").html("Novo fornecedor");
                     $("#created").html("Cadastrar");
                     $("#updated").hide();
                     $("#created").show();
-                    $("#formPermission").trigger("reset");
                     $("#modalFormCreate").modal("show");
                 }
             }
@@ -96,7 +96,7 @@
             dataType: "json",
             data: $("#formProvider").serialize(),
             success: function (data) {
-                $("#formProvider").trigger("reset");
+                cleanFormDB('#formProvider');
                 $("#modalFormCreate").modal("hide");
                 $("#providers_table").DataTable().ajax.reload(null, false);
                 if (data.success) {
@@ -155,8 +155,8 @@
             dataType: "json",
             data: $("#formProvider").serialize(),
             success: function (data) {
+                cleanFormDB('#formProvider');
                 $('#id').val('');
-                $("#formProvider").trigger("reset");
                 $("#modalFormCreate").modal("hide");
                 $("#providers_table").DataTable().ajax.reload(null, false);
                 if (data.success) {
