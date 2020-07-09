@@ -10,7 +10,7 @@
                 </button>
             </div>
 
-            <form id="formPermission">
+            <form class="my-form" id="formPermission">
                 @csrf
                 <div class="modal-body">
                     @include('admin.permissions._fields')

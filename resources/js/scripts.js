@@ -92,13 +92,16 @@ function getSelectOptions(url, type, dataType, seletor) {
 /** CLEAN FORM */
 function cleanFormDB(selector) {
     document.querySelector(selector).reset();
-    $('#start').val("").trigger('change');
-    $('#type').val("").trigger('change');
-    $('#select-applications').val("").trigger('change');
-    $('#select-environments').val("").trigger('change');
-    $('#select-providers').val("").trigger('change');
-    $('#select-servers').val("").trigger('change');
-    $('#select-towers').val("").trigger('change');
-    $('#select-users').val("").trigger('change');
-
+    $('#name').val("").removeClass('is-invalid');
+    $('#username').val("").removeClass('is-invalid');
+    $('#email').val("").removeClass('is-invalid');
+    $('#password').val("").removeClass('is-invalid');
+    $('#start').val("").trigger('change').removeClass('is-invalid');
+    $('#type').val("").trigger('change').removeClass('is-invalid');
+    $('#select-applications').val("").trigger('change').removeClass('is-invalid');
+    $('#select-environments').val("").trigger('change').removeClass('is-invalid');
+    $('#select-providers').val("").trigger('change').removeClass('is-invalid');
+    $('#select-servers').val("").trigger('change').removeClass('is-invalid');
+    $('#select-towers').val("").trigger('change').removeClass('is-invalid');
+    $('#select-users').val("").trigger('change').removeClass('is-invalid');
 }

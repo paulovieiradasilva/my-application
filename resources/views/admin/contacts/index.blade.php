@@ -105,10 +105,12 @@
             let options = $('input[name="contactable_type"]:checked').val();
 
             if (options == "App\\Models\\Provider") {
+                $('#select-users').val("").trigger('change');
                 $('.type-provider-box').show();
                 $('.type-employee-box').hide();
             }
             else {
+                $('#select-providers').val("").trigger('change');
                 $('.type-employee-box').show();
                 $('.type-provider-box').hide();
             }
@@ -139,9 +141,39 @@
             complete: function (data) { },
             error: function (data) {
                 /** Criar as validações dos inputs para erros */
-                if (data.responseJSON.errors.name) {
-                    $("#name").addClass("is-invalid");
-                    $("#name-feedback").html(data.responseJSON.errors.name);
+                if (data.responseJSON.errors.contactable_type) {
+                    $('#select-users').addClass('is-invalid');
+                    $('#users-feedback').html(data.responseJSON.errors.contactable_type);
+
+                    $('#select-providers').addClass('is-invalid');
+                    $('#providers-feedback').html(data.responseJSON.errors.contactable_type);
+                } else {
+                    $('#select-users').removeClass('is-invalid');
+                    $('#users-feedback').val('');
+
+                    $('#select-providers').removeClass('is-invalid');
+                    $('#providers-feedback').val('');
+                }
+                if (data.responseJSON.errors.email) {
+                    $('#email').addClass('is-invalid');
+                    $('#email-feedback').html(data.responseJSON.errors.email);
+                } else {
+                    $('#email').removeClass('is-invalid');
+                    $('#email-feedback').val('');
+                }
+                if (data.responseJSON.errors.phone) {
+                    $('#phone').addClass('is-invalid');
+                    $('#phone-feedback').html(data.responseJSON.errors.phone);
+                } else {
+                    $('#phone').removeClass('is-invalid');
+                    $('#phone-feedback').val('');
+                }
+                if (data.responseJSON.errors.cellphone) {
+                    $('#cellphone').addClass('is-invalid');
+                    $('#cellphone-feedback').html(data.responseJSON.errors.cellphone);
+                } else {
+                    $('#cellphone').removeClass('is-invalid');
+                    $('#cellphone-feedback').val('');
                 }
             }
         });
@@ -156,7 +188,6 @@
         $.get(
             "{{ route('contacts.index') }}" + "/" + id + "/edit",
             function (data) {
-                console.log(data);
                 $("#modalTitle").html("Editar contato");
                 $("#updated").html("Atualizar");
                 $("#modalFormCreate").modal("show");

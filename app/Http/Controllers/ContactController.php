@@ -6,6 +6,8 @@ use App\Models\Contact;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\ContactCreateRequest;
+use App\Http\Requests\ContactUpdateRequest;
 
 class ContactController extends Controller
 {
@@ -44,7 +46,7 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ContactCreateRequest $request)
     {
         // dd($request->all());
         try {
@@ -87,7 +89,7 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ContactUpdateRequest $request, $id)
     {
         // dd($request->all());
         try {

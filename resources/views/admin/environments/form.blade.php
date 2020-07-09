@@ -10,7 +10,7 @@
                 </button>
             </div>
 
-            <form id="formEnvironment">
+            <form class="my-form" id="formEnvironment">
                 @csrf
                 <div class="modal-body">
                     @include('admin.environments._fields')

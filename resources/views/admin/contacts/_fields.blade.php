@@ -21,18 +21,16 @@
 <div class="form-group row type-employee-box" style="display: none;">
     <label for="employee_id" class="col-sm-2 col-form-label">Funcionários</label>
     <div class="col-sm-10">
-        <select name="contactable_id" id="select-users" class="form-control select2" data-placeholder="Funcionários" style="width: 100%;">
-        </select>
+        <select name="contactable_id1" id="select-users" class="form-control select2" data-placeholder="Funcionários" style="width: 100%;"></select>
+        <div id="users-feedback" class="invalid-feedback"></div>
     </div>
 </div>
 
 <div class="form-group row type-provider-box" style="display: none;">
     <label for="provider_id" class="col-sm-2 col-form-label">Fornecedores</label>
     <div class="col-sm-10">
-        <select name="contactable_id" id="select-providers" class="form-control select2" data-placeholder="Fornecedores">
-            <option disabled selected></option>
-        </select>
-        <div id="provider-feedback" class="invalid-feedback"></div>
+        <select name="contactable_id2" id="select-providers" class="form-control select2" data-placeholder="Fornecedores"></select>
+        <div id="providers-feedback" class="invalid-feedback"></div>
     </div>
 </div>
 

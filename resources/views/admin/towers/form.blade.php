@@ -10,7 +10,7 @@
                 </button>
             </div>
 
-            <form id="formTower">
+            <form class="my-form" id="formTower">
                 @csrf
                 <div class="modal-body">
                     @include('admin.towers._fields')

@@ -10,7 +10,7 @@
                 </button>
             </div>
 
-            <form id="formProvider">
+            <form class="my-form" id="formProvider">
                 @csrf
                 <div class="modal-body">
                     @include('admin.providers._fields')

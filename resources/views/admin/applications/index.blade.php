@@ -33,9 +33,9 @@
 @section('scripts')
 <script>
     /** LIST SERVERS */
-    $(document).ready(function () {
+    $(document).ready(function() {
         $('#applications_table').DataTable({
-            initComplete: function () {
+            initComplete: function() {
                 $('.card').show();
                 $('#applications_table').css('display', 'inline-table').css('width', 'inherit');
             },
@@ -53,7 +53,7 @@
                 { data: 'created_at' },
                 { data: 'updated_at' },
                 { data: 'action' }
-            ],
+           ],
             order: [
                 [0, 'desc']
             ],
@@ -66,7 +66,7 @@
                 className: 'btn btn-default'
             }, {
                 text: 'Novo',
-                action: function () {
+                action: function() {
                     cleanFormDB('#formApplication');
                     $('#modalTitle').html('Nova aplicação');
                     $("#created").html("Cadastrar");
@@ -83,11 +83,10 @@
     });
 
     /** RESET MODAL VALIDATIONS */
-    $("#modalFormCreate").on("hide.bs.modal", function () {
-    });
+    $("#modalFormCreate").on("hide.bs.modal", function() {});
 
     /** GET LISTS */
-    $(document).ready(function () {
+    $(document).ready(function() {
         getSelectOptions("{{ url('providers-all') }}", "GET", "json", "#select-providers");
         getSelectOptions("{{ url('servers-all') }}", "GET", "json", "#select-servers");
         getSelectOptions("{{ url('employees-all') }}", "GET", "json", "#select-users");
@@ -105,7 +104,7 @@
             type: 'POST',
             dataType: 'json',
             data: $('#formApplication').serialize(),
-            success: function (data) {
+            success: function(data) {
                 cleanFormDB('#formApplication');
                 $('#modalFormCreate').modal('hide');
                 $('#applications_table').DataTable().ajax.reload(null, false);
@@ -116,8 +115,8 @@
                     toastr.error(data.error);
                 }
             },
-            complete: function (data) {},
-            error: function (data) {
+            complete: function(data) {},
+            error: function(data) {
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
                     $('#name').addClass('is-invalid');
@@ -173,7 +172,7 @@
 
         $.get(
             "{{ route('applications.index') }}" + '/' + id + '/edit',
-            function (data) {
+            function(data) {
 
                 /** */
                 data.data.application.details.forEach(function(item) {
@@ -221,7 +220,7 @@
             type: 'PATCH',
             dataType: 'json',
             data: $('#formApplication').serialize(),
-            success: function (data) {
+            success: function(data) {
                 cleanFormDB('#formApplication');
                 $('#id').val('');
                 $('#modalFormCreate').modal('hide');
@@ -233,8 +232,8 @@
                     toastr.error(data.error);
                 }
             },
-            complete: function (data) {},
-            error: function (data) {
+            complete: function(data) {},
+            error: function(data) {
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
                     $('#name').addClass('is-invalid');
@@ -262,7 +261,7 @@
             url: "{{ route('applications.index') }}" + '/' + id,
             type: 'DELETE',
             dataType: 'json',
-            success: function (data) {
+            success: function(data) {
                 $('#applications_table').DataTable().ajax.reload(null, false);
                 $('#deleteModalCenter').modal('hide');
                 if (data.success) {
@@ -272,8 +271,8 @@
                     toastr.error(data.error);
                 }
             },
-            complete: function (data) {},
-            error: function (data) {
+            complete: function(data) {},
+            error: function(data) {
                 /** Criar as validações dos inputs para erros */
             }
         });
@@ -288,7 +287,7 @@
         $("#id-item").html(item);
 
         $('#id').val(item);
-
     }
+
 </script>
 @stop
