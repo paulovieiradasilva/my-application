@@ -27,13 +27,14 @@
 
                         @can('applications.index')
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle {{ request()->is(['applications','services', 'integrations']) ? 'active' : '' }}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle {{ request()->is(['applications','services', 'integrations', 'details']) ? 'active' : '' }}" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Minhas aplicações
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item {{ request()->is('applications') ? 'active' : '' }}" href="{{ route('applications.index') }}">Aplicações</a>
                                 <a class="dropdown-item {{ request()->is('services') ? 'active' : '' }}" href="{{ route('services.index') }}">Serviços</a>
                                 <a class="dropdown-item {{ request()->is('integrations') ? 'active' : '' }}" href="{{ route('integrations.index') }}">Integrações</a>
+                                <a class="dropdown-item {{ request()->is('details') ? 'active' : '' }}" href="{{ route('details.index') }}">Detalhes</a>
                             </div>
                         </li>
                         @endcan
@@ -198,7 +199,9 @@
                 <div class="container">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <h5 class="m-0 text-dark"> {{ $page }} <small>Example 3.0</small></h5>
+                            <h5 class="m-0 text-dark"> {{ $page }}
+                                <!-- <small>Example 3.0</small> -->
+                            </h5>
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">

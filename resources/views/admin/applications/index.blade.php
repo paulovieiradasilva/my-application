@@ -175,11 +175,6 @@
             function(data) {
 
                 /** */
-                data.data.application.details.forEach(function(item) {
-                    addRowTable('#application-details', item);
-                })
-
-                /** */
                 let servers = [];
                 data.data.application.servers.forEach(element => servers.push(element.id));
 

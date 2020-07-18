@@ -20,4 +20,12 @@ class Detail extends Model
     {
         return $this->belongsTo(Application::class);
     }
+
+    /**
+     * Get the detail of the environment.
+     */
+    public function environment()
+    {
+        return $this->belongsTo(Environment::class);
+    }
 }

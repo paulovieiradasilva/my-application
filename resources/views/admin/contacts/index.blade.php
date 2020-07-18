@@ -10,11 +10,11 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>E-mail</th>
+                                <th>Contato</th>
                                 <th>Telefone</th>
                                 <th>Celular</th>
+                                <th>E-mail</th>
                                 <th>Site</th>
-                                <th>Contato</th>
                                 <th>Tipo</th>
                                 <th>Criado</th>
                                 <th>Atualizado</th>
@@ -47,11 +47,11 @@
             ajax: "{{ url('contacts_datatables') }}",
             columns: [
                 { data: "id" },
-                { data: "email" },
+                { data: "contactable.name" },
                 { data: "phone" },
                 { data: "cellphone" },
+                { data: "email" },
                 { data: "site" },
-                { data: "contactable_id" },
                 { data: "contactable_type" },
                 { data: "created_at" },
                 { data: "updated_at" },
@@ -188,6 +188,9 @@
         $.get(
             "{{ route('contacts.index') }}" + "/" + id + "/edit",
             function (data) {
+
+                console.log(data);
+
                 $("#modalTitle").html("Editar contato");
                 $("#updated").html("Atualizar");
                 $("#modalFormCreate").modal("show");

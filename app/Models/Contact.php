@@ -21,12 +21,4 @@ class Contact extends Model
         return $this->morphTo();
     }
 
-    /**
-     * Get the providers for the application.
-     */
-    public function providers()
-    {
-        return $this->HasMany(Provider::class);
-    }
-
 }

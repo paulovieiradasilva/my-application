@@ -26,7 +26,7 @@ class ApplicationController extends Controller
     /** */
     public function list()
     {
-        return DataTables::of(Application::with(['provider', 'tower'])
+        return DataTables::of(Application::with(['provider', 'tower', 'details'])
             ->select(['id', 'name', 'description', 'start', 'platform', 'type', 'provider_id', 'created_at', 'updated_at']))
             ->addColumn('action', 'components.button._actions')
             ->make(true);
@@ -88,10 +88,10 @@ class ApplicationController extends Controller
             'employees.contacts',
             'integrations.credential',
             'services.credential',
-            'details' // corrigir.
-        ])->where('id', $id)->get();
+            'details.environment',
+        ])->where('id', $id)->first();
 
-        //return $application[0]->servers[0]->credential;
+        // return $application->details[0]->type;
         return view('admin.applications.show', compact('application'))->with('page', 'Aplicações');
     }
 

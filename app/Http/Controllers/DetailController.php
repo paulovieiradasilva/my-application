@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Contact;
+use App\Models\Detail;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\ContactCreateRequest;
-use App\Http\Requests\ContactUpdateRequest;
+use App\Http\Requests\DetailCreateRequest;
+use App\Http\Requests\DetailUpdateRequest;
 
-class ContactController extends Controller
+class DetailController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,14 +18,14 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return view('admin.contacts.index')->with('page', 'Contatos');
+        return view('admin.details.index')->with('page', 'Detalhes');
     }
 
     /** */
     public function list()
     {
-        return DataTables::of(Contact::with(['contactable'])
-            ->select(['id', 'email', 'phone', 'cellphone', 'site', 'contactable_type', 'contactable_id', 'created_at', 'updated_at']))
+        return DataTables::of(Detail::with(['application', 'environment'])
+            ->select(['id', 'application_id', 'type', 'content', 'environment_id', 'created_at', 'updated_at']))
             ->addColumn('action', 'components.button._actions')
             ->make(true);
     }
@@ -46,15 +46,16 @@ class ContactController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ContactCreateRequest $request)
+    public function store(DetailCreateRequest $request)
     {
         try {
-            Contact::create($request->all());
-            return response()->json(['success' => 'Contato cadastrado com sucesso!']);
+            $detail = Detail::create($request->all());
 
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro ao cadastrar contato']);
+            return response()->json(['error' => 'Erro ao cadastrar detalhe']);
         }
+
+        return response()->json(['success' => 'Detalhe cadastrado com sucesso!']);
     }
 
     /**
@@ -76,10 +77,9 @@ class ContactController extends Controller
      */
     public function edit($id)
     {
-        $contact = Contact::findOrFail($id);
-        $contact->contactable;
+        $detail = Detail::findOrFail($id);
 
-        return $contact;
+        return $detail;
     }
 
     /**
@@ -89,21 +89,17 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ContactUpdateRequest $request, $id)
+    public function update(DetailUpdateRequest $request, $id)
     {
-        // dd($request->all());
         try {
-            DB::beginTransaction();
+            $detail = Detail::findOrFail($id);
+            $detail->update($request->all());
 
-            $contact = Contact::findOrFail($id);
-            $contact->update($request->all());
-
-            DB::commit();
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro ao atualizar contato']);
+            return response()->json(['error' => 'Erro ao atualizar detalhe']);
         }
 
-        return response()->json(['success' => 'Contato atualizar com sucesso!']);
+        return response()->json(['success' => 'Detalhe atualizado com sucesso!']);
     }
 
     /**
@@ -115,13 +111,13 @@ class ContactController extends Controller
     public function destroy($id)
     {
         try {
-            $contact = Contact::findOrFail($id);
-            $contact->delete();
+            $detail = Detail::findOrFail($id);
+            $detail->delete();
 
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Erro ao deletar contato']);
+            return response()->json(['error' => 'Erro ao deletar detalhe']);
         }
 
-        return response()->json(['success' => 'Contato deletado com sucesso!']);
+        return response()->json(['success' => 'Detalhe deletado com sucesso!']);
     }
 }

@@ -425,6 +425,37 @@ class PermissionsTableSeeder extends Seeder
             'description' => 'Deletar integrações'
         ]);
 
+        /** Details */
+        Permission::create([
+            'name' => 'Criar novo detalhe',
+            'slug' => 'details.create',
+            'description' => 'Cadastrar novo detalhe'
+        ]);
+
+        Permission::create([
+            'name' => 'Listar detalhes',
+            'slug' => 'details.index',
+            'description' => 'Listar todos os detalhes'
+        ]);
+
+        Permission::create([
+            'name' => 'Visualizar detalhe ',
+            'slug' => 'details.show',
+            'description' => 'Ver detalhe'
+        ]);
+
+        Permission::create([
+            'name' => 'Atualizar detalhe',
+            'slug' => 'details.edit',
+            'description' => 'Editar detalhe'
+        ]);
+
+        Permission::create([
+            'name' => 'Eliminar detalhe',
+            'slug' => 'details.destroy',
+            'description' => 'Deletar detalhe'
+        ]);
+
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
     }
 }

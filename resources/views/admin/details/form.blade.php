@@ -10,10 +10,10 @@
                 </button>
             </div>
 
-            <form class="my-form" id="formIntegration">
+            <form class="my-form" id="formDetail">
                 @csrf
                 <div class="modal-body">
-                    @include('admin.integrations._fields')
+                    @include('admin.details._fields')
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

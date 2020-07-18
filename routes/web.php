@@ -192,6 +192,18 @@ Route::middleware(['auth'])->group(function () {
     /** Datatables */
     Route::get('integrations_datatables', 'IntegrationController@list');
 
+    // Details
+    Route::get('details', 'DetailController@index')->name('details.index')->middleware('can:details.index');
+    Route::get('details/create', 'DetailController@create')->name('details.create')->middleware('can:details.create');
+    Route::post('details', 'DetailController@store')->name('details.store');
+    Route::get('details/{id}', 'DetailController@show')->name('details.show')->middleware('can:details.show');
+    Route::get('details/{id}/edit', 'DetailController@edit')->name('details.edit')->middleware('can:details.edit');
+    Route::patch('details/{id}', 'DetailController@update')->name('details.update');
+    Route::delete('details/{id}', 'DetailController@destroy')->name('details.destroy')->middleware('can:details.destroy');
+
+    /** Datatables */
+    Route::get('details_datatables', 'DetailController@list');
+
     // Contacts
     Route::get('contacts', 'ContactController@index')->name('contacts.index')->middleware('can:contacts.index');
     Route::get('contacts/create', 'ContactController@create')->name('contacts.create')->middleware('can:contacts.create');

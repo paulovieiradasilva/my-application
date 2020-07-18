@@ -26,6 +26,6 @@ class Employee extends Model
      */
     public function contacts()
     {
-        return $this->morphOne(Contact::class, 'contactable');
+        return $this->morphMany(Contact::class, 'contactable');
     }
 }

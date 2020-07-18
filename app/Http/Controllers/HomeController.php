@@ -27,5 +27,6 @@ class HomeController extends Controller
     {
         $applications = Application::paginate(12);
         return view('home', ['applications' => $applications])->with('page', 'Home');
+        // return $applications = Application::with(['provider', 'tower'])->paginate(12);
     }
 }
