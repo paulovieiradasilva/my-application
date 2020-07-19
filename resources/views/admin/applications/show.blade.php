@@ -91,8 +91,8 @@
                                                     <strong>IP:</strong> {{ $server->ip }} <br />
                                                     <strong>Tipo:</strong> {{ $server->type }} <br />
                                                     <strong>Ambiente:</strong> {{ $server->environment->name }} <br />
-                                                    <strong>Usuário:</strong> {{ $server->credential->username }} <br />
-                                                    <strong>Senha:</strong> {{ $server->credential->password }} <br />
+                                                    <strong>Usuário:</strong>  <br />
+                                                    <strong>Senha:</strong>  <br />
                                                 </div>
                                             </dd>
                                             @endforeach

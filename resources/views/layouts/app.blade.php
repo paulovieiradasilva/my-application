@@ -251,7 +251,7 @@
                     <!-- Conteudo -->
                 </div>
                 <!-- Default to the left -->
-                <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">MyApplications</a>.</strong> {{__('All rights reserved.')}}
+                <strong>Copyright &copy; 2014-2019 <a href="#">MyApplications</a>.</strong> {{__('All rights reserved.')}}
             </div>
         </footer>
     </div>

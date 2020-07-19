@@ -14,7 +14,7 @@
                                 <th>Telefone</th>
                                 <th>Celular</th>
                                 <th>E-mail</th>
-                                <th>Site</th>
+                                <!-- <th>Site</th> -->
                                 <th>Tipo</th>
                                 <th>Criado</th>
                                 <th>Atualizado</th>
@@ -51,7 +51,7 @@
                 { data: "phone" },
                 { data: "cellphone" },
                 { data: "email" },
-                { data: "site" },
+                // { data: "site" },
                 { data: "contactable_type" },
                 { data: "created_at" },
                 { data: "updated_at" },
