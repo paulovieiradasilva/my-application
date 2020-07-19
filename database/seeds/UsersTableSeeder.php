@@ -20,6 +20,6 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('password')
         ]);
 
-        factory(User::class, 100)->create();
+        // factory(User::class, 100)->create();
     }
 }
