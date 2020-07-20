@@ -91,8 +91,10 @@
                                                     <strong>IP:</strong> {{ $server->ip }} <br />
                                                     <strong>Tipo:</strong> {{ $server->type }} <br />
                                                     <strong>Ambiente:</strong> {{ $server->environment->name }} <br />
-                                                    <strong>Usuário:</strong>  <br />
-                                                    <strong>Senha:</strong>  <br />
+                                                    @if($server->credential !== null)
+                                                        <strong>Usuário:</strong> {{ $server->credential->username }} <br />
+                                                        <strong>Senha:</strong> {{ $server->credential->password }} <br />
+                                                    @endif
                                                 </div>
                                             </dd>
                                             @endforeach
@@ -120,38 +122,32 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <h4 class="text-primary">Link's</h4>
-                                                <dd>
-                                                    <div class="p-3">
-                                                        @foreach($application->details as $detail)
-                                                        @if($detail->type == "Link")
+                                                @foreach($application->details as $detail)
+                                                    @if($detail->type == "Link")
+                                                    <dd>
                                                         <h6>
                                                             <span>{{ $detail->environment->name }} :
                                                                 <a target="_blank" class="text-secondary"
                                                                     href="{{ $detail->content }}">{{ $detail->content }}</a>
                                                             </span>
                                                         </h6>
-                                                        @endif
-                                                        @endforeach
-                                                    </div>
-                                                </dd>
+                                                    </dd>
+                                                    @endif
+                                                @endforeach
                                             </div>
                                             <div class="col-md-6">
-                                                <h4 class="text-primary">Diretório</h4>
-                                                <dd>
-                                                    <div class="p-3">
-                                                        @forelse($application->details as $detail)
-                                                        @if($detail->type == "Diretório")
+                                                <h4 class="text-primary">Diretório's</h4>
+                                                @foreach($application->details as $detail)
+                                                    @if($detail->type == "Diretório")
+                                                    <dd>
                                                         <h6>
                                                             <span>{{ $detail->environment->name }} :
                                                                 {{ $detail->content }}
                                                             </span>
                                                         </h6>
-                                                        @endif
-                                                        @empty
-                                                        <p>Teste</p>
-                                                        @endforelse
-                                                    </div>
-                                                </dd>
+                                                    </dd>
+                                                    @endif
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>

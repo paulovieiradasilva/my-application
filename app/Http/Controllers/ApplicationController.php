@@ -91,7 +91,7 @@ class ApplicationController extends Controller
             'details.environment',
         ])->where('id', $id)->first();
 
-        // return $application->details[0]->type;
+        // return $application->details;
         return view('admin.applications.show', compact('application'))->with('page', 'Aplicações');
     }
 
