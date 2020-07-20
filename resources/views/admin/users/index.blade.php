@@ -65,10 +65,11 @@
                     text: 'Novo',
                     action: function () {
                         cleanFormDB('#formUser');
+                        $('#modalTitle').html('Novo usuário');
+                        /** */
+                        removeSpinner("#created", 'Cadastrar');
                         $('.password').show(); // Mostrando o input PASSWORD
                         $('.password-confirm').show(); // Mostrando o input PASSWORD CONFIRM
-                        $('#modalTitle').html('Novo usuário');
-                        $("#created").html("Cadastrar");
                         $("#updated").hide();
                         $("#created").show();
                         $('#modalFormCreate').modal('show');
@@ -95,6 +96,9 @@
     /** CREATE  */
     function store() {
 
+        /** */
+        addSpinner("#created", true);
+
         $.ajax({
             url: "{{ route('users.store') }}",
             type: 'POST',
@@ -113,6 +117,9 @@
             },
             complete: function (data) {},
             error: function (data) {
+
+                /** */
+                removeSpinner("#created", 'Cadastrar');
 
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
@@ -151,7 +158,8 @@
                 });
 
                 $('#modalTitle').html('Editar usuário');
-                $('#updated').html('Atualizar');
+                /** */
+                removeSpinner("#updated", 'Atualizar');
                 $('.password').hide(); // Ocultando o input PASSWORD
                 $('.password-confirm').hide(); // Ocultando o input PASSWORD
                 $('#modalFormCreate').modal('show');
@@ -168,6 +176,9 @@
 
         var id = $('#id').val();
 
+        /** */
+        addSpinner("#updated", true);
+
         $.ajax({
             url: "{{ route('users.index') }}" + '/' + id,
             type: 'PUT',
@@ -178,6 +189,10 @@
                 $('#id').val('');
                 $('#modalFormCreate').modal('hide');
                 $('#users_table').DataTable().ajax.reload(null, false);
+
+                /** */
+                removeSpinner("#updated", 'Atualizar');
+
                 if (data.success) {
                     toastr.success(data.success);
                 }
@@ -187,6 +202,10 @@
             },
             complete: function (data) {},
             error: function (data) {
+
+                /** */
+                removeSpinner("#updated", 'Atualizar');
+                
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
                     $('#name').addClass('is-invalid');

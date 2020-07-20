@@ -67,7 +67,8 @@
                 action: function() {
                     cleanFormDB('#formDatabase');
                     $('#modalTitle').html('Novo banco de dados');
-                    $("#created").html("Cadastrar");
+                    /** */
+                    removeSpinner("#created", 'Cadastrar');
                     $("#updated").hide();
                     $("#created").show();
                     $('#formDatabase').trigger('reset');
@@ -94,6 +95,9 @@
     /** CREATE  */
     function store() {
 
+        /** */
+        addSpinner("#created", true);
+
         $.ajax({
             url: "{{ route('databases.store') }}",
             type: 'POST',
@@ -112,6 +116,10 @@
             },
             complete: function(data) {},
             error: function(data) {
+
+                /** */
+                removeSpinner("#created", 'Cadastrar');
+
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.server_id) {
                     $('#select-servers').addClass('is-invalid');
@@ -165,13 +173,16 @@
         $("#updated").show();
         $("#created").hide();
 
+        cleanFormDB('#formDatabase');
+
         $.get(
             "{{ route('databases.index') }}" + '/' + id + '/edit',
             function(data) {
                 $('#edit-item-table').show();
                 $('#add-item-table').hide();
                 $('#modalTitle').html('Editar banco de dados');
-                $('#updated').html('Atualizar');
+                /** */
+                removeSpinner("#updated", 'Atualizar');
                 $('#modalFormCreate').modal('show');
 
                 $('#name').val(data.data.databases.name);
@@ -190,6 +201,9 @@
     function update() {
 
         var id = $('#id').val();
+
+        /** */
+        addSpinner("#updated", true);
 
         $.ajax({
             url: "{{ route('databases.index') }}" + '/' + id,
@@ -211,6 +225,10 @@
             },
             complete: function(data) {},
             error: function(data) {
+
+                /** */
+                removeSpinner("#updated", 'Atualizar');
+
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.server_id) {
                     $('#select-servers').addClass('is-invalid');

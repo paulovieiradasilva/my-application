@@ -76,7 +76,8 @@
                     $('.type-employee-box').hide();
                     $('.type-provider-box').hide();
                     $("#modalTitle").html("Novo fornecedor");
-                    $("#created").html("Cadastrar");
+                    /** */
+                    removeSpinner("#created", 'Cadastrar');
                     $("#updated").hide();
                     $("#created").show();
                     $("#modalFormCreate").modal("show");
@@ -122,6 +123,9 @@
     /** CREATE */
     function store() {
 
+        /** */
+        addSpinner("#created", true);
+
         $.ajax({
             url: "{{ route('contacts.store') }}",
             type: "POST",
@@ -140,6 +144,10 @@
             },
             complete: function (data) { },
             error: function (data) {
+
+                /** */
+                removeSpinner("#created", 'Cadastrar');
+
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.contactable_type) {
                     $('#select-users').addClass('is-invalid');
@@ -185,14 +193,14 @@
         $("#updated").show();
         $("#created").hide();
 
+        cleanFormDB('#formContact');
+
         $.get(
             "{{ route('contacts.index') }}" + "/" + id + "/edit",
             function (data) {
-
-                console.log(data);
-
                 $("#modalTitle").html("Editar contato");
-                $("#updated").html("Atualizar");
+                /** */
+                removeSpinner("#updated", 'Atualizar');
                 $("#modalFormCreate").modal("show");
 
                 if (data.contactable_type == "App\\Models\\Employee") {
@@ -219,6 +227,9 @@
 
         var id = $('#id').val();
 
+        /** */
+        addSpinner("#updated", true);
+
         $.ajax({
             url: "{{ route('contacts.index') }}" + "/" + id,
             type: "PATCH",
@@ -226,7 +237,6 @@
             data: $("#formContact").serialize(),
             success: function (data) {
                 cleanFormDB('#formContact');
-                $('#id').val('');
                 $("#modalFormCreate").modal("hide");
                 $("#contacts_table").DataTable().ajax.reload(null, false);
                 if (data.success) {
@@ -238,6 +248,10 @@
             },
             complete: function (data) { },
             error: function (data) {
+
+                /** */
+                removeSpinner("#updated", 'Atualizar');
+
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
                     $("#name").addClass("is-invalid");

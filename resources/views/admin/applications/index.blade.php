@@ -69,7 +69,8 @@
                 action: function() {
                     cleanFormDB('#formApplication');
                     $('#modalTitle').html('Nova aplicação');
-                    $("#created").html("Cadastrar");
+                    /** */
+                    removeSpinner("#created", 'Cadastrar');
                     $("#updated").hide();
                     $("#created").show();
                     $('#formApplication').trigger('reset');
@@ -99,6 +100,9 @@
     /** CREATE  */
     function store() {
 
+        /** */
+        addSpinner("#created", true);
+
         $.ajax({
             url: "{{ route('applications.store') }}",
             type: 'POST',
@@ -117,6 +121,10 @@
             },
             complete: function(data) {},
             error: function(data) {
+
+                /** */
+                removeSpinner("#created", 'Cadastrar');
+
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
                     $('#name').addClass('is-invalid');
@@ -170,6 +178,8 @@
         $("#updated").show();
         $("#created").hide();
 
+        cleanFormDB('#formApplication');
+
         $.get(
             "{{ route('applications.index') }}" + '/' + id + '/edit',
             function(data) {
@@ -183,7 +193,8 @@
                 data.data.application.employees.forEach(element => employees.push(element.id));
 
                 $('#modalTitle').html('Editar aplicação');
-                $('#updated').html('Atualizar');
+                /** */
+                removeSpinner("#updated", 'Atualizar');
                 $('#modalFormCreate').modal('show');
                 $('#name').val(data.data.application.name);
                 $('#platform').val(data.data.application.platform);
@@ -210,6 +221,9 @@
 
         var id = $('#id').val();
 
+        /** */
+        addSpinner("#updated", true);
+
         $.ajax({
             url: "{{ route('applications.index') }}" + '/' + id,
             type: 'PATCH',
@@ -217,7 +231,6 @@
             data: $('#formApplication').serialize(),
             success: function(data) {
                 cleanFormDB('#formApplication');
-                $('#id').val('');
                 $('#modalFormCreate').modal('hide');
                 $('#applications_table').DataTable().ajax.reload(null, false);
                 if (data.success) {
@@ -229,6 +242,10 @@
             },
             complete: function(data) {},
             error: function(data) {
+
+                /** */
+                removeSpinner("#updated", 'Atualizar');
+
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
                     $('#name').addClass('is-invalid');

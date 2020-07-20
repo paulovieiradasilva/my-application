@@ -63,9 +63,9 @@
                     text: 'Novo',
                     action: function () {
                         cleanFormDB('#formEnvironment');
-                        $('#id').val('');
                         $('#modalTitle').html('Novo ambiente');
-                        $('#created').html('Cadastrar');
+                        /** */
+                        removeSpinner("#created", 'Cadastrar');
                         $("#updated").hide();
                         $("#created").show();
                         $('#modalFormCreate').modal('show');
@@ -88,6 +88,9 @@
     /** CREATE  */
     function store() {
 
+        /** */
+        addSpinner("#created", true);
+
         $.ajax({
             url: "{{ route('environments.store') }}",
             type: "POST",
@@ -96,9 +99,7 @@
             success: function (data) {
                 cleanFormDB('#formEnvironment');
                 $("#modalFormCreate").modal("hide");
-                $("#environments_table")
-                    .DataTable()
-                    .ajax.reload(null, false);
+                $("#environments_table").DataTable().ajax.reload(null, false);
                 if (data.success) {
                     toastr.success(data.success);
                 }
@@ -108,6 +109,10 @@
             },
             complete: function (data) {},
             error: function (data) {
+
+                /** */
+                removeSpinner("#created", 'Cadastrar');
+
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
                     $('#name').addClass('is-invalid');
@@ -127,11 +132,14 @@
         $("#updated").show();
         $("#created").hide();
 
+        cleanFormDB('#formEnvironment');
+
         $.get(
             "{{ route('environments.index') }}" + "/" + id + "/edit",
             function (data) {
                 $('#modalTitle').html('Editar ambinente');
-                $('#updated').html('Atualizar');
+                /** */
+                removeSpinner("#updated", 'Atualizar');
                 $('#modalFormCreate').modal('show');
                 $('#id').val(data.id);
                 $('#name').val(data.name);
@@ -145,6 +153,9 @@
     function update() {
 
         var id = $('#id').val();
+
+        /** */
+        addSpinner("#updated", true);
 
         $.ajax({
             url: "{{ route('environments.index') }}" + "/" + id,
@@ -167,6 +178,10 @@
             },
             complete: function (data) {},
             error: function (data) {
+
+                /** */
+                removeSpinner("#updated", 'Atualizar');
+
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
                     $('#name').addClass('is-invalid');

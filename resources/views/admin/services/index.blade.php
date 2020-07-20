@@ -66,9 +66,9 @@
                 text: 'Novo',
                 action: function () {
                     cleanFormDB('#formService');
-                    $('#id').val('');
                     $('#modalTitle').html('Novo serviço');
-                    $("#created").html("Cadastrar");
+                    /** */
+                    removeSpinner("#created", 'Cadastrar');
                     $("#updated").hide();
                     $("#created").show();
                     $('#modalFormCreate').modal('show');

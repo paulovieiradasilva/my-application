@@ -24858,6 +24858,7 @@ body {
   margin-left: 1px;
 }
 
+/** */
 .dropdown-item.active,
 .dropdown-item:hover {
   color: #292828;
@@ -24867,6 +24868,7 @@ body {
   margin-left: 1px;
 }
 
+/** */
 .dropdown-item.active,
 .dropdown-item:focus {
   color: #292828;
@@ -24876,6 +24878,7 @@ body {
   margin-left: 1px;
 }
 
+/** */
 .dropdown-item {
   display: block;
   width: 100%;
@@ -24903,16 +24906,19 @@ body {
   border-radius: 100px;
 }
 
+/** */
 .buscar-caja:hover > .buscar-txt {
   width: 240px;
   padding: 0 13px;
 }
 
+/** */
 .buscar-caja:hover > .buscar-btn {
   background: white;
   color: black;
 }
 
+/** */
 .buscar-btn {
   float: right;
   width: 40px;
@@ -24930,12 +24936,14 @@ body {
   cursor: pointer;
 }
 
+/** */
 .buscar-btn > i {
   font-size: 13px;
   color: #a5a6a7;
   margin-top: 2px;
 }
 
+/** */
 .buscar-txt {
   border: none;
   background: none;
@@ -24950,7 +24958,6 @@ body {
   width: 0px;
 }
 
-/** */
 /** removendo a borda vermelha do is-invalid */
 .form-control.is-invalid,
 .form-control.is-invalid:focus,

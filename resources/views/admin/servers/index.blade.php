@@ -69,7 +69,8 @@
                 action: function() {
                     cleanFormDB('#formServer');
                     $('#modalTitle').html('Novo servidor');
-                    $("#created").html("Cadastrar");
+                    /** */
+                    removeSpinner("#created", 'Cadastrar');
                     $("#updated").hide();
                     $("#created").show();
                     $('#formServer').trigger('reset');
@@ -96,6 +97,9 @@
     /** CREATE  */
     function store() {
 
+        /** */
+        addSpinner("#created", true);
+
         $.ajax({
             url: "{{ route('servers.store') }}",
             type: 'POST',
@@ -114,6 +118,10 @@
             },
             complete: function(data) {},
             error: function(data) {
+
+                /** */
+                removeSpinner("#created", 'Cadastrar');
+
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
                     $('#name').addClass('is-invalid');
@@ -174,11 +182,14 @@
         $("#updated").show();
         $("#created").hide();
 
+        cleanFormDB('#formServer');
+
         $.get(
             "{{ route('servers.index') }}" + '/' + id + '/edit',
             function(data) {
                 $('#modalTitle').html('Editar servidor');
-                $('#updated').html('Atualizar');
+                /** */
+                removeSpinner("#updated", 'Atualizar');
                 $('#modalFormCreate').modal('show');
                 $('#name').val(data.data.server.name);
                 $('#ip').val(data.data.server.ip);
@@ -199,6 +210,9 @@
 
         var id = $('#id').val();
 
+        /** */
+        addSpinner("#updated", true);
+
         $.ajax({
             url: "{{ route('servers.index') }}" + '/' + id,
             type: 'PATCH',
@@ -218,6 +232,10 @@
             },
             complete: function(data) {},
             error: function(data) {
+
+                /** */
+                removeSpinner("#updated", 'Atualizar');
+                
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
                     $('#name').addClass('is-invalid');

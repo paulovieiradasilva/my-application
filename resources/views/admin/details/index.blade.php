@@ -66,9 +66,9 @@
                 text: 'Novo',
                 action: function () {
                     cleanFormDB('#formDetail');
-                    $('#id').val('');
                     $('#modalTitle').html('Novo detalhe');
-                    $("#created").html("Cadastrar");
+                    /** */
+                    removeSpinner("#created", 'Cadastrar');
                     $("#updated").hide();
                     $("#created").show();
                     $('#modalFormCreate').modal('show');
@@ -95,6 +95,9 @@
     /** CREATE  */
     function store() {
 
+        /** */
+        addSpinner("#created", true);
+
         $.ajax({
             url: "{{ route('details.store') }}",
             type: 'POST',
@@ -113,6 +116,10 @@
             },
             complete: function (data) {},
             error: function (data) {
+
+                /** */
+                removeSpinner("#created", 'Cadastrar');
+
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.application_id) {
                     $('#select-applications').addClass('is-invalid');
@@ -152,11 +159,14 @@
         $("#updated").show();
         $("#created").hide();
 
+        cleanFormDB('#formDetail');
+
         $.get(
             "{{ route('details.index') }}" + '/' + id + '/edit',
             function (data) {
                 $('#modalTitle').html('Editar detalhe');
-                $('#updated').html('Atualizar');
+                /** */
+                removeSpinner("#updated", 'Atualizar');
                 $('#modalFormCreate').modal('show');
                 $('#description').val(data.description);
                 $('#select-applications').val(data.application_id).trigger('change');
@@ -172,6 +182,9 @@
     function update() {
 
         var id = $('#id').val();
+
+        /** */
+        addSpinner("#updated", true);
 
         $.ajax({
             url: "{{ route('details.index') }}" + '/' + id,
@@ -192,6 +205,10 @@
             },
             complete: function (data) {},
             error: function (data) {
+
+                /** */
+                removeSpinner("#updated", 'Atualizar');
+
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.application_id) {
                     $('#select-applications').addClass('is-invalid');

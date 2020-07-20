@@ -96,6 +96,7 @@ function cleanFormDB(selector) {
     $('#username').val("").removeClass('is-invalid');
     $('#email').val("").removeClass('is-invalid');
     $('#password').val("").removeClass('is-invalid');
+    $('#content').val("").removeClass('is-invalid');
     $('#start').val("").trigger('change').removeClass('is-invalid');
     $('#type').val("").trigger('change').removeClass('is-invalid');
     $('#select-applications').val("").trigger('change').removeClass('is-invalid');
@@ -104,4 +105,16 @@ function cleanFormDB(selector) {
     $('#select-servers').val("").trigger('change').removeClass('is-invalid');
     $('#select-towers').val("").trigger('change').removeClass('is-invalid');
     $('#select-users').val("").trigger('change').removeClass('is-invalid');
+}
+
+/** ADD SPINNER IN BUTTON */
+function addSpinner(selector, boolean) {
+    $(selector)
+        .prepend(`<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> `)
+        .attr("disabled", boolean);
+}
+
+/** ADD SPINNER IN BUTTON */
+function removeSpinner(selector, text) {
+    $(selector).html(text).attr("disabled", false);
 }

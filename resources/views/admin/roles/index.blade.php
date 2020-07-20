@@ -66,7 +66,8 @@
                     text: 'Novo',
                     action: function () {
                         $('#modalTitle').html('Novo papél');
-                        $("#created").html("Cadastrar");
+                        /** */
+                        removeSpinner("#created", 'Cadastrar');
                         $("#updated").hide();
                         $("#created").show();
                         $('#formRole').trigger('reset');

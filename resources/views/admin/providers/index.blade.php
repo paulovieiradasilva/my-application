@@ -68,7 +68,8 @@
                 action: function () {
                     cleanFormDB('#formProvider');
                     $("#modalTitle").html("Novo fornecedor");
-                    $("#created").html("Cadastrar");
+                    /** */
+                    removeSpinner("#created", 'Cadastrar');
                     $("#updated").hide();
                     $("#created").show();
                     $("#modalFormCreate").modal("show");
@@ -90,6 +91,9 @@
     /** CREATE */
     function store() {
 
+        /** */
+        addSpinner("#created", true);
+
         $.ajax({
             url: "{{ route('providers.store') }}",
             type: "POST",
@@ -108,6 +112,10 @@
             },
             complete: function (data) { },
             error: function (data) {
+
+                /** */
+                removeSpinner("#created", 'Cadastrar');
+
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
                     $("#name").addClass("is-invalid");
@@ -123,11 +131,14 @@
         $("#updated").show();
         $("#created").hide();
 
+        cleanFormDB('#formProvider');
+
         $.get(
             "{{ route('providers.index') }}" + "/" + id + "/edit",
             function (data) {
                 $("#modalTitle").html("Editar forncedor");
-                $("#updated").html("Atualizar");
+                /** */
+                removeSpinner("#updated", 'Atualizar');
                 $("#modalFormCreate").modal("show");
                 $("#name").val(data.name);
                 $("#opening_hours").val(data.opening_hours);
@@ -149,16 +160,24 @@
 
         var id = $('#id').val();
 
+        /** */
+        addSpinner("#updated", true);
+
         $.ajax({
             url: "{{ route('providers.index') }}" + "/" + id,
             type: "PATCH",
             dataType: "json",
             data: $("#formProvider").serialize(),
             success: function (data) {
+
                 cleanFormDB('#formProvider');
                 $('#id').val('');
                 $("#modalFormCreate").modal("hide");
                 $("#providers_table").DataTable().ajax.reload(null, false);
+
+                /** */
+                removeSpinner("#updated", 'Atualizar');
+
                 if (data.success) {
                     toastr.success(data.success);
                 }
@@ -168,6 +187,10 @@
             },
             complete: function (data) { },
             error: function (data) {
+
+                /** */
+                removeSpinner("#updated", 'Atualizar');
+
                 /** Criar as validações dos inputs para erros */
                 if (data.responseJSON.errors.name) {
                     $("#name").addClass("is-invalid");
