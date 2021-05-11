@@ -63,7 +63,7 @@
         "jsgrid": "^1.5.3",
         "jszip": "^3.2.2",
         "laravel-mix": "^4.0.7",
-        "lodash": "^4.17.13",
+        "lodash": "^4.17.21",
         "moment": "^2.24.0",
         "overlayscrollbars": "^1.10.0",
         "pdfmake": "^0.1.62",
