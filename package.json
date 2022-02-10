@@ -82,7 +82,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
-        "node-sass": "^4.14.1",
+        "node-sass": "^7.0.0",
         "postcss-loader": "^3.0.0"
     }
 }
